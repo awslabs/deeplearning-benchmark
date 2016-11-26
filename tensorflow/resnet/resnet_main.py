@@ -43,11 +43,18 @@ tf.app.flags.DEFINE_string('log_root', '',
 tf.app.flags.DEFINE_integer('num_gpus', 0,
                             'Number of gpus used for training. (0 or 1)')
 
+def synthetic_data(batch_size):
+  images = np.random.rand(batch_size, IMAGE_SIZE, IMAGE_SIZE, NUM_CHANNELS) - 0.5
+  images = tf.cast(images, tf.float32)
+  labels = np.random.randint(0, 9, size=batch_size)
+  one_hot = np.zeros((labels.size, NUM_LABELS))
+  one_hot[np.arange(labels.size),labels] = 1
+  one_hot = tf.cast(one_hot, tf.float32)
+  return images, one_hot
 
 def train(hps):
   """Training loop."""
-  images, labels = cifar_input.build_input(
-      FLAGS.dataset, FLAGS.train_data_path, hps.batch_size, FLAGS.mode)
+  images, labels = synthetic_data(hps.batch_size)
   model = resnet_model.ResNet(hps, images, labels, FLAGS.mode)
   model.build_graph()
   summary_writer = tf.train.SummaryWriter(FLAGS.train_dir)
@@ -181,11 +188,11 @@ def main(_):
                              relu_leakiness=0.1,
                              optimizer='mom')
 
-  with tf.device(dev):
-    if FLAGS.mode == 'train':
-      train(hps)
-    elif FLAGS.mode == 'eval':
-      evaluate(hps)
+#   with tf.device(dev):
+  if FLAGS.mode == 'train':
+    train(hps)
+  elif FLAGS.mode == 'eval':
+    evaluate(hps)
 
 
 if __name__ == '__main__':

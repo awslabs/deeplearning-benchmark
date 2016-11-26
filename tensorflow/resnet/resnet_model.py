@@ -55,6 +55,7 @@ class ResNet(object):
 
   def build_graph(self):
     """Build a whole graph for the model."""
+    # This code has been modified to build Resnet 152
     self.global_step = tf.Variable(0, name='global_step', trainable=False)
     self._build_model()
     if self.mode == 'train':
@@ -69,13 +70,13 @@ class ResNet(object):
     """Build the core model within the graph."""
     with tf.variable_scope('init'):
       x = self._images
-      x = self._conv('init_conv', x, 3, 3, 16, self._stride_arr(1))
+      x = self._conv('init_conv', x, 7, 3, 64, self._stride_arr(2))
 
     strides = [1, 2, 2]
     activate_before_residual = [True, False, False]
     if self.hps.use_bottleneck:
       res_func = self._bottleneck_residual
-      filters = [16, 64, 128, 256]
+      filters = [64, 256, 512, 1024, 2048]
     else:
       res_func = self._residual
       filters = [16, 16, 32, 64]
@@ -87,25 +88,32 @@ class ResNet(object):
       # Update hps.num_residual_units to 9
 
     with tf.variable_scope('unit_1_0'):
-      x = res_func(x, filters[0], filters[1], self._stride_arr(strides[0]),
+      x = res_func(x, filters[0], filters[1], self._stride_arr(2),
                    activate_before_residual[0])
-    for i in xrange(1, self.hps.num_residual_units):
+    for i in xrange(1, 3):
       with tf.variable_scope('unit_1_%d' % i):
         x = res_func(x, filters[1], filters[1], self._stride_arr(1), False)
 
     with tf.variable_scope('unit_2_0'):
-      x = res_func(x, filters[1], filters[2], self._stride_arr(strides[1]),
+      x = res_func(x, filters[1], filters[2], self._stride_arr(2),
                    activate_before_residual[1])
-    for i in xrange(1, self.hps.num_residual_units):
+    for i in xrange(1, 8):
       with tf.variable_scope('unit_2_%d' % i):
         x = res_func(x, filters[2], filters[2], self._stride_arr(1), False)
 
     with tf.variable_scope('unit_3_0'):
-      x = res_func(x, filters[2], filters[3], self._stride_arr(strides[2]),
+      x = res_func(x, filters[2], filters[3], self._stride_arr(2),
                    activate_before_residual[2])
-    for i in xrange(1, self.hps.num_residual_units):
+    for i in xrange(1, 36):
       with tf.variable_scope('unit_3_%d' % i):
         x = res_func(x, filters[3], filters[3], self._stride_arr(1), False)
+
+    with tf.variable_scope('unit_4_0'):
+      x = res_func(x, filters[3], filters[4], self._stride_arr(2),
+                   activate_before_residual[2])
+    for i in xrange(1, 3):
+      with tf.variable_scope('unit_4_%d' % i):
+        x = res_func(x, filters[4], filters[4], self._stride_arr(1), False)
 
     with tf.variable_scope('unit_last'):
       x = self._batch_norm('final_bn', x)
