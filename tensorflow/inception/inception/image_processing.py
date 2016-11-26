@@ -41,6 +41,7 @@ from __future__ import division
 from __future__ import print_function
 
 import tensorflow as tf
+import numpy as np
 
 FLAGS = tf.app.flags.FLAGS
 
@@ -424,87 +425,18 @@ def batch_inputs(dataset, batch_size, train, num_preprocess_threads=None,
     ValueError: if data is not found
   """
   with tf.name_scope('batch_processing'):
-    data_files = dataset.data_files()
-    if data_files is None:
-      raise ValueError('No data files found for this dataset')
 
-    # Create filename_queue
-    if train:
-      filename_queue = tf.train.string_input_producer(data_files,
-                                                      shuffle=True,
-                                                      capacity=16)
-    else:
-      filename_queue = tf.train.string_input_producer(data_files,
-                                                      shuffle=False,
-                                                      capacity=1)
-    if num_preprocess_threads is None:
-      num_preprocess_threads = FLAGS.num_preprocess_threads
-
-    if num_preprocess_threads % 4:
-      raise ValueError('Please make num_preprocess_threads a multiple '
-                       'of 4 (%d % 4 != 0).', num_preprocess_threads)
-
-    if num_readers is None:
-      num_readers = FLAGS.num_readers
-
-    if num_readers < 1:
-      raise ValueError('Please make num_readers at least 1')
-
-    # Approximate number of examples per shard.
-    examples_per_shard = 1024
-    # Size the random shuffle queue to balance between good global
-    # mixing (more examples) and memory use (fewer examples).
-    # 1 image uses 299*299*3*4 bytes = 1MB
-    # The default input_queue_memory_factor is 16 implying a shuffling queue
-    # size: examples_per_shard * 16 * 1MB = 17.6GB
-    min_queue_examples = examples_per_shard * FLAGS.input_queue_memory_factor
-    if train:
-      examples_queue = tf.RandomShuffleQueue(
-          capacity=min_queue_examples + 3 * batch_size,
-          min_after_dequeue=min_queue_examples,
-          dtypes=[tf.string])
-    else:
-      examples_queue = tf.FIFOQueue(
-          capacity=examples_per_shard + 3 * batch_size,
-          dtypes=[tf.string])
-
-    # Create multiple readers to populate the queue of examples.
-    if num_readers > 1:
-      enqueue_ops = []
-      for _ in range(num_readers):
-        reader = dataset.reader()
-        _, value = reader.read(filename_queue)
-        enqueue_ops.append(examples_queue.enqueue([value]))
-
-      tf.train.queue_runner.add_queue_runner(
-          tf.train.queue_runner.QueueRunner(examples_queue, enqueue_ops))
-      example_serialized = examples_queue.dequeue()
-    else:
-      reader = dataset.reader()
-      _, example_serialized = reader.read(filename_queue)
-
-    images_and_labels = []
-    for thread_id in range(num_preprocess_threads):
-      # Parse a serialized Example proto to extract the image and metadata.
-      image_buffer, label_index, bbox, _ = parse_example_proto(
-          example_serialized)
-      image = image_preprocessing(image_buffer, bbox, train, thread_id)
-      images_and_labels.append([image, label_index])
-
-    images, label_index_batch = tf.train.batch_join(
-        images_and_labels,
-        batch_size=batch_size,
-        capacity=2 * num_preprocess_threads * batch_size)
-
-    # Reshape images into these desired dimensions.
     height = FLAGS.image_size
     width = FLAGS.image_size
     depth = 3
 
-    images = tf.cast(images, tf.float32)
-    images = tf.reshape(images, shape=[batch_size, height, width, depth])
-
+    synthetic_images = np.random.rand(batch_size, height, width, depth) - 0.5
+    synthetic_labels = np.random.randint(0, 9, size=batch_size)
+    
+    synthetic_images = tf.cast(tf.convert_to_tensor(synthetic_images), tf.float32)
+    synthetic_labels = tf.cast(tf.convert_to_tensor(synthetic_labels), tf.int32)
+    
     # Display the training images in the visualizer.
-    tf.image_summary('images', images)
+    #tf.image_summary('images', images)
 
-    return images, tf.reshape(label_index_batch, [batch_size])
+    return synthetic_images, synthetic_labels

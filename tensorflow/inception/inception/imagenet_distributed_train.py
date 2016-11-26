@@ -53,7 +53,7 @@ def main(unused_args):
   else:
     # `worker` jobs will actually do the work.
     dataset = ImagenetData(subset=FLAGS.subset)
-    assert dataset.data_files()
+    #assert dataset.data_files()
     # Only the chief checks for or creates train_dir.
     if FLAGS.task_id == 0:
       if not tf.gfile.Exists(FLAGS.train_dir):

@@ -23,6 +23,7 @@ from __future__ import print_function
 from datetime import datetime
 import os.path
 import time
+import sys
 
 import numpy as np
 import tensorflow as tf
@@ -30,6 +31,7 @@ import tensorflow as tf
 from inception import image_processing
 from inception import inception_model as inception
 from inception.slim import slim
+from tensorflow.python.client import timeline
 
 FLAGS = tf.app.flags.FLAGS
 
@@ -273,32 +275,58 @@ def train(target, dataset, cluster_spec):
       # specified interval. Note that the summary_op and train_op never run
       # simultaneously in order to prevent running out of GPU memory.
       next_summary_time = time.time() + FLAGS.save_summaries_secs
-      while not sv.should_stop():
+      step = 0
+      while (not sv.should_stop()) and step<=2000:
         try:
+
           start_time = time.time()
-          loss_value, step = sess.run([train_op, global_step])
+          run_metadata = tf.RunMetadata()        
+          profile_step = 60
+          trace_done = False
+          
+          if step == profile_step:
+            tf.logging.info("Tracing at step %d" % step)
+            loss_value, step = sess.run(
+                    [train_op, global_step],
+                    options=tf.RunOptions(trace_level=tf.RunOptions.FULL_TRACE),
+                    run_metadata=run_metadata)
+            trace_done = True
+          else:
+            loss_value, step = sess.run([train_op, global_step])
+
+          duration = time.time() - start_time
+
+          if trace_done:
+            trace = timeline.Timeline(step_stats=run_metadata.step_stats)
+            trace_file = open('/tmp/timeline.ctf.json', 'w')
+            trace_file.write(trace.generate_chrome_trace_format())
+            trace_file.close()
+
           assert not np.isnan(loss_value), 'Model diverged with loss = NaN'
           if step > FLAGS.max_steps:
             break
-          duration = time.time() - start_time
 
-          if step % 30 == 0:
-            examples_per_sec = FLAGS.batch_size / float(duration)
-            format_str = ('Worker %d: %s: step %d, loss = %.2f'
-                          '(%.1f examples/sec; %.3f  sec/batch)')
+          examples_per_sec = FLAGS.batch_size / float(duration)
+          format_str = ('Worker %d: %s: step %d, loss = %.2f'
+                        '(%.1f examples/sec; %.3f  sec/batch)')
+          if step >= 10 and step != profile_step+1:
             tf.logging.info(format_str %
                             (FLAGS.task_id, datetime.now(), step, loss_value,
                              examples_per_sec, duration))
+          else:
+            tf.logging.info('Not considering step %d (%.1f samples/sec)' %
+                            (step, examples_per_sec))
+
 
           # Determine if the summary_op should be run on the chief worker.
-          if is_chief and next_summary_time < time.time():
-            tf.logging.info('Running Summary operation on the chief.')
-            summary_str = sess.run(summary_op)
-            sv.summary_computed(sess, summary_str)
-            tf.logging.info('Finished running Summary operation.')
-
-            # Determine the next time for running the summary.
-            next_summary_time += FLAGS.save_summaries_secs
+#           if is_chief and next_summary_time < time.time():
+#             tf.logging.info('Running Summary operation on the chief.')
+#             summary_str = sess.run(summary_op)
+#             sv.summary_computed(sess, summary_str)
+#             tf.logging.info('Finished running Summary operation.')
+# 
+#             # Determine the next time for running the summary.
+#             next_summary_time += FLAGS.save_summaries_secs
         except:
           if is_chief:
             tf.logging.info('About to execute sync_clean_up_op!')
