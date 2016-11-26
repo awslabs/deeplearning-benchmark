@@ -122,7 +122,7 @@ while [ $executed -eq 0 ]; do
     
         sleep 30
     
-        num_running=`bash runincluster.sh -h $NODES_FILE -c "ps -ef | grep ps_hosts | grep -v grep | wc -l" | awk '{s+=$1} END {print s}'`
+        num_running=`bash runincluster.sh -h $NODES_FILE -n $NUM_NODES -c "ps -ef | grep ps_hosts | grep -v grep | wc -l" | awk '{s+=$1} END {print s}'`
         expected_running=$(($NUM_NODES*(GPU_PER_NODE+1)))
         if [ ${num_running} -ne ${expected_running} ] ; then
             echo "Some process died unexpectedly. Restart this test."
@@ -131,7 +131,7 @@ while [ $executed -eq 0 ]; do
             break
         fi
         
-        current_iteration=`bash runincluster.sh -h $NODES_FILE -c "cat /tmp/worker* | grep 'examples/sec' | sed 's/.*step \([[:digit:]]*\).*/\1/'" | sort | tail -1`
+        current_iteration=`bash runincluster.sh -h $NODES_FILE -n $NUM_NODES -c "cat /tmp/worker* | grep 'examples/sec' | sed 's/.*step \([[:digit:]]*\).*/\1/'" 2>/dev/null | sort | tail -1`
         if ! [[ $current_iteration =~ ^[0-9]+$ ]] ; then
             current_iteration=0
         fi
