@@ -125,13 +125,6 @@ else
     cd mxnet && git pull && cd ..
 fi
 
-# if [ ! -d "tfperftest" ]; then
-#     echo "Cloning TensorFlow performance test"
-#     git clone https://github.com/indhub/tfperftest.git tfperftest
-# else 
-#     cd tfperftest && git pull && cd ..
-# fi
-
 # Create the hostname list required for MXNet
 rm hostnames
 head -$HOSTS_COUNT $HOSTS |
