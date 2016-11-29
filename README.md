@@ -26,3 +26,5 @@ Note: The following mini-batch sizes are used by default:
 
 Mini-batch size can be changed using the --models switch. For example to run Inception-v3 with a batch size of 16 and AlexNet with a batch size of 256, run the following:
 `bash runscalabilitytest.sh --models "Inceptionv3:16,Alexnet:256"`.
+
+To run training across multiple machines, the scripts use parameter servers that workers talk to over the network to update parameters. It is possible to get better performance on single machine by not using the parameter servers. Given we are only interested in distributed performance across multiple machines, for simplicity, the scripts don't run different code optimized for single machine for tests that run on single machine. This should not affect the results for distributed training.
