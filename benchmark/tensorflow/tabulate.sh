@@ -40,8 +40,8 @@ done
 
 echo "Writing table to $TABLE_FILE"
 IDEAL_FILE=$TABLE_FILE.ideal
-rm $TABLE_FILE 2>/dev/null
-rm $IDEAL_FILE 2>/dev/null
+rm -f $TABLE_FILE 
+rm -f $IDEAL_FILE 
 
 images_one_gpu=`cat ${LOG_DIR}/${MODEL}_b${BATCH_SIZE}_g1/imagespersec`
 

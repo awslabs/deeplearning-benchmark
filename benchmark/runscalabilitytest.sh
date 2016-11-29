@@ -126,7 +126,7 @@ else
 fi
 
 # Create the hostname list required for MXNet
-rm hostnames
+rm -f hostnames
 head -$HOSTS_COUNT $HOSTS |
 while read line; do
     if [ -z line ]; then continue; fi
@@ -137,7 +137,7 @@ done
 
 
 echo "Compressing MXNet"
-rm mxnet.tar.gz
+rm -f mxnet.tar.gz
 tar -cvzf mxnet.tar.gz ./mxnet > /dev/null 2>&1
 
 echo "Copying MXNet to remote nodes..."

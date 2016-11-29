@@ -53,7 +53,7 @@ elif [ "$MODEL" == "resnet" ]; then
     model_path="../../tensorflow resnet"
 fi
 
-rm model.tar.gz
+rm -f model.tar.gz
 tar -czvf model.tar.gz -C $model_path
 
 echo "Copying scripts to remote nodes..."
