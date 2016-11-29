@@ -118,11 +118,10 @@ echo "Using $REMOTE_DIR as remote directory"
 if [ ! -d "mxnet" ]; then
     echo "Cloning MXNet"
     git clone https://github.com/dmlc/mxnet.git
-    cd mxnet
+    cd mxnet && git reset --hard 9c284f9516919ca057c34e60f292946dfa853acc
     git clone https://github.com/dmlc/dmlc-core dmlc-core
-    cd ..
-else
-    cd mxnet && git pull && cd ..
+    cd dmlc-core && git reset --hard f554de0a6914f8028aab50aea02003a4344e732d
+    cd ../..
 fi
 
 # Create the hostname list required for MXNet
