@@ -3,7 +3,7 @@ import numpy as np
 import sys
 import getopt
 import csv
-
+import math
 
 def main(argv):
 
@@ -11,7 +11,7 @@ def main(argv):
     csv_list = None
 
     try:
-        opts, args = getopt.getopt(argv, "", ["labels=","csv=","file=","runs="])
+        opts, args = getopt.getopt(argv, "", ["labels=","csv=","file=","maxgpu="])
     except getopt.GetoptError:
         print("Incorrect args")
         sys.exit(2)
@@ -23,10 +23,10 @@ def main(argv):
             csv_list = arg
         elif opt == "--file":
             out_file = arg
-        elif opt == "--runs":
-            num_runs = int(arg)
+        elif opt == "--maxgpu":
+            max_gpu = int(arg)
             
-    if(label_list == None or csv_list == None or out_file == None or num_runs == None):
+    if(label_list == None or csv_list == None or out_file == None or max_gpu == None):
         print("Incorrect args")
         sys.exit(2)
 
@@ -37,10 +37,13 @@ def main(argv):
     map(str.strip, csv_files)
 
     line_chart = pygal.Line(logarithmic=True, truncate_legend=100, legend_at_bottom=True)
-    line_chart.title = "Deep Learning Fameworks - Performance Comparison"
+    line_chart.title = "Deep Learning Frameworks - Performance Comparison"
     
+    num_runs = math.ceil(math.log(max_gpu,2)) + 1
     x = np.arange(0,num_runs)
     x = np.power(2,x)
+    x[-1] = max_gpu
+    
     line_chart.x_labels = map(str, x.tolist())
     
     # Add ideal plot

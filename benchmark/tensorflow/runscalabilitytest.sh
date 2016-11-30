@@ -54,9 +54,14 @@ while [ "$ngpu" -le "$MAX_GPUS" ]; do
     
     bash runtest.sh -m $MODEL -h $NODES_FILE -r $REMOTE_DIR -n $num_machines -g $gpu_per_machine -b $BATCH_SIZE
     
+    if [ "$ngpu" -eq "$MAX_GPUS" ] ; then
+        break
+    fi
+    
     gpu_list=${gpu_list}${ngpu},
     
     ngpu=$(($ngpu * 2))
+    ngpu=$(( $ngpu < $MAX_GPUS ? $ngpu : $MAX_GPUS ))
 done
 
 gpu_list=`echo $gpu_list | rev | cut -c 2- | rev`

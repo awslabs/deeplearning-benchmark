@@ -220,4 +220,5 @@ csv_files=${csv_files%?}
 a_csv_file=`ls csv_*/*.csv | xargs echo | tr ' ' '\n' | head -1`
 num_lines=`cat ${a_csv_file} | sed '/^\s*$/d' | wc -l | xargs`
 
-python plotgraph.py --labels="${labels}" --csv="${csv_files}" --file=comparison_graph.svg --runs=$num_lines
+max_gpu=$(($HOSTS_COUNT * $GPU_PER_HOST))
+python plotgraph.py --labels="${labels}" --csv="${csv_files}" --file=comparison_graph.svg --maxgpu=$max_gpu
