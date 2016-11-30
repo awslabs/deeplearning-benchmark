@@ -118,7 +118,7 @@ echo "Using $REMOTE_DIR as remote directory"
 if [ ! -d "mxnet" ]; then
     echo "Cloning MXNet"
     git clone https://github.com/dmlc/mxnet.git
-    cd mxnet && git reset --hard 9c284f9516919ca057c34e60f292946dfa853acc
+    cd mxnet && git reset --hard a3a928c21ab91b246a5fab7c9ec135f6e616f899
     git clone https://github.com/dmlc/dmlc-core dmlc-core
     cd dmlc-core && git reset --hard f554de0a6914f8028aab50aea02003a4344e732d
     cd ../..
