@@ -146,9 +146,9 @@ while read line; do
     arr=( $line )
     ssh_alias=${arr[1]}
 
-    scp mxnet.tar.gz $ssh_alias:$REMOTE_DIR
-    scp hostnames $ssh_alias:$REMOTE_DIR
-    ssh $ssh_alias 'cd '${REMOTE_DIR}' && tar -xvzf mxnet.tar.gz > /dev/null 2>&1' &
+    scp -o "StrictHostKeyChecking no" mxnet.tar.gz $ssh_alias:$REMOTE_DIR
+    scp -o "StrictHostKeyChecking no" hostnames $ssh_alias:$REMOTE_DIR
+    ssh -o "StrictHostKeyChecking no" $ssh_alias 'cd '${REMOTE_DIR}' && tar -xvzf mxnet.tar.gz > /dev/null 2>&1' &
 done
 
 # Construct the models string for MXNet 
@@ -171,10 +171,10 @@ echo $mxnet_command
 line=$(head -n 1 $HOSTS)
 arr=( $line )
 master_host=${arr[1]}
-ssh $master_host $mxnet_command
+ssh -o "StrictHostKeyChecking no" $master_host $mxnet_command
 rm -rf csv_mxnet
 mkdir csv_mxnet
-scp ${master_host}:${REMOTE_DIR}/mxnet/example/image-classification/benchmark/*.csv ./csv_mxnet
+scp -o "StrictHostKeyChecking no" ${master_host}:${REMOTE_DIR}/mxnet/example/image-classification/benchmark/*.csv ./csv_mxnet
 
 # Run TensorFlow
 rm -rf csv_tf
@@ -222,3 +222,28 @@ num_lines=`cat ${a_csv_file} | sed '/^\s*$/d' | wc -l | xargs`
 
 max_gpu=$(($HOSTS_COUNT * $GPU_PER_HOST))
 python plotgraph.py --labels="${labels}" --csv="${csv_files}" --file=comparison_graph.svg --maxgpu=$max_gpu
+
+echo
+echo Summary:
+echo
+
+max_gpus=$((GPU_PER_HOST * HOSTS_COUNT))
+ngpu=1
+gpu_list=""
+while [ "$ngpu" -le "$max_gpus" ]; do
+    gpu_list=${gpu_list}${ngpu}", " 
+    if [ "$ngpu" -eq "$max_gpus" ] ; then
+        break
+    fi
+    ngpu=$(($ngpu * 2))
+    ngpu=$(( $ngpu < $max_gpus ? $ngpu : $max_gpus ))
+done
+gpu_list=`echo $gpu_list | rev | cut -c 2- | rev`
+echo Completed tests on $gpu_list GPUs
+echo
+
+echo Data available in:
+ls csv_*
+echo
+
+echo Data plotted in graph: comparison_graph.svg

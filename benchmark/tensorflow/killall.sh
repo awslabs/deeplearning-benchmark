@@ -22,6 +22,6 @@ while read line; do
     tuple=( $line )
     ssh_alias=${tuple[1]}
 
-    ssh -n $ssh_alias "ps -ef | grep 'ps_hosts' | grep -v grep | sed 's/ \+/ /g' | cut -d ' ' -f 2 | xargs kill -9" > /dev/null 2>&1
-    ssh -n $ssh_alias "ps -ef | grep tail | grep worker | grep -v grep | sed 's/ \+/ /g' | cut -d ' ' -f 2 | xargs kill -9" > /dev/null 2>&1
+    ssh -o "StrictHostKeyChecking no" -n $ssh_alias "ps -ef | grep 'ps_hosts' | grep -v grep | sed 's/ \+/ /g' | cut -d ' ' -f 2 | xargs kill -9" > /dev/null 2>&1
+    ssh -o "StrictHostKeyChecking no" -n $ssh_alias "ps -ef | grep tail | grep worker | grep -v grep | sed 's/ \+/ /g' | cut -d ' ' -f 2 | xargs kill -9" > /dev/null 2>&1
 done

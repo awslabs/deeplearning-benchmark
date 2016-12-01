@@ -64,8 +64,8 @@ while read line; do
   arr=( $line )
   host_name=${arr[0]}
   ssh_alias=${arr[1]}
-  scp model.tar.gz $ssh_alias:$REMOTE_DIR
-  ssh $ssh_alias 'cd '${REMOTE_DIR}' && tar -xvzf model.tar.gz > /dev/null 2>&1' &
+  scp -o "StrictHostKeyChecking no" model.tar.gz $ssh_alias:$REMOTE_DIR
+  ssh -o "StrictHostKeyChecking no" $ssh_alias 'cd '${REMOTE_DIR}' && tar -xvzf model.tar.gz > /dev/null 2>&1' &
 done
 
 echo "Generating runners..."
@@ -87,7 +87,7 @@ head -$NUM_NODES $NODES_FILE |
 while read line; do
   arr=( $line )
   ssh_alias=${arr[1]}
-  scp gen/${index}.sh ${ssh_alias}:${RUNNER_DEST}/runner.sh
+  scp -o "StrictHostKeyChecking no" gen/${index}.sh ${ssh_alias}:${RUNNER_DEST}/runner.sh
   let "index++"
 done
 
@@ -102,7 +102,7 @@ while [ $executed -eq 0 ]; do
     while read line; do
       tuple=( $line )
       ssh_alias=${tuple[1]}
-      ssh ${ssh_alias} "cd ${RUNNER_DEST} && bash runner.sh" &
+      ssh -o "StrictHostKeyChecking no" ${ssh_alias} "cd ${RUNNER_DEST} && bash runner.sh" &
     done
 
     # We could wait for less but there isn't going to be any output for 10 sec anyway
@@ -114,7 +114,7 @@ while [ $executed -eq 0 ]; do
     while read line; do
       tuple=( $line )
       ssh_alias=${tuple[1]}
-      ssh ${ssh_alias} "tail -f /tmp/worker* | grep --line-buffered '/sec'" &
+      ssh -o "StrictHostKeyChecking no" ${ssh_alias} "tail -f /tmp/worker* | grep --line-buffered '/sec'" &
     done
 
     while :
@@ -157,7 +157,7 @@ head -$NUM_NODES $NODES_FILE |
 while read line; do
   tuple=( $line )
   ssh_alias=${tuple[1]}
-  scp $ssh_alias:/tmp/worker* $LOG_DIR
+  scp -o "StrictHostKeyChecking no" $ssh_alias:/tmp/worker* $LOG_DIR
 done
 
 #Get average images/sec

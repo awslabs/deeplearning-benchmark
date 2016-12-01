@@ -34,6 +34,6 @@ while read line; do
     tuple=( $line )
     ssh_alias=${tuple[1]}
     
-    ssh -n $ssh_alias ${COMMAND}
+    ssh -o "StrictHostKeyChecking no" -n $ssh_alias ${COMMAND}
 
 done

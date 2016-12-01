@@ -32,7 +32,7 @@ def get_script(script_name, remote_dir, workers_list, ps_list, index, batch_size
 
     script += 'rm -rf /tmp/imagenet_train/'
     script += '\n'    
-    script += 'rm /tmp/worker*'
+    script += 'rm -f /tmp/worker*'
     script += '\n'
     script += "export PYTHONPATH='"+remote_dir+"/inception'"
     script += '\n'
