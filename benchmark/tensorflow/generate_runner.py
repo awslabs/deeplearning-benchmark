@@ -11,7 +11,7 @@ def get_nodes(nodes_file):
     with open(nodes_file) as f:
         lines = f.read().splitlines()
         
-    nodes = [s.split()[0] for s in lines if s]
+    nodes = [s.split()[0] for s in lines if s.strip()]
     return nodes
 
 

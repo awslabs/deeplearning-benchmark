@@ -1,6 +1,6 @@
 #!/bin/bash
 
-while [[ $# -gt 1 ]]
+while [[ $# -gt 0 ]]
 do
 key="$1"
 
@@ -29,6 +29,10 @@ case $key in
     MAX_GPUS="$2"
     shift # past argument
     ;;
+    --use_ssh_config)
+    use_ssh_config="--use_ssh_config $2"
+    shift
+    ;;    
     *)
           # unknown option
     ;;
@@ -52,7 +56,7 @@ while [ "$ngpu" -le "$MAX_GPUS" ]; do
         gpu_per_machine=$ngpu
     fi
     
-    bash runtest.sh -m $MODEL -h $NODES_FILE -r $REMOTE_DIR -n $num_machines -g $gpu_per_machine -b $BATCH_SIZE
+    bash runtest.sh -m $MODEL -h $NODES_FILE -r $REMOTE_DIR -n $num_machines -g $gpu_per_machine -b $BATCH_SIZE $use_ssh_config
     
     gpu_list=${gpu_list}${ngpu},
     

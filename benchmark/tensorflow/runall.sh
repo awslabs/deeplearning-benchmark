@@ -1,6 +1,6 @@
 #!/bin/bash
 
-while [[ $# -gt 1 ]]
+while [[ $# -gt 0 ]]
 do
 key="$1"
 
@@ -25,6 +25,10 @@ case $key in
     MAX_GPUS="$2"
     shift # past argument
     ;;
+    --use_ssh_config)
+    use_ssh_config="--use_ssh_config $2"
+    shift
+    ;;    
     *)
           # unknown option
     ;;
@@ -38,5 +42,5 @@ for model in `echo $MODELS | tr ',' ' '`; do
     model_name=${arr[0]}
     batch_size=${arr[1]}
  
-    bash runscalabilitytest.sh -h $HOSTS_LIST -m $model_name -g $GPU_PER_HOST -b $batch_size -r $REMOTE_DIR -x $MAX_GPUS
+    bash runscalabilitytest.sh -h $HOSTS_LIST -m $model_name -g $GPU_PER_HOST -b $batch_size -r $REMOTE_DIR -x $MAX_GPUS $use_ssh_config
 done

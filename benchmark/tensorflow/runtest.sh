@@ -1,6 +1,6 @@
 #!/bin/bash
 
-while [[ $# -gt 1 ]]
+while [[ $# -gt 0 ]]
 do
 key="$1"
 
@@ -33,6 +33,11 @@ case $key in
     ITERATIONS="$2"
     shift # past argument
     ;;
+    --use_ssh_config)
+    use_ssh_config="--use_ssh_config $2"
+    ssh_opts="-F $2"
+    shift
+    ;;    
     *)
           # unknown option
     ;;
@@ -64,8 +69,8 @@ while read line; do
   arr=( $line )
   host_name=${arr[0]}
   ssh_alias=${arr[1]}
-  scp -o "StrictHostKeyChecking no" model.tar.gz $ssh_alias:$REMOTE_DIR
-  ssh -o "StrictHostKeyChecking no" $ssh_alias 'cd '${REMOTE_DIR}' && tar -xvzf model.tar.gz > /dev/null 2>&1' &
+  scp -o "StrictHostKeyChecking no" $ssh_opts model.tar.gz $ssh_alias:$REMOTE_DIR
+  ssh -o "StrictHostKeyChecking no" $ssh_opts $ssh_alias 'cd '${REMOTE_DIR}' && tar -xvzf model.tar.gz > /dev/null 2>&1' &
 done
 
 echo "Generating runners..."
@@ -87,12 +92,12 @@ head -$NUM_NODES $NODES_FILE |
 while read line; do
   arr=( $line )
   ssh_alias=${arr[1]}
-  scp -o "StrictHostKeyChecking no" gen/${index}.sh ${ssh_alias}:${RUNNER_DEST}/runner.sh
+  scp -o "StrictHostKeyChecking no" $ssh_opts gen/${index}.sh ${ssh_alias}:${RUNNER_DEST}/runner.sh
   let "index++"
 done
 
 echo "Killing lingering processes"
-bash killall.sh -h $NODES_FILE
+bash killall.sh -h $NODES_FILE $use_ssh_config
 
 executed=0
 while [ $executed -eq 0 ]; do
@@ -102,7 +107,7 @@ while [ $executed -eq 0 ]; do
     while read line; do
       tuple=( $line )
       ssh_alias=${tuple[1]}
-      ssh -o "StrictHostKeyChecking no" ${ssh_alias} "cd ${RUNNER_DEST} && bash runner.sh" &
+      ssh -o "StrictHostKeyChecking no" $ssh_opts ${ssh_alias} "cd ${RUNNER_DEST} && bash runner.sh" &
     done
 
     # We could wait for less but there isn't going to be any output for 10 sec anyway
@@ -114,7 +119,7 @@ while [ $executed -eq 0 ]; do
     while read line; do
       tuple=( $line )
       ssh_alias=${tuple[1]}
-      ssh -o "StrictHostKeyChecking no" ${ssh_alias} "tail -f /tmp/worker* | grep --line-buffered '/sec'" &
+      ssh -o "StrictHostKeyChecking no" $ssh_opts ${ssh_alias} "tail -f /tmp/worker* | grep --line-buffered '/sec'" &
     done
 
     while :
@@ -122,22 +127,22 @@ while [ $executed -eq 0 ]; do
     
         sleep 30
     
-        num_running=`bash runincluster.sh -h $NODES_FILE -n $NUM_NODES -c "ps -ef | grep ps_hosts | grep -v grep | wc -l" | awk '{s+=$1} END {print s}'`
+        num_running=`bash runincluster.sh $use_ssh_config -h $NODES_FILE -n $NUM_NODES -c "ps -ef | grep ps_hosts | grep -v grep | wc -l" | awk '{s+=$1} END {print s}'`
         expected_running=$(($NUM_NODES*(GPU_PER_NODE+1)))
         if [ ${num_running} -ne ${expected_running} ] ; then
             echo "Some process died unexpectedly. Restart this test."
-            bash killall.sh -h $NODES_FILE
+            bash killall.sh -h $NODES_FILE $use_ssh_config
             executed=0
             break
         fi
         
-        current_iteration=`bash runincluster.sh -h $NODES_FILE -n $NUM_NODES -c "cat /tmp/worker* | grep 'examples/sec' | sed 's/.*step \([[:digit:]]*\).*/\1/'" 2>/dev/null | sort | tail -1`
+        current_iteration=`bash runincluster.sh $use_ssh_config -h $NODES_FILE -n $NUM_NODES -c "cat /tmp/worker* | grep 'examples/sec' | sed 's/.*step \([[:digit:]]*\).*/\1/'" 2>/dev/null | sort | tail -1`
         if ! [[ $current_iteration =~ ^[0-9]+$ ]] ; then
             current_iteration=0
         fi
         if [ ${current_iteration} -gt $ITERATIONS ]; then
             echo "Reached required number of iterations. Terminating test"
-            bash killall.sh -h $NODES_FILE
+            bash killall.sh -h $NODES_FILE $use_ssh_config
             executed=1
             break
         fi
@@ -157,7 +162,7 @@ head -$NUM_NODES $NODES_FILE |
 while read line; do
   tuple=( $line )
   ssh_alias=${tuple[1]}
-  scp -o "StrictHostKeyChecking no" $ssh_alias:/tmp/worker* $LOG_DIR
+  scp -o "StrictHostKeyChecking no" $ssh_opts $ssh_alias:/tmp/worker* $LOG_DIR
 done
 
 #Get average images/sec

@@ -2,7 +2,7 @@
 
 ADD_IDEAL=0
 
-while [[ $# -gt 1 ]]
+while [[ $# -gt 0 ]]
 do
 key="$1"
 
@@ -29,7 +29,6 @@ case $key in
     ;;
     -i|--add_ideal)
     ADD_IDEAL=1
-    shift # past argument
     ;;
     *)
           # unknown option

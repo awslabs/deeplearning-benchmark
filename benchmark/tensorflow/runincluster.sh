@@ -1,6 +1,6 @@
 #!/bin/bash
 
-while [[ $# -gt 1 ]]
+while [[ $# -gt 0 ]]
 do
 key="$1"
 
@@ -17,6 +17,10 @@ case $key in
     COMMAND="$2"
     shift 
     ;;
+    --use_ssh_config)
+    ssh_opts="-F $2"
+    shift
+    ;;    
     *)
           # unknown option
     ;;
@@ -34,6 +38,6 @@ while read line; do
     tuple=( $line )
     ssh_alias=${tuple[1]}
     
-    ssh -o "StrictHostKeyChecking no" -n $ssh_alias ${COMMAND}
+    ssh -o "StrictHostKeyChecking no" $ssh_opts -n $ssh_alias ${COMMAND}
 
 done

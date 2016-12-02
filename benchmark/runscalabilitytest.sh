@@ -1,6 +1,6 @@
 #!/bin/bash
 
-while [[ $# -gt 1 ]]
+while [[ $# -gt 0 ]]
 do
 key="$1"
 
@@ -29,12 +29,33 @@ case $key in
     REMOTE_DIR="$2"
     shift # past argument
     ;;
+    -u|--user)
+    USER="$2"
+    shift # past argument
+    ;;
+    -p|--pem)
+    PEM="$2"
+    shift # past argument
+    ;;    
     *)
           # unknown option
     ;;
 esac
 shift # past argument or value
 done
+
+if [ -n "$HOSTS" ] && [ -n "$USER" ] && [ -n "$PEM" ]; then
+    python createsshconfig.py --hosts=$HOSTS --user=$USER --pem=$PEM --out=sshconfig
+    awk '{print $1 " " $1}' $HOSTS > nodes
+    HOSTS=nodes
+
+    eval `ssh-agent -s`
+    trap "kill $SSH_AGENT_PID && unset SSH_AGENT_PID" 0
+    ssh-add -k $PEM
+    
+    ssh_opts="-F sshconfig"
+    use_ssh_config="--use_ssh_config ../sshconfig"
+fi
 
 instance_type=`curl -m 5 http://169.254.169.254/latest/meta-data/instance-type`
 if [[ $instance_type ]]; then
@@ -146,9 +167,9 @@ while read line; do
     arr=( $line )
     ssh_alias=${arr[1]}
 
-    scp -o "StrictHostKeyChecking no" mxnet.tar.gz $ssh_alias:$REMOTE_DIR
-    scp -o "StrictHostKeyChecking no" hostnames $ssh_alias:$REMOTE_DIR
-    ssh -o "StrictHostKeyChecking no" $ssh_alias 'cd '${REMOTE_DIR}' && tar -xvzf mxnet.tar.gz > /dev/null 2>&1' &
+    scp -o "StrictHostKeyChecking no" $ssh_opts mxnet.tar.gz $ssh_alias:$REMOTE_DIR
+    scp -o "StrictHostKeyChecking no" $ssh_opts hostnames $ssh_alias:$REMOTE_DIR
+    ssh -o "StrictHostKeyChecking no" $ssh_opts $ssh_alias 'cd '${REMOTE_DIR}' && tar -xvzf mxnet.tar.gz > /dev/null 2>&1' &
 done
 
 # Construct the models string for MXNet 
@@ -171,10 +192,10 @@ echo $mxnet_command
 line=$(head -n 1 $HOSTS)
 arr=( $line )
 master_host=${arr[1]}
-ssh -o "StrictHostKeyChecking no" $master_host $mxnet_command
+ssh -o "StrictHostKeyChecking no" -A $ssh_opts $master_host $mxnet_command
 rm -rf csv_mxnet
 mkdir csv_mxnet
-scp -o "StrictHostKeyChecking no" ${master_host}:${REMOTE_DIR}/mxnet/example/image-classification/benchmark/*.csv ./csv_mxnet
+scp -o "StrictHostKeyChecking no" $ssh_opts ${master_host}:${REMOTE_DIR}/mxnet/example/image-classification/benchmark/*.csv ./csv_mxnet
 
 # Run TensorFlow
 rm -rf csv_tf
@@ -182,8 +203,8 @@ mkdir csv_tf
 current_dir=$PWD
 cp $HOSTS tensorflow/nodes
 cd tensorflow
-echo bash runall.sh -m $MODELS -h nodes -g $GPU_PER_HOST -r $REMOTE_DIR -x "$((HOSTS_COUNT * GPU_PER_HOST))"
-bash runall.sh -m $MODELS -h nodes -g $GPU_PER_HOST -r $REMOTE_DIR -x "$((HOSTS_COUNT * GPU_PER_HOST))"
+echo bash runall.sh -m $MODELS -h nodes -g $GPU_PER_HOST -r $REMOTE_DIR -x "$((HOSTS_COUNT * GPU_PER_HOST))" $use_ssh_config
+bash runall.sh -m $MODELS -h nodes -g $GPU_PER_HOST -r $REMOTE_DIR -x "$((HOSTS_COUNT * GPU_PER_HOST))" $use_ssh_config
 cp logs/*.csv $current_dir/csv_tf
 cd $current_dir
 
