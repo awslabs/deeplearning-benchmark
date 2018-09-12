@@ -64,7 +64,7 @@ class Benchmarks(object):
                     benchmark[k] = v
                 else:
                     print(metric_prefix, v, metric_suffix)
-                    metric = metric_prefix + '.' + v + '.' + metric_suffix
+                    metric = "{}.{}.{}".format(metric_prefix, v, metric_suffix)
                     benchmark[k] = self._get_metric(metric)
 
             benchmark_type = benchmark['Type']

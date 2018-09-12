@@ -15,30 +15,42 @@
 # specific language governing permissions and limitations
 # under the License.
 # -*- coding: utf-8 -*-
-"""Report generation methods for creating xls and other formats.
+"""
+Report generation methods for creating xls and other formats.
 """
 import logging
 import os
 import xlsxwriter
 
-def generate_report(path, benchmarks):
-    """Generate a report from benchmark data.
+from xlsx2html import xlsx2html
+
+HTML_EXTENSION = '.html'
+XLSX_EXTENSION = '.xlsx'
+
+def generate_report(filename_prefix, benchmarks):
+    """
+    Generate a report from benchmark data.
 
     Parameters
     ----------
-    path : string
-        the output filename for the report; this will be overwritten if it exists
+    filename_prefix : string
+        the output filename minus the extension for the report. Both an xlsx and html file will be
+        (over-)written for thei filename_prefix.
     benchmarks : Benchmarks object
         the benchmark data for the report
     """
 
+    html_filename = filename_prefix + HTML_EXTENSION
+    xlsx_filename = filename_prefix + XLSX_EXTENSION
     try:
-        os.remove(path)
+        os.remove(html_filename)
+        os.remove(xlsx_filename)
     except OSError as e:
         pass
-    assert not os.path.exists(path)
+    assert not os.path.exists(html_filename)
+    assert not os.path.exists(xlsx_filename)
 
-    workbook = xlsxwriter.Workbook(path)
+    workbook = xlsxwriter.Workbook(xlsx_filename)
     worksheet = workbook.add_worksheet()
     worksheet.set_column('A:A', 20)
 
@@ -50,10 +62,12 @@ def generate_report(path, benchmarks):
     add_report(worksheet, row, benchmarks, 'Training NLP')
 
     workbook.close()
+    xlsx2html(xlsx_filename, html_filename)
 
 
 def add_report(worksheet, row, benchmarks, type):
-    """Adds a report to a worksheet for a task type.
+    """
+    Adds a report to a worksheet for a task type.
 
     Parameters
     ----------
@@ -70,7 +84,7 @@ def add_report(worksheet, row, benchmarks, type):
     Returns
     -------
     int
-        the row number following the section
+        the row number following the report
     """
     benchmarks, headers = benchmarks.get_benchmarks(type)
     if benchmarks is None:
@@ -96,5 +110,4 @@ def add_report(worksheet, row, benchmarks, type):
         worksheet.set_column(j+1, j+1, max_width)
 
     return row + len(benchmarks)
-
 
