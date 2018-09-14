@@ -22,6 +22,7 @@ import logging
 import os
 import xlsxwriter
 
+from .benchmarks import Benchmarks
 from xlsx2html import xlsx2html
 
 HTML_EXTENSION = '.html'
@@ -42,30 +43,64 @@ def generate_report(filename_prefix, benchmarks):
 
     html_filename = filename_prefix + HTML_EXTENSION
     xlsx_filename = filename_prefix + XLSX_EXTENSION
+
     try:
         os.remove(html_filename)
-        os.remove(xlsx_filename)
     except OSError as e:
         pass
     assert not os.path.exists(html_filename)
+
+    try:
+        os.remove(xlsx_filename)
+    except OSError as e:
+        pass
     assert not os.path.exists(xlsx_filename)
 
+    # Create format references in the workbook.
     workbook = xlsxwriter.Workbook(xlsx_filename)
+    formats = {
+        'header' : workbook.add_format(
+            {
+                'align': 'center',
+                'bold': True,
+                'border': 2,
+                'border_color': '#9ea3aa',
+                'bg_color': '#dadfe8'
+            }
+        ),
+        'categorical' : workbook.add_format(
+            {
+                'align': 'center',
+                'border': 1,
+                'border_color': '#9ea3aa',
+                'bg_color': '#f2f6fc'
+            }
+        ),
+        'number' : workbook.add_format(
+            {
+                'align': 'center',
+                # 'num_format': '0.00', Doesn't appear to be working.
+                'border': 1,
+                'border_color': '#9ea3aa'
+            }
+        )
+    }
+
     worksheet = workbook.add_worksheet()
     worksheet.set_column('A:A', 20)
 
     row = 0
-    row = add_report(worksheet, row, benchmarks, 'Inference')
+    row = _add_report(worksheet, formats, row, benchmarks, 'Inference')
     row += 3
-    row = add_report(worksheet, row, benchmarks, 'Training CV')
+    row = _add_report(worksheet, formats, row, benchmarks, 'Training CV')
     row += 3
-    add_report(worksheet, row, benchmarks, 'Training NLP')
+    _add_report(worksheet, formats, row, benchmarks, 'Training NLP')
 
     workbook.close()
     xlsx2html(xlsx_filename, html_filename)
 
 
-def add_report(worksheet, row, benchmarks, type):
+def _add_report(worksheet, formats, row, benchmarks, benchmark_type):
     """
     Adds a report to a worksheet for a task type.
 
@@ -73,11 +108,13 @@ def add_report(worksheet, row, benchmarks, type):
     ----------
     worksheet : an xlswriter worksheet object
         the worksheet to add the report
+    formats : dict
+        a dictionary of worksheet formats
     row : int
         the row to add the report
     benchmarks : a Benchmarks object
         the benchmark data for the report
-    type : string
+    benchmark_type : str
         the type of benchmarks to capture, e.g. 'Training CV', 'Training NLP', 'Inference' (must be
         one of Benchmarks.HEADERS.keys()).
 
@@ -86,21 +123,26 @@ def add_report(worksheet, row, benchmarks, type):
     int
         the row number following the report
     """
-    benchmarks, headers = benchmarks.get_benchmarks(type)
+    benchmarks, headers = benchmarks.get_benchmarks(benchmark_type)
     if benchmarks is None:
-        logging.warning('No benchmarks found for type "{}", skipping report'.format(type))
+        logging.warning('No benchmarks found for type "{}", skipping report'.format(benchmark_type))
         return row
 
-    worksheet.write(row, 0, 'Type')
-    worksheet.write(row + 1, 0, type)
+    worksheet.write(row, 0, 'Type', formats['header'])
+    worksheet.write(row + 1, 0, benchmark_type, formats['header'])
 
     for j, header in enumerate(headers):
-        worksheet.write(row, j + 1, header)
+        worksheet.write(row, j + 1, Benchmarks.append_header_unit(header), formats['header'])
         max_width = len(header)
 
         for i, benchmark in enumerate(benchmarks):
             val = str(benchmark[header])
-            worksheet.write(row + i + 1, j + 1, val)
+            if header in Benchmarks.CATEGORICAL_HEADERS:
+                format = formats['categorical']
+            else:
+                format = formats['number']
+
+            worksheet.write(row + i + 1, j + 1, val, format)
             max_width = max(max_width, len(val))
 
 
