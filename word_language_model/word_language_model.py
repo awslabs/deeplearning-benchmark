@@ -150,11 +150,13 @@ def train(epochs, ctx):
 
     for epoch in range(epochs):
         total_L = 0.0
-        start_time = time.time()
+        cur_L = 0.0
+        tic = time.time()
         hidden_states = [
             model.begin_state(func=mx.nd.zeros, batch_size=args.batch_size // len(ctx), ctx=ctx[i])
             for i in range(len(ctx))
         ]
+        btic = time.time()
         for ibatch, i in enumerate(range(0, train_data.shape[0] - 1, args.bptt)):
             # get data batch from the training data
             data_batch, target_batch = get_batch(train_data, i)
@@ -186,20 +188,21 @@ def train(epochs, ctx):
 
             if ibatch % args.log_interval == 0 and ibatch > 0:
                 cur_L = total_L / args.bptt / args.batch_size / args.log_interval
-                logging.info('[Epoch %d Batch %d] loss %.2f, ppl %.2f' % (
-                    epoch, ibatch, cur_L, math.exp(cur_L)))
+                logging.info('[Epoch %d Batch %d] Speed: %f samples/sec loss %.2f, ppl %.2f' % (
+                    epoch, ibatch, args.batch_size/(time.time()-btic), cur_L, math.exp(cur_L)))
                 total_L = 0.0
+            btic = time.time()
 
+        logging.info('[Epoch %d] train loss %.2f, train ppl %.2f' % (epoch, cur_L, math.exp(cur_L)))
+        logging.info('[Epoch %d] time cost %.2f'%(epoch, time.time()-tic))
         val_L = eval(val_data, ctx)
-
-        logging.info('[Epoch %d] time cost %.2fs, valid loss %.2f, valid ppl %.2f' % (
-            epoch, time.time() - start_time, val_L, math.exp(val_L)))
+        logging.info('[Epoch %d] valid loss %.2f, valid ppl %.2f' % (epoch, val_L, math.exp(val_L)))
 
         if val_L < best_val:
             best_val = val_L
-            test_L = eval(test_data, ctx)
+            # test_L = eval(test_data, ctx)
             model.collect_params().save('model.params')
-            logging.info('test loss %.2f, test ppl %.2f' % (test_L, math.exp(test_L)))
+            # logging.info('test loss %.2f, test ppl %.2f' % (test_L, math.exp(test_L)))
         else:
             args.lr = args.lr * 0.25
             trainer._init_optimizer('sgd',
@@ -220,6 +223,6 @@ if __name__ == '__main__':
     # Training code
     ###############################################################################
     train(args.epochs, context)
-    model.collect_params().load(args.save, context)
-    test_L = eval(test_data, context)
-    logging.info('Best test loss %.2f, test ppl %.2f' % (test_L, math.exp(test_L)))
+    # model.collect_params().load(args.save, context)
+    # test_L = eval(test_data, context)
+    # logging.info('Best test loss %.2f, test ppl %.2f' % (test_L, math.exp(test_L)))
