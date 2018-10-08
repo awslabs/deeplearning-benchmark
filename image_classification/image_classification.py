@@ -50,6 +50,8 @@ parser.add_argument('--benchmark', action='store_true',
                     help='whether to run benchmark.')
 parser.add_argument('--mode', type=str,
                     help='mode in which to train the model. options are symbolic, imperative, hybrid')
+parser.add_argument('--infer', type=bool, default=False,
+                    help='inference if infer is True, else training')
 parser.add_argument('--model', type=str, required=True,
                     help='type of model to use. see vision_model for options.')
 parser.add_argument('--use_thumbnail', action='store_true',
@@ -181,13 +183,20 @@ if __name__ == '__main__':
             out = mx.sym.Cast(data=out, dtype=np.float32)
         softmax = mx.sym.SoftmaxOutput(out, name='softmax')
         mod = mx.mod.Module(softmax, context=[mx.gpu(i) for i in range(gpus)] if gpus > 0 else [mx.cpu()])
-        mod.fit(
-            train_data,
-            val_data,
-            num_epoch=opt.epochs,
-            kvstore=opt.kvstore,
-            batch_end_callback=mx.callback.Speedometer(batch_size, opt.log_interval)
-        )
+        if opt.infer:
+            mod.score(
+                eval_data=val_data,
+                eval_metric=mx.metric.Accuracy(),
+                batch_end_callback=mx.callback.Speedometer(batch_size, opt.log_interval)
+            )
+        else:
+            mod.fit(
+                train_data,
+                val_data,
+                num_epoch=opt.epochs,
+                kvstore=opt.kvstore,
+                batch_end_callback=mx.callback.Speedometer(batch_size, opt.log_interval)
+            )
     else:
         if opt.dtype == 'float16':
             net.cast(np.float16)
