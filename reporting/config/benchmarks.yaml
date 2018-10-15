@@ -25,7 +25,7 @@
 #      Model: The model being used to test. e.g. ResNet-50
 #      Benchmark: Optional Benchmark Description
 #      Instance Type: C5.18xl <- In this format
-#      Num Instances: 3
+#      Num Instances:
 #      CPU Memory:
 #      GPU Memory Max:
 #      GPU Memory Mean:
@@ -52,8 +52,6 @@
 #      Perplexity:
 #      Throughput:
 #      Time to Train:
-# TODO(vishaalk): Uptime is often measured as total uptime including training and inference, rather than simply uptime
-#                 for the benchmark. We'll have to# make that distinction in the worksheet.
 # TODO(vishaalk): Use default values to avoid redundancy.
 benchmarks:
 # ------------------ Tensorflow MKL --------------------------------------------
@@ -149,7 +147,6 @@ benchmarks:
     Benchmark: CIFAR-10
     Instance Type: P3.2x
     Latency: inference_latency
-# TODO(vishaalk): Revisit the paragraph below to see if it's being used.
     Throughput: inference_throughput
     CPU Memory: cpu_memory_usage 
     GPU Memory Max: gpu_memory_usage_max
@@ -193,7 +190,6 @@ benchmarks:
     Benchmark: CIFAR-10
     Instance Type: P3.2x
     Latency: inference_latency
-# TODO(vishaalk): Revisit the paragraph below to see if it's being used.
     Throughput: inference_throughput
     Throughput: inference_throughput
     CPU Memory: cpu_memory_usage 
@@ -238,7 +234,6 @@ benchmarks:
     Benchmark: CIFAR-10
     Instance Type: P3.2x
     Latency: inference_latency
-# TODO(vishaalk): Revisit the paragraph below to see if it's being used.
     Throughput: inference_throughput
     CPU Memory: cpu_memory_usage 
     GPU Memory Max: gpu_memory_usage_max
@@ -348,9 +343,9 @@ benchmarks:
     GPU Memory Std: gpu_memory_usage_std
     Precision:
     Loss: test_loss
-# TODO(vishaalk): Train perplexity should be test perplexity
+# TODO(vishaalk): Train perplexity should be test perplexity.
     Perplexity: train_perplexity
-# TODO(vishaalk): Speed is likely wrong below
+# TODO(vishaalk): Speed is likely wrong below. Investigate.
     Throughput: speed
     Time to Train: total_training_time
     Validation Perplexity: validation_perplexity
@@ -368,9 +363,9 @@ benchmarks:
     GPU Memory Std: gpu_memory_usage_std
     Precision:
     Loss: test_loss
-# TODO(vishaalk): Train perplexity should be test perplexity
+# TODO(vishaalk): Train perplexity should be test perplexity.
     Perplexity: train_perplexity
-# TODO(vishaalk): Speed is likely wrong below
+# TODO(vishaalk): Speed is likely wrong below. Investigate.
     Throughput: speed
     Time to Train: total_training_time
     Validation Perplexity: validation_perplexity
@@ -388,9 +383,9 @@ benchmarks:
     GPU Memory Std: gpu_memory_usage_std
     Precision:
     Loss: test_loss
-# TODO(vishaalk): Train perplexity should be test perplexity
+# TODO(vishaalk): Train perplexity should be test perplexity.
     Perplexity: train_perplexity
-# TODO(vishaalk): Speed is likely wrong below
+# TODO(vishaalk): Speed is likely wrong below. Investigate.
     Throughput: speed
     Time to Train: total_training_time
     Validation Perplexity: validation_perplexity
@@ -408,9 +403,9 @@ benchmarks:
     GPU Memory Std: gpu_memory_usage_std
     Precision:
     Loss: test_loss
-# TODO(vishaalk): Train perplexity should be test perplexity
+# TODO(vishaalk): Train perplexity should be test perplexity.
     Perplexity: train_perplexity
-# TODO(vishaalk): Speed is likely wrong below
+# TODO(vishaalk): Speed is likely wrong below. Investigate.
     Throughput: speed
     Time to Train: total_training_time
     Validation Perplexity: validation_perplexity
@@ -770,7 +765,6 @@ benchmarks:
     Instance Type: C5.18x
     CPU Memory: cpu_memory_usage
     Latency: Average_inference_time_bvlc_alexnet_cpu
-#   Model: MXNet
     Uptime: uptime_in_seconds
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
     Metric Suffix: nightly.c5_18x
@@ -781,7 +775,6 @@ benchmarks:
     Instance Type: C5.18x
     CPU Memory: cpu_memory_usage
     Latency: Average_inference_time_bvlc_googlenet_cpu
-#   Model: MXNet
     Uptime: uptime_in_seconds
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
     Metric Suffix: nightly.c5_18x
@@ -793,7 +786,6 @@ benchmarks:
     Instance Type: C5.18x
     CPU Memory: cpu_memory_usage
     Latency: Average_inference_time_densenet121_cpu
-#   Model: MXNet
     Uptime: uptime_in_seconds
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
     Metric Suffix: nightly.c5_18x
@@ -805,7 +797,6 @@ benchmarks:
     Instance Type: C5.18x
     CPU Memory: cpu_memory_usage
     Latency: Average_inference_time_squeezenet_cpu
-#   Model: MXNet
     Uptime: uptime_in_seconds
 # TODO(vishaalk): This is not in the dashboards and appears to be unused.
 #  - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
@@ -818,7 +809,6 @@ benchmarks:
 #    Instance Type: C5.18x
 #    CPU Memory: cpu_memory_usage
 #    Latency: Average_inference_time_reference_caffenet_cpu
-#   Model: MXNet
 #    Uptime: uptime_in_seconds
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
     Metric Suffix: nightly.c5_18x
@@ -829,7 +819,6 @@ benchmarks:
     Instance Type: C5.18x
     CPU Memory: cpu_memory_usage
     Latency: Average_inference_time_bvlc_reference_caffenet_cpu
-#   Model: MXNet
     Uptime: uptime_in_seconds
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
     Metric Suffix: nightly.c5_18x
@@ -840,7 +829,6 @@ benchmarks:
     Instance Type: C5.18x
     CPU Memory: cpu_memory_usage
     Latency: Average_inference_time_shufflenet_cpu
-#   Model: MXNet
     Uptime: uptime_in_seconds
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
     Metric Suffix: nightly.c5_18x
@@ -851,7 +839,6 @@ benchmarks:
     Instance Type: C5.18x
     CPU Memory: cpu_memory_usage
     Latency: Average_inference_time_bvlc_reference_rcnn_ilsvrc13_cpu
-#   Model: MXNet
     Uptime: uptime_in_seconds
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
     Metric Suffix: nightly.c5_18x
@@ -862,7 +849,6 @@ benchmarks:
     Instance Type: C5.18x
     CPU Memory: cpu_memory_usage
     Latency: Average_inference_time_vgg19_cpu
-#   Model: MXNet
     Uptime: uptime_in_seconds
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
     Metric Suffix: nightly.c5_18x
@@ -873,6 +859,5 @@ benchmarks:
     Instance Type: C5.18x
     CPU Memory: cpu_memory_usage
     Latency: Average_inference_time_resnet50_cpu
-#   Model: MXNet
     Uptime: uptime_in_seconds
 # -----------------------------------------------------------------------------
