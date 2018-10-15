@@ -34,16 +34,16 @@ class Benchmarks(object):
     * AWS_DEFAULT_REGION
     """
     HEADERS = {
-        'Inference' : ['Test', 'Benchmark', 'Benchmark Desc', 'Instance Type', 'Latency',
+        'Inference' : ['Framework', 'Model', 'Benchmark', 'Instance Type', 'Latency',
                        'P50 Latency', 'P90 Latency', 'Throughput', 'CPU Memory',
                        'GPU Memory Mean', 'GPU Memory Max', 'Uptime'],
-        'Training CV' : ['Test', 'Benchmark', 'Benchmark Desc', 'Instance Type', 'Model',
-                         'Precision', 'Top1 val acc', 'Top1 train acc', 'Throughput',
-                         'Time to Train', 'CPU Memory', 'GPU Memory Mean', 'GPU Memory Max',
+        'Training CV' : ['Framework', 'Model', 'Benchmark', 'Instance Type', 'Precision',
+                         'Top1 val acc', 'Top1 train acc', 'Throughput', 'Time to Train',
+                         'CPU Memory', 'GPU Memory Mean', 'GPU Memory Max',
                          'Uptime'],
-        'Training NLP' : ['Test', 'Benchmark', 'Benchmark Desc', 'Instance Type', 'Model',
-                          'Precision', 'Perplexity', 'Throughput', 'Time to Train',
-                          'CPU Memory', 'GPU Memory Mean', 'GPU Memory Max', 'Uptime']
+        'Training NLP' : ['Framework', 'Model', 'Benchmark', 'Instance Type', 'Precision',
+                          'Perplexity', 'Throughput', 'Time to Train', 'CPU Memory',
+                          'GPU Memory Mean', 'GPU Memory Max', 'Uptime']
     }
     HEADER_UNITS = {
         'Latency' : 'ms',
@@ -67,8 +67,8 @@ class Benchmarks(object):
         'Time to Train' : 'time_to_train',
         'Uptime' : 'uptime_in_seconds'
     }
-    CATEGORICAL_HEADERS = ['Metric Prefix', 'Metric Suffix', 'Type', 'Test', 'Benchmark',
-                           'Benchmark Desc', 'Instance Type', 'Num Instances', 'Model',
+    CATEGORICAL_HEADERS = ['Metric Prefix', 'Metric Suffix', 'Type', 'Test', 'Framework',
+                           'Benchmark', 'Instance Type', 'Num Instances', 'Model',
                            'Precision', 'Notes']
 
 
