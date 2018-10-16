@@ -34,15 +34,15 @@ class Benchmarks(object):
     * AWS_DEFAULT_REGION
     """
     HEADERS = {
-        'Inference' : ['Framework', 'Model', 'Benchmark Desc', 'Instance Type', 'Latency',
-                       'P50 Latency', 'P90 Latency', 'Throughput', 'CPU Memory',
+        'Inference' : ['Framework', 'Framework Desc', 'Model', 'Benchmark Desc', 'Instance Type',
+                       'Latency', 'P50 Latency', 'P90 Latency', 'Throughput', 'CPU Memory',
                        'GPU Memory Mean', 'GPU Memory Max', 'Uptime'],
-        'Training CV' : ['Framework', 'Model', 'Benchmark Desc', 'Instance Type', 'Precision',
-                         'Top1 val acc', 'Top1 train acc', 'Throughput', 'Time to Train',
-                         'CPU Memory', 'GPU Memory Mean', 'GPU Memory Max',
+        'Training CV' : ['Framework', 'Framework Desc', 'Model', 'Benchmark Desc', 'Instance Type',
+                         'Precision', 'Top1 val acc', 'Top1 train acc', 'Throughput',
+                         'Time to Train', 'CPU Memory', 'GPU Memory Mean', 'GPU Memory Max',
                          'Uptime'],
-        'Training NLP' : ['Framework', 'Model', 'Benchmark Desc', 'Instance Type', 'Precision',
-                          'Perplexity', 'Throughput', 'Time to Train', 'CPU Memory',
+        'Training NLP' : ['Framework', 'Framework Desc', 'Model', 'Benchmark Desc', 'Instance Type',
+                          'Precision', 'Perplexity', 'Throughput', 'Time to Train', 'CPU Memory',
                           'GPU Memory Mean', 'GPU Memory Max', 'Uptime']
     }
     HEADER_UNITS = {
@@ -68,8 +68,8 @@ class Benchmarks(object):
         'Uptime' : 'uptime_in_seconds'
     }
     CATEGORICAL_HEADERS = ['Metric Prefix', 'Metric Suffix', 'Type', 'Test', 'Framework',
-                           'Benchmark', 'Instance Type', 'Num Instances', 'Model',
-                           'Precision', 'Notes']
+                           'Framework Desc', 'Model', 'Benchmark Desc', 'Instance Type',
+                           'Num Instances', 'Precision']
 
 
     def __init__(self):

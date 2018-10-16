@@ -16,45 +16,51 @@
 # under the License.
 #
 #
-# Configuration for benchmarks to be included in the Benchmark.AI report. This
-# file is of the following forMmat:
+# Configuration for benchmarks to be included in the Benchmark.AI report.
 #
-#  benchmarks:
-#    - Metric Prefix: the metric prefix without trailing period (required).
-#      Metric Suffix: the metric suffix without leading period (required).
-#      Type: Training CV, Training NLP or Inference (required)
-#      Framework: The framework being tested, e.g. MXNet, Tensorflow, MXNet Import
-#      Model: The model being used to test. e.g. ResNet-50
-#      Benchmark Desc: Optional Benchmark Description
-#      Instance Type: m4.4xlarge
-#      Num Instances:
-#      CPU Memory:
-#      GPU Memory Max:
-#      GPU Memory Mean:
-#      GPU Memory Std:
-#      ###  This section for Inference tasks ###
+# If you would like to add a benchmark to the benchmark report, please follow the following convention, and check your
+# configuration by generating a test report via the CLI.
+#
+# To generate a report, set the AWS environment variables described in report.py and run
+#     'python report.py -f output'
+# You can inspect output.xlsx and output.html to ensure they are as expected.
+#
+# The configuration format is as follows. All fields are optional unless specified as required.
+#
+#    - Metric Prefix: the metric prefix without trailing period  (required)
+#      Metric Suffix: the metric suffix without leading period  (required)
+#      Type: Training CV, Training NLP or Inference  (required)
+#      Framework: MXNet, Tensorflow, PyTorch, Caffe
+#      Framework Desc: Gluon, Module, Symbol, Gluon Hybrid, Horovod, SageMaker
+#      Model: the model architecture e.g. ResNet-50
+#      Benchmark Desc: Benchmark description/hyperparameters/dataset
+#      Instance Type: p3.18xlarge
+#      Num Instances: the number of instances
+
+#      ###  These keys for Inference tasks ###
 #      Latency:
 #      P50 Latency:
 #      P90 Latency:
-#      Throughput:
-#      ###  This section for Training CV tasks ###
-#      Model:
-#      Precision:
+#
+#      ###  These keys for Training CV tasks ###
+#      Top 1 Val Acc:  the top-1 validation accuracy
+#      Top 1 Train Acc: the top-1 training accuracy
+#      Precision: the precision, e.g. FP16, FP32
 #      Perplexity:
-#      GPU Memory Max:
-#      GPU Memory Mean:
-#      GPU Memory Std:
-#      Top 1 Val Acc:
-#      Top 1 Train Acc:
-#      Throughput:
-#      Time to Train:
-#      ###  This section for Training NLP tasks ###
-#      Model:
-#      Precision:
+#
+#      ###  These keys for Training NLP tasks ###
+#      Precision: the precision, e.g. FP16, FP32
 #      Perplexity:
-#      Throughput:
-#      Time to Train:
-# TODO(vishaalk): Use default values to avoid redundancy.
+#
+#      ### Default values will be used for the keys. They do not need to be specified, but can be overridden if
+#      ### necessary:
+#      CPU Memory: cpu_memory
+#      GPU Memory Max: gpu_memory_usage_max
+#      GPU Memory Mean: gpu_memory_usage_mean
+#      Throughput: throughput
+#      Time to Train: time_to_train
+#      Uptime: uptime_in_seconds
+#
 benchmarks:
 # ------------------ Tensorflow MKL --------------------------------------------
   - Metric Prefix: mxnet.tensorflow_mkl_c5_resnet50_18xlg
@@ -100,7 +106,8 @@ benchmarks:
   - Metric Prefix: mxnet.tensorflow_horovod_resnet50_p3_16xlg_batch_2048
     Metric Suffix: nightly.p3_16x
     Type: Training CV
-    Framework: Tensorflow Horovod
+    Framework: Tensorflow
+    Framework Desc: Horovod
     Model: ResNet-50
     Instance Type: p3.16xlarge
     CPU Memory: cpu_memory_usage
@@ -115,7 +122,8 @@ benchmarks:
   - Metric Prefix: chainer.resnet50_imagenet_sagemaker_ch_docker
     Metric Suffix: nightly.p3_16x
     Type: Training CV
-    Framework: Chainer Sagemaker
+    Framework: Chainer
+    Framework Desc: SageMaker
     Model: ResNet-50
     Benchmark Desc: ImageNet
     Instance Type: p3.16xlarge
@@ -129,7 +137,8 @@ benchmarks:
   - Metric Prefix: mxnet.dawnbench_cifar10_resnet164_basic_gluon
     Metric Suffix: _p3_2x_nightly
     Type: Training CV
-    Framework: MXNet Gluon
+    Framework: MXNet
+    Framework Desc: Gluon
     Model: ResNet-164
     Benchmark Desc: CIFAR-10
     Instance Type: p3.2xlarge
@@ -145,6 +154,7 @@ benchmarks:
     Metric Suffix: _p3_2x_nightly
     Type: Inference
     Framework: MXNet
+    Framework Desc: Gluon
     Model: ResNet-164
     Benchmark Desc: CIFAR-10
     Instance Type: p3.2xlarge
@@ -160,6 +170,7 @@ benchmarks:
     Metric Suffix: _c5_18x_nightly
     Type: Inference
     Framework: MXNet
+    Framework Desc: Gluon
     Model: ResNet-164
     Benchmark Desc: CIFAR-10
     Instance Type: c5.18xlarge
@@ -172,7 +183,8 @@ benchmarks:
   - Metric Prefix: mxnet.dawnbench_cifar10_resnet164_basic_gluon_hybrid
     Metric Suffix: _p3_2x_nightly
     Type: Training CV
-    Framework: MXNet Gluon Hybrid
+    Framework: MXNet
+    Framework Desc: Gluon Hybrid
     Model: ResNet-164
     Benchmark Desc: CIFAR-10
     Instance Type: p3.2xlarge
@@ -188,6 +200,7 @@ benchmarks:
     Metric Suffix: _p3_2x_nightly
     Type: Inference
     Framework: MXNet
+    Framework Desc: Gluon Hybrid
     Model: ResNet-164
     Benchmark Desc: CIFAR-10
     Instance Type: p3.2xlarge
@@ -204,6 +217,7 @@ benchmarks:
     Metric Suffix: _c5_18x_nightly
     Type: Inference
     Framework: MXNet
+    Framework Desc: Gluon Hybrid
     Model: ResNet-164
     Benchmark Desc: CIFAR-10
     Instance Type: c5.18xlarge
@@ -216,7 +230,8 @@ benchmarks:
   - Metric Prefix: mxnet.dawnbench_cifar10_resnet164_basic_module
     Metric Suffix: _p3_2x_nightly
     Type: Training CV
-    Framework: MXNet Module
+    Framework: MXNet
+    Framework Desc: Module
     Model: ResNet-164
     Benchmark Desc: CIFAR-10
     Instance Type: p3.2xlarge
@@ -232,6 +247,7 @@ benchmarks:
     Metric Suffix: _p3_2x_nightly
     Type: Inference
     Framework: MXNet
+    Framework Desc: Module
     Model: ResNet-164
     Benchmark Desc: CIFAR-10
     Instance Type: p3.2xlarge
@@ -247,6 +263,7 @@ benchmarks:
     Metric Suffix: _c5_18x_nightly
     Type: Inference
     Framework: MXNet
+    Framework Desc: Module
     Model: ResNet-164
     Benchmark Desc: CIFAR-10
     Instance Type: c5.18xlarge
@@ -259,7 +276,8 @@ benchmarks:
   - Metric Prefix: mxnet.lstm_ptb_imperative
     Metric Suffix: nightly.c4_8x
     Type: Training NLP
-    Framework: MXNet Imperative
+    Framework: MXNet
+    Framework Desc: Gluon
     Model: LSTM
     Benchmark Desc: PTB
     Instance Type: c4.8xlarge
@@ -277,7 +295,8 @@ benchmarks:
   - Metric Prefix: mxnet.lstm_ptb_imperative
     Metric Suffix: nightly.c5_18x
     Type: Training NLP
-    Framework: MXNet Imperative
+    Framework: MXNet
+    Framework Desc: Gluon
     Model: LSTM
     Benchmark Desc: PTB
     Instance Type: c5.18xlarge
@@ -296,7 +315,8 @@ benchmarks:
   - Metric Prefix: mxnet.lstm_ptb_imperative
     Metric Suffix: nightly.p2_16x
     Type: Training NLP
-    Framework: MXNet Imperative
+    Framework: MXNet
+    Framework Desc: Gluon
     Model: LSTM
     Benchmark Desc: PTB
     Instance Type: p2.16xlarge
@@ -315,7 +335,8 @@ benchmarks:
   - Metric Prefix: mxnet.lstm_ptb_imperative
     Metric Suffix: nightly.p3_x
     Type: Training NLP
-    Framework: MXNet Imperative
+    Framework: MXNet
+    Framework Desc: Gluon
     Model: LSTM
     Benchmark Desc: PTB
     Instance Type: p3.8xlarge
@@ -335,7 +356,8 @@ benchmarks:
   - Metric Prefix: mxnet.lstm_ptb_symbolic
     Metric Suffix: nightly.c4_8x
     Type: Training NLP
-    Framework: MXNet Symbolic
+    Framework: MXNet
+    Framework Desc: Symbol
     Model: LSTM
     Benchmark Desc: PTB
     Instance Type: c4.8xlarge
@@ -355,7 +377,8 @@ benchmarks:
   - Metric Prefix: mxnet.lstm_ptb_symbolic
     Metric Suffix: nightly.c5_18x
     Type: Training NLP
-    Framework: MXNet Symbolic
+    Framework: MXNet
+    Framework Desc: Symbol
     Model: LSTM
     Benchmark Desc: PTB
     Instance Type: c5.18xlarge
@@ -375,7 +398,8 @@ benchmarks:
   - Metric Prefix: mxnet.lstm_ptb_symbolic
     Metric Suffix: nightly.p2_16x
     Type: Training NLP
-    Framework: MXNet Symbolic
+    Framework: MXNet
+    Framework Desc: Symbol
     Model: LSTM
     Benchmark Desc: PTB
     Instance Type: p2.16xlarge
@@ -395,7 +419,8 @@ benchmarks:
   - Metric Prefix: mxnet.lstm_ptb_symbolic
     Metric Suffix: nightly.p3_x
     Type: Training NLP
-    Framework: MXNet Symbolic
+    Framework: MXNet
+    Framework Desc: Symbol
     Model: LSTM
     Benchmark Desc: PTB
     Instance Type: p3.8xlarge
@@ -417,7 +442,8 @@ benchmarks:
   - Metric Prefix: mxnet.mms_resnet18_gpu
     Metric Suffix: nightly.p3_8x
     Type: Inference
-    Framework: MXNet MMS
+    Framework: MXNet
+    Framework Desc: MMS
     Model: ResNet-18
     Benchmark Desc: 50 req 25
     Instance Type: p3.8xlarge
@@ -431,7 +457,8 @@ benchmarks:
   - Metric Prefix: mxnet.mms_resnet18_gpu
     Metric Suffix: nightly.p3_8x
     Type: Inference
-    Framework: MXNet MMS
+    Framework: MXNet
+    Framework Desc: MMS
     Model: ResNet-18
     Benchmark Desc: 50 req 50
     Instance Type: p3.8xlarge
@@ -446,7 +473,8 @@ benchmarks:
   - Metric Prefix: mxnet.mms_resnet18_gpu
     Metric Suffix: nightly.p3_8x
     Type: Inference
-    Framework: MXNet MMS
+    Framework: MXNet
+    Framework Desc: MMS
     Model: ResNet-18
     Benchmark Desc: 100 req 25
     Instance Type: p3.8xlarge
@@ -466,7 +494,8 @@ benchmarks:
   - Metric Prefix: mxnet.mms_resnet18_gpu
     Metric Suffix: nightly.p3_8x
     Type: Inference
-    Framework: MXNet MMS
+    Framework: MXNet
+    Framework Desc: MMS
     Model: ResNet-18
     Benchmark Desc: 50 req 100
     Instance Type: p3.8xlarge
@@ -486,7 +515,8 @@ benchmarks:
   - Metric Prefix: mxnet.mms_resnet18_gpu
     Metric Suffix: nightly.p3_8x
     Type: Inference
-    Framework: MXNet MMS
+    Framework: MXNet
+    Framework Desc: MMS
     Model: ResNet-18
     Benchmark Desc: 100 req 50
     Instance Type: p3.8xlarge
@@ -506,7 +536,8 @@ benchmarks:
   - Metric Prefix: mxnet.mms_resnet18_gpu
     Metric Suffix: nightly.p3_8x
     Type: Inference
-    Framework: MXNet MMS
+    Framework: MXNet
+    Framework Desc: MMS
     Model: ResNet-18
     Benchmark Desc: 100 req 100
     Instance Type: p3.8xlarge
@@ -528,9 +559,9 @@ benchmarks:
   - Metric Prefix: mxnet.resnet50_imagenet_sagemaker_mx_docker
     Metric Suffix: nightly.p3_16x
     Type: Training CV
-    Framework: Sagemaker
+    Framework: MXNet
     Model: ResNet-50
-    Benchmark Desc: ImageNet
+    Benchmark Desc: SageMaker/ImageNet
     Instance Type: p3.16xlarge
     Num Instances:
     CPU Memory: cpu_memory_usage
@@ -549,7 +580,8 @@ benchmarks:
   - Metric Prefix: mxnet.mxnet_resnet50v1_imagenet_gluon_fp16
     Metric Suffix: daily.p3_16x
     Type: Training CV
-    Framework: MXNet Gluon
+    Framework: MXNet
+    Framework Desc: Gluon
     Model: ResNet-50V1
     Benchmark Desc: ImageNet
     Instance Type: p3.16xlarge
@@ -570,7 +602,8 @@ benchmarks:
   - Metric Prefix: mxnet.mxnet_resnet50v1_imagenet_symbolic_fp16
     Metric Suffix: daily.p3_16x
     Type: Training CV
-    Framework: MXNet Symbolic
+    Framework: MXNet
+    Framework Desc: Symbol
     Model: ResNet-50V1
     Benchmark Desc: ImageNet
     Instance Type: p3.16xlarge
@@ -591,7 +624,8 @@ benchmarks:
   - Metric Prefix: mxnet.mxnet_resnet50v1_imagenet_symbolic_fp32
     Metric Suffix: daily.p3_16x
     Type: Training CV
-    Framework: MXNet Symbolic
+    Framework: MXNet
+    Framework Desc: Symbol
     Model: ResNet-50V1
     Benchmark Desc: ImageNet
     Instance Type: p3.16xlarge
@@ -612,7 +646,8 @@ benchmarks:
   - Metric Prefix: mxnet.mxnet_resnet50v1_imagenet_symbolic_fp16_p38x
     Metric Suffix: daily.p3_16x
     Type: Training CV
-    Framework: MXNet Symbolic
+    Framework: MXNet
+    Framework Desc: Symbol
     Model: ResNet-50V1
     Benchmark Desc: ImageNet
     Instance Type: p3.16xlarge
@@ -633,7 +668,8 @@ benchmarks:
   - Metric Prefix: mxnet.mxnet_resnet50v1_imagenet_symbolic_fp16_p38x
     Metric Suffix: daily.p3_16x
     Type: Training CV
-    Framework: MXNet Symbolic
+    Framework: MXNet
+    Framework Desc: Symbol
     Model: ResNet-50V1
     Benchmark Desc: ImageNet
     Instance Type: p3.16xlarge
@@ -677,7 +713,7 @@ benchmarks:
     Type: Training CV
     Framework: PyTorch
     Model: ResNet-50
-    Benchmark Desc: ImageNet 480x256-q95
+    Benchmark Desc: SageMaker/ImageNet 480x256-q95
     Instance Type: p3.16xlarge
     Num Instances:
     CPU Memory: cpu_memory_usage
@@ -697,7 +733,7 @@ benchmarks:
     Type: Training CV
     Framework: Tensorflow
     Model: ResNet-50
-    Benchmark Desc: ImageNet
+    Benchmark Desc: SageMaker/ImageNet
     Instance Type: p3.16xlarge
     Num Instances:
     CPU Memory: cpu_memory_usage
@@ -718,7 +754,8 @@ benchmarks:
   - Metric Prefix: mxnet.mxnet_resnet50v2_imagenet_symbolic_fp16
     Metric Suffix: daily.p3_16x
     Type: Training CV
-    Framework: MXNet Symbolic
+    Framework: MXNet
+    Framework Desc: Symbol
     Model: ResNet-50V2
     Benchmark Desc: ImageNet
     Instance Type: p3.16xlarge
@@ -739,7 +776,8 @@ benchmarks:
   - Metric Prefix: mxnet.mxnet_resnet50v2_imagenet_symbolic_fp16
     Metric Suffix: daily.p3_16x
     Type: Training CV
-    Framework: MXNet Symbolic
+    Framework: MXNet
+    Framework Desc: Symbol
     Model: ResNet-50V2
     Benchmark Desc: ImageNet
     Instance Type: p3.16xlarge
@@ -782,7 +820,6 @@ benchmarks:
     Metric Suffix: nightly.c5_18x
     Type: Inference
     Framework: MXNet
-    Framework: ONNX CPU
     Model: DenseNet-121
     Benchmark Desc: Import ONNX Model
     Instance Type: c5.18xlarge
@@ -792,7 +829,6 @@ benchmarks:
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
     Metric Suffix: nightly.c5_18x
     Type: Inference
-    Framework: ONNX CPU
     Framework: MXNet
     Model: SqueezeNet
     Benchmark Desc: Import ONNX Model
@@ -804,7 +840,6 @@ benchmarks:
 #  - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
 #    Metric Suffix: nightly.c5_18x
 #    Type: Inference
-#    Framework: ONNX CPU
 #    Framework: MXNet
 #    Model: Ref CaffeNet
 #    Benchmark Desc: Import ONNX Model
