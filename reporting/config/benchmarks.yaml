@@ -16,15 +16,17 @@
 # under the License.
 #
 #
-# Configuration for benchmarks to be included in the Benchmark.AI report. This file is of the following formmat:
+# Configuration for benchmarks to be included in the Benchmark.AI report. This
+# file is of the following forMmat:
+#
 #  benchmarks:
 #    - Metric Prefix: the metric prefix without trailing period (required).
 #      Metric Suffix: the metric suffix without leading period (required).
 #      Type: Training CV, Training NLP or Inference (required)
 #      Framework: The framework being tested, e.g. MXNet, Tensorflow, MXNet Import
 #      Model: The model being used to test. e.g. ResNet-50
-#      Benchmark: Optional Benchmark Description
-#      Instance Type: C5.18xl <- In this format
+#      Benchmark Desc: Optional Benchmark Description
+#      Instance Type: m4.4xlarge
 #      Num Instances:
 #      CPU Memory:
 #      GPU Memory Max:
@@ -60,8 +62,8 @@ benchmarks:
     Type: Training CV
     Framework: Tensorflow
     Model: ResNet-50
-    Benchmark: Batch size 1
-    Instance Type: C5.18xl
+    Benchmark Desc: Batch size 1
+    Instance Type: c5.18xlarge
     CPU Memory: cpu_memory_usage
     Throughput: images/sec(training with batch size 1)
 
@@ -70,8 +72,8 @@ benchmarks:
     Type: Training CV
     Framework: Tensorflow
     Model: ResNet-50
-    Benchmark: Batch size 32
-    Instance Type: C5.18xl
+    Benchmark Desc: Batch size 32
+    Instance Type: c5.18xlarge
     CPU Memory: cpu_memory_usage
     Throughput: images/sec(training with batch size 32)
 
@@ -80,8 +82,8 @@ benchmarks:
     Type: Inference
     Framework: Tensorflow
     Model: ResNet-50
-    Benchmark: Batch size 1
-    Instance Type: C5.18xl
+    Benchmark Desc: Batch size 1
+    Instance Type: c5.18xlarge
     CPU Memory: cpu_memory_usage
     Throughput: images/sec(Inference with batch size 1)
 
@@ -90,17 +92,17 @@ benchmarks:
     Type: Inference
     Framework: Tensorflow
     Model: ResNet-50
-    Benchmark: Batch size 32
-    Instance Type: C5.18xl
+    Benchmark Desc: Batch size 32
+    Instance Type: c5.18xlarge
     CPU Memory: cpu_memory_usage
     Throughput: images/sec(Inference with batch size 32)
 # ------------------ Tensorflow Horovod ----------------------------------------
-  - Metric Prefix: mxnet.tensorflow_horovod_resnet50_p3_16xlg_batch_2048 
+  - Metric Prefix: mxnet.tensorflow_horovod_resnet50_p3_16xlg_batch_2048
     Metric Suffix: nightly.p3_16x
     Type: Training CV
     Framework: Tensorflow Horovod
     Model: ResNet-50
-    Instance Type: P3.16x
+    Instance Type: p3.16xlarge
     CPU Memory: cpu_memory_usage
     GPU Memory Max: gpu_memory_usage_max
     GPU Memory Mean: gpu_memory_usage_mean
@@ -115,8 +117,8 @@ benchmarks:
     Type: Training CV
     Framework: Chainer Sagemaker
     Model: ResNet-50
-    Benchmark: ImageNet
-    Instance Type: P3.16x
+    Benchmark Desc: ImageNet
+    Instance Type: p3.16xlarge
     CPU Memory: cpu_memory_usage
     GPU Memory Max: gpu_memory_usage_max
     GPU Memory Mean: gpu_memory_usage_mean
@@ -125,12 +127,12 @@ benchmarks:
 
 # ------------------ DAWNBench CIFAR-10 ----------------------------------------
   - Metric Prefix: mxnet.dawnbench_cifar10_resnet164_basic_gluon
-    Metric Suffix: _p3_2x_nightly 
+    Metric Suffix: _p3_2x_nightly
     Type: Training CV
     Framework: MXNet Gluon
     Model: ResNet-164
-    Benchmark: CIFAR-10
-    Instance Type: P3.2x
+    Benchmark Desc: CIFAR-10
+    Instance Type: p3.2xlarge
     Throughput: training_throughput
     Time to Train: training_duration
     CPU Memory: cpu_memory_usage
@@ -140,15 +142,15 @@ benchmarks:
     Uptime: uptime_in_seconds
 
   - Metric Prefix: mxnet.dawnbench_cifar10_resnet164_basic_gluon
-    Metric Suffix: _p3_2x_nightly 
+    Metric Suffix: _p3_2x_nightly
     Type: Inference
     Framework: MXNet
     Model: ResNet-164
-    Benchmark: CIFAR-10
-    Instance Type: P3.2x
+    Benchmark Desc: CIFAR-10
+    Instance Type: p3.2xlarge
     Latency: inference_latency
     Throughput: inference_throughput
-    CPU Memory: cpu_memory_usage 
+    CPU Memory: cpu_memory_usage
     GPU Memory Max: gpu_memory_usage_max
     GPU Memory Mean: gpu_memory_usage_mean
     GPU Memory Std: gpu_memory_usage_std
@@ -159,21 +161,21 @@ benchmarks:
     Type: Inference
     Framework: MXNet
     Model: ResNet-164
-    Benchmark: CIFAR-10
-    Instance Type: C5.18x
+    Benchmark Desc: CIFAR-10
+    Instance Type: c5.18xlarge
     Latency: inference_latency
     Throughput: inference_throughput
-    CPU Memory: cpu_memory_usage 
+    CPU Memory: cpu_memory_usage
     Uptime: uptime_in_seconds
 
 # ------------------ DAWNBench CIFAR-10 Gluon Hybrid ---------------------------
   - Metric Prefix: mxnet.dawnbench_cifar10_resnet164_basic_gluon_hybrid
-    Metric Suffix: _p3_2x_nightly 
+    Metric Suffix: _p3_2x_nightly
     Type: Training CV
     Framework: MXNet Gluon Hybrid
     Model: ResNet-164
-    Benchmark: CIFAR-10
-    Instance Type: P3.2x
+    Benchmark Desc: CIFAR-10
+    Instance Type: p3.2xlarge
     Throughput: training_throughput
     Time to Train: training_duration
     CPU Memory: cpu_memory_usage
@@ -183,16 +185,16 @@ benchmarks:
     Uptime: uptime_in_seconds
 
   - Metric Prefix: mxnet.dawnbench_cifar10_resnet164_basic_gluon_hybrid
-    Metric Suffix: _p3_2x_nightly 
+    Metric Suffix: _p3_2x_nightly
     Type: Inference
     Framework: MXNet
     Model: ResNet-164
-    Benchmark: CIFAR-10
-    Instance Type: P3.2x
+    Benchmark Desc: CIFAR-10
+    Instance Type: p3.2xlarge
     Latency: inference_latency
     Throughput: inference_throughput
     Throughput: inference_throughput
-    CPU Memory: cpu_memory_usage 
+    CPU Memory: cpu_memory_usage
     GPU Memory Max: gpu_memory_usage_max
     GPU Memory Mean: gpu_memory_usage_mean
     GPU Memory Std: gpu_memory_usage_std
@@ -203,21 +205,21 @@ benchmarks:
     Type: Inference
     Framework: MXNet
     Model: ResNet-164
-    Benchmark: CIFAR-10
-    Instance Type: C5.18x
+    Benchmark Desc: CIFAR-10
+    Instance Type: c5.18xlarge
     Latency: inference_latency
     Throughput: inference_throughput
-    CPU Memory: cpu_memory_usage 
+    CPU Memory: cpu_memory_usage
     Uptime: uptime_in_seconds
 
 # ------------------ DAWNBench CIFAR-10 Module ----------------------------
   - Metric Prefix: mxnet.dawnbench_cifar10_resnet164_basic_module
-    Metric Suffix: _p3_2x_nightly 
+    Metric Suffix: _p3_2x_nightly
     Type: Training CV
     Framework: MXNet Module
     Model: ResNet-164
-    Benchmark: CIFAR-10
-    Instance Type: P3.2x
+    Benchmark Desc: CIFAR-10
+    Instance Type: p3.2xlarge
     Throughput: training_throughput
     Time to Train: training_duration
     CPU Memory: cpu_memory_usage
@@ -227,15 +229,15 @@ benchmarks:
     Uptime: uptime_in_seconds
 
   - Metric Prefix: mxnet.dawnbench_cifar10_resnet164_basic_module
-    Metric Suffix: _p3_2x_nightly 
+    Metric Suffix: _p3_2x_nightly
     Type: Inference
     Framework: MXNet
     Model: ResNet-164
-    Benchmark: CIFAR-10
-    Instance Type: P3.2x
+    Benchmark Desc: CIFAR-10
+    Instance Type: p3.2xlarge
     Latency: inference_latency
     Throughput: inference_throughput
-    CPU Memory: cpu_memory_usage 
+    CPU Memory: cpu_memory_usage
     GPU Memory Max: gpu_memory_usage_max
     GPU Memory Mean: gpu_memory_usage_mean
     GPU Memory Std: gpu_memory_usage_std
@@ -246,11 +248,11 @@ benchmarks:
     Type: Inference
     Framework: MXNet
     Model: ResNet-164
-    Benchmark: CIFAR-10
-    Instance Type: C5.18x
+    Benchmark Desc: CIFAR-10
+    Instance Type: c5.18xlarge
     Latency: inference_latency
     Throughput: inference_throughput
-    CPU Memory: cpu_memory_usage 
+    CPU Memory: cpu_memory_usage
     Uptime: uptime_in_seconds
 
 # ------------------ LSTM PTB --------------------------------------------------
@@ -259,8 +261,8 @@ benchmarks:
     Type: Training NLP
     Framework: MXNet Imperative
     Model: LSTM
-    Benchmark: PTB
-    Instance Type: C4.8x
+    Benchmark Desc: PTB
+    Instance Type: c4.8xlarge
     CPU Memory: cpu_memory_usage
     GPU Memory Max: gpu_memory_usage_max
     GPU Memory Mean: gpu_memory_usage_mean
@@ -277,8 +279,8 @@ benchmarks:
     Type: Training NLP
     Framework: MXNet Imperative
     Model: LSTM
-    Benchmark: PTB
-    Instance Type: C5.18x
+    Benchmark Desc: PTB
+    Instance Type: c5.18xlarge
     CPU Memory: cpu_memory_usage
     GPU Memory Max: gpu_memory_usage_max
     GPU Memory Mean: gpu_memory_usage_mean
@@ -296,8 +298,8 @@ benchmarks:
     Type: Training NLP
     Framework: MXNet Imperative
     Model: LSTM
-    Benchmark: PTB
-    Instance Type: P2.16x
+    Benchmark Desc: PTB
+    Instance Type: p2.16xlarge
     CPU Memory: cpu_memory_usage
     GPU Memory Max: gpu_memory_usage_max
     GPU Memory Mean: gpu_memory_usage_mean
@@ -311,12 +313,12 @@ benchmarks:
     Validation Perplexity: validation_perplexity
     Uptime: uptime_in_seconds
   - Metric Prefix: mxnet.lstm_ptb_imperative
-    Metric Suffix: nightly.p3_x 
+    Metric Suffix: nightly.p3_x
     Type: Training NLP
     Framework: MXNet Imperative
     Model: LSTM
-    Benchmark: PTB
-    Instance Type: P3.x
+    Benchmark Desc: PTB
+    Instance Type: p3.8xlarge
     CPU Memory: cpu_memory_usage
     GPU Memory Max: gpu_memory_usage_max
     GPU Memory Mean: gpu_memory_usage_mean
@@ -335,8 +337,8 @@ benchmarks:
     Type: Training NLP
     Framework: MXNet Symbolic
     Model: LSTM
-    Benchmark: PTB
-    Instance Type: C4.8x
+    Benchmark Desc: PTB
+    Instance Type: c4.8xlarge
     CPU Memory: cpu_memory_usage
     GPU Memory Max: gpu_memory_usage_max
     GPU Memory Mean: gpu_memory_usage_mean
@@ -355,8 +357,8 @@ benchmarks:
     Type: Training NLP
     Framework: MXNet Symbolic
     Model: LSTM
-    Benchmark: PTB
-    Instance Type: C5.18x
+    Benchmark Desc: PTB
+    Instance Type: c5.18xlarge
     CPU Memory: cpu_memory_usage
     GPU Memory Max: gpu_memory_usage_max
     GPU Memory Mean: gpu_memory_usage_mean
@@ -375,8 +377,8 @@ benchmarks:
     Type: Training NLP
     Framework: MXNet Symbolic
     Model: LSTM
-    Benchmark: PTB
-    Instance Type: P2.16x
+    Benchmark Desc: PTB
+    Instance Type: p2.16xlarge
     CPU Memory: cpu_memory_usage
     GPU Memory Max: gpu_memory_usage_max
     GPU Memory Mean: gpu_memory_usage_mean
@@ -395,8 +397,8 @@ benchmarks:
     Type: Training NLP
     Framework: MXNet Symbolic
     Model: LSTM
-    Benchmark: PTB
-    Instance Type: P3.x
+    Benchmark Desc: PTB
+    Instance Type: p3.8xlarge
     CPU Memory: cpu_memory_usage
     GPU Memory Max: gpu_memory_usage_max
     GPU Memory Mean: gpu_memory_usage_mean
@@ -417,8 +419,8 @@ benchmarks:
     Type: Inference
     Framework: MXNet MMS
     Model: ResNet-18
-    Benchmark: 50 req 25
-    Instance Type: P3.8x
+    Benchmark Desc: 50 req 25
+    Instance Type: p3.8xlarge
     CPU Memory: cpu_memory_usage
     Throughput: Throughput_concurrency_50_req_25
     Error Rate: Error_rate_concurrency_50_req_25
@@ -431,8 +433,8 @@ benchmarks:
     Type: Inference
     Framework: MXNet MMS
     Model: ResNet-18
-    Benchmark: 50 req 50
-    Instance Type: P3.8x
+    Benchmark Desc: 50 req 50
+    Instance Type: p3.8xlarge
     Num Instances:
     CPU Memory: cpu_memory_usage
     Throughput: Throughput_concurrency_50_req_50
@@ -446,8 +448,8 @@ benchmarks:
     Type: Inference
     Framework: MXNet MMS
     Model: ResNet-18
-    Benchmark: 100 req 25
-    Instance Type: P3.8x
+    Benchmark Desc: 100 req 25
+    Instance Type: p3.8xlarge
     Num Instances:
     CPU Memory: cpu_memory_usage
     Precision:
@@ -466,8 +468,8 @@ benchmarks:
     Type: Inference
     Framework: MXNet MMS
     Model: ResNet-18
-    Benchmark: 50 req 100
-    Instance Type: P3.8x
+    Benchmark Desc: 50 req 100
+    Instance Type: p3.8xlarge
     Num Instances:
     CPU Memory: cpu_memory_usage
     Precision:
@@ -486,8 +488,8 @@ benchmarks:
     Type: Inference
     Framework: MXNet MMS
     Model: ResNet-18
-    Benchmark: 100 req 50
-    Instance Type: P3.8x
+    Benchmark Desc: 100 req 50
+    Instance Type: p3.8xlarge
     Num Instances:
     CPU Memory: cpu_memory_usage
     Precision:
@@ -506,8 +508,8 @@ benchmarks:
     Type: Inference
     Framework: MXNet MMS
     Model: ResNet-18
-    Benchmark: 100 req 100
-    Instance Type: P3.8x
+    Benchmark Desc: 100 req 100
+    Instance Type: p3.8xlarge
     Num Instances:
     CPU Memory: cpu_memory_usage
     Precision:
@@ -523,13 +525,13 @@ benchmarks:
     Uptime: uptime_in_seconds
 
 # ------------------ Resnet-50 --------------------------------------------------
-  - Metric Prefix: mxnet.resnet50_imagenet_sagemaker_mx_docker 
+  - Metric Prefix: mxnet.resnet50_imagenet_sagemaker_mx_docker
     Metric Suffix: nightly.p3_16x
     Type: Training CV
     Framework: Sagemaker
     Model: ResNet-50
-    Benchmark: ImageNet
-    Instance Type: P3.16x
+    Benchmark Desc: ImageNet
+    Instance Type: p3.16xlarge
     Num Instances:
     CPU Memory: cpu_memory_usage
     GPU Memory Max: gpu_memory_usage_max
@@ -545,12 +547,12 @@ benchmarks:
     Uptime: uptime_in_seconds
 # ------------------ Resnet-50V1 ------------------------------------------------
   - Metric Prefix: mxnet.mxnet_resnet50v1_imagenet_gluon_fp16
-    Metric Suffix: daily.p3_16x 
+    Metric Suffix: daily.p3_16x
     Type: Training CV
     Framework: MXNet Gluon
     Model: ResNet-50V1
-    Benchmark: ImageNet
-    Instance Type: P3.16x
+    Benchmark Desc: ImageNet
+    Instance Type: p3.16xlarge
     Num Instances:
     CPU Memory: cpu_memory_usage
     GPU Memory Max: gpu_memory_usage_max
@@ -566,12 +568,12 @@ benchmarks:
     Uptime: uptime_in_seconds
 
   - Metric Prefix: mxnet.mxnet_resnet50v1_imagenet_symbolic_fp16
-    Metric Suffix: daily.p3_16x 
+    Metric Suffix: daily.p3_16x
     Type: Training CV
     Framework: MXNet Symbolic
     Model: ResNet-50V1
-    Benchmark: ImageNet
-    Instance Type: P3.16x
+    Benchmark Desc: ImageNet
+    Instance Type: p3.16xlarge
     Num Instances:
     CPU Memory: cpu_memory_usage
     GPU Memory Max: gpu_memory_usage_max
@@ -587,12 +589,12 @@ benchmarks:
     Uptime: uptime_in_seconds
 
   - Metric Prefix: mxnet.mxnet_resnet50v1_imagenet_symbolic_fp32
-    Metric Suffix: daily.p3_16x 
+    Metric Suffix: daily.p3_16x
     Type: Training CV
     Framework: MXNet Symbolic
     Model: ResNet-50V1
-    Benchmark: ImageNet
-    Instance Type: P3.16x
+    Benchmark Desc: ImageNet
+    Instance Type: p3.16xlarge
     Num Instances:
     CPU Memory: cpu_memory_usage
     GPU Memory Max: gpu_memory_usage_max
@@ -608,12 +610,12 @@ benchmarks:
     Uptime: uptime_in_seconds
 
   - Metric Prefix: mxnet.mxnet_resnet50v1_imagenet_symbolic_fp16_p38x
-    Metric Suffix: daily.p3_16x 
+    Metric Suffix: daily.p3_16x
     Type: Training CV
     Framework: MXNet Symbolic
     Model: ResNet-50V1
-    Benchmark: ImageNet
-    Instance Type: P3.8x
+    Benchmark Desc: ImageNet
+    Instance Type: p3.16xlarge
     Num Instances:
     CPU Memory: cpu_memory_usage
     GPU Memory Max: gpu_memory_usage_max
@@ -629,12 +631,12 @@ benchmarks:
     Uptime: uptime_in_seconds
 
   - Metric Prefix: mxnet.mxnet_resnet50v1_imagenet_symbolic_fp16_p38x
-    Metric Suffix: daily.p3_16x 
+    Metric Suffix: daily.p3_16x
     Type: Training CV
     Framework: MXNet Symbolic
     Model: ResNet-50V1
-    Benchmark: ImageNet
-    Instance Type: P3.8x
+    Benchmark Desc: ImageNet
+    Instance Type: p3.16xlarge
     Num Instances:
     CPU Memory: cpu_memory_usage
     GPU Memory Max: gpu_memory_usage_max
@@ -654,8 +656,8 @@ benchmarks:
     Type: Training CV
     Framework: MXNet
     Model: ResNet-50
-    Benchmark: ImageNet 480x256-q95
-    Instance Type: P3.16x
+    Benchmark Desc: ImageNet 480x256-q95
+    Instance Type: p3.16xlarge
     Num Instances:
     CPU Memory: cpu_memory_usage
     GPU Memory Max: gpu_memory_usage_max
@@ -675,8 +677,8 @@ benchmarks:
     Type: Training CV
     Framework: PyTorch
     Model: ResNet-50
-    Benchmark: ImageNet 480x256-q95
-    Instance Type: P3.16x
+    Benchmark Desc: ImageNet 480x256-q95
+    Instance Type: p3.16xlarge
     Num Instances:
     CPU Memory: cpu_memory_usage
     GPU Memory Max: gpu_memory_usage_max
@@ -695,8 +697,8 @@ benchmarks:
     Type: Training CV
     Framework: Tensorflow
     Model: ResNet-50
-    Benchmark: ImageNet
-    Instance Type: P3.16x
+    Benchmark Desc: ImageNet
+    Instance Type: p3.16xlarge
     Num Instances:
     CPU Memory: cpu_memory_usage
     GPU Memory Max: gpu_memory_usage_max
@@ -714,12 +716,12 @@ benchmarks:
 
 # ------------------ Resnet-50V2 ------------------------------------------------
   - Metric Prefix: mxnet.mxnet_resnet50v2_imagenet_symbolic_fp16
-    Metric Suffix: daily.p3_16x 
+    Metric Suffix: daily.p3_16x
     Type: Training CV
     Framework: MXNet Symbolic
     Model: ResNet-50V2
-    Benchmark: ImageNet
-    Instance Type: P3.16x
+    Benchmark Desc: ImageNet
+    Instance Type: p3.16xlarge
     Num Instances:
     CPU Memory: cpu_memory_usage
     GPU Memory Max: gpu_memory_usage_max
@@ -735,12 +737,12 @@ benchmarks:
     Uptime: uptime_in_seconds
 
   - Metric Prefix: mxnet.mxnet_resnet50v2_imagenet_symbolic_fp16
-    Metric Suffix: daily.p3_16x 
+    Metric Suffix: daily.p3_16x
     Type: Training CV
     Framework: MXNet Symbolic
     Model: ResNet-50V2
-    Benchmark: ImageNet
-    Instance Type: P3.16x
+    Benchmark Desc: ImageNet
+    Instance Type: p3.16xlarge
     Num Instances:
     CPU Memory: cpu_memory_usage
     GPU Memory Max: gpu_memory_usage_max
@@ -761,29 +763,29 @@ benchmarks:
     Type: Inference
     Framework: MXNet
     Model: BVLC Alexnet
-    Benchmark: Import ONNX Model
-    Instance Type: C5.18x
+    Benchmark Desc: Import ONNX Model
+    Instance Type: c5.18xlarge
     CPU Memory: cpu_memory_usage
     Latency: Average_inference_time_bvlc_alexnet_cpu
     Uptime: uptime_in_seconds
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
     Metric Suffix: nightly.c5_18x
     Type: Inference
-    Framework: MXNet 
+    Framework: MXNet
     Model: BVLC GoogleNet
-    Benchmark: Import ONNX Model
-    Instance Type: C5.18x
+    Benchmark Desc: Import ONNX Model
+    Instance Type: c5.18xlarge
     CPU Memory: cpu_memory_usage
     Latency: Average_inference_time_bvlc_googlenet_cpu
     Uptime: uptime_in_seconds
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
     Metric Suffix: nightly.c5_18x
     Type: Inference
-    Framework: MXNet 
+    Framework: MXNet
     Framework: ONNX CPU
     Model: DenseNet-121
-    Benchmark: Import ONNX Model
-    Instance Type: C5.18x
+    Benchmark Desc: Import ONNX Model
+    Instance Type: c5.18xlarge
     CPU Memory: cpu_memory_usage
     Latency: Average_inference_time_densenet121_cpu
     Uptime: uptime_in_seconds
@@ -791,10 +793,10 @@ benchmarks:
     Metric Suffix: nightly.c5_18x
     Type: Inference
     Framework: ONNX CPU
-    Framework: MXNet 
+    Framework: MXNet
     Model: SqueezeNet
-    Benchmark: Import ONNX Model
-    Instance Type: C5.18x
+    Benchmark Desc: Import ONNX Model
+    Instance Type: c5.18xlarge
     CPU Memory: cpu_memory_usage
     Latency: Average_inference_time_squeezenet_cpu
     Uptime: uptime_in_seconds
@@ -803,60 +805,60 @@ benchmarks:
 #    Metric Suffix: nightly.c5_18x
 #    Type: Inference
 #    Framework: ONNX CPU
-#    Framework: MXNet 
+#    Framework: MXNet
 #    Model: Ref CaffeNet
-#    Benchmark: Import ONNX Model
-#    Instance Type: C5.18x
+#    Benchmark Desc: Import ONNX Model
+#    Instance Type: c5.18xlarge
 #    CPU Memory: cpu_memory_usage
 #    Latency: Average_inference_time_reference_caffenet_cpu
 #    Uptime: uptime_in_seconds
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
     Metric Suffix: nightly.c5_18x
     Type: Inference
-    Framework: MXNet 
+    Framework: MXNet
     Model: BVLC Ref CaffeNet
-    Benchmark: Import ONNX Model
-    Instance Type: C5.18x
+    Benchmark Desc: Import ONNX Model
+    Instance Type: c5.18xlarge
     CPU Memory: cpu_memory_usage
     Latency: Average_inference_time_bvlc_reference_caffenet_cpu
     Uptime: uptime_in_seconds
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
     Metric Suffix: nightly.c5_18x
     Type: Inference
-    Framework: MXNet 
+    Framework: MXNet
     Model: ShuffleNet
-    Benchmark: Import ONNX Model
-    Instance Type: C5.18x
+    Benchmark Desc: Import ONNX Model
+    Instance Type: c5.18xlarge
     CPU Memory: cpu_memory_usage
     Latency: Average_inference_time_shufflenet_cpu
     Uptime: uptime_in_seconds
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
     Metric Suffix: nightly.c5_18x
     Type: Inference
-    Framework: MXNet 
+    Framework: MXNet
     Model: BVLC Ref RCNN Ilsvrc13
-    Benchmark: Import ONNX Model
-    Instance Type: C5.18x
+    Benchmark Desc: Import ONNX Model
+    Instance Type: c5.18xlarge
     CPU Memory: cpu_memory_usage
     Latency: Average_inference_time_bvlc_reference_rcnn_ilsvrc13_cpu
     Uptime: uptime_in_seconds
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
     Metric Suffix: nightly.c5_18x
     Type: Inference
-    Framework: MXNet 
+    Framework: MXNet
     Model: VGG19
-    Benchmark: Import ONNX Model
-    Instance Type: C5.18x
+    Benchmark Desc: Import ONNX Model
+    Instance Type: c5.18xlarge
     CPU Memory: cpu_memory_usage
     Latency: Average_inference_time_vgg19_cpu
     Uptime: uptime_in_seconds
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
     Metric Suffix: nightly.c5_18x
     Type: Inference
-    Framework: MXNet 
+    Framework: MXNet
     Model: ResNet-50
-    Benchmark: Import ONNX Model
-    Instance Type: C5.18x
+    Benchmark Desc: Import ONNX Model
+    Instance Type: c5.18xlarge
     CPU Memory: cpu_memory_usage
     Latency: Average_inference_time_resnet50_cpu
     Uptime: uptime_in_seconds

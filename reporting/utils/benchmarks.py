@@ -34,14 +34,14 @@ class Benchmarks(object):
     * AWS_DEFAULT_REGION
     """
     HEADERS = {
-        'Inference' : ['Framework', 'Model', 'Benchmark', 'Instance Type', 'Latency',
+        'Inference' : ['Framework', 'Model', 'Benchmark Desc', 'Instance Type', 'Latency',
                        'P50 Latency', 'P90 Latency', 'Throughput', 'CPU Memory',
                        'GPU Memory Mean', 'GPU Memory Max', 'Uptime'],
-        'Training CV' : ['Framework', 'Model', 'Benchmark', 'Instance Type', 'Precision',
+        'Training CV' : ['Framework', 'Model', 'Benchmark Desc', 'Instance Type', 'Precision',
                          'Top1 val acc', 'Top1 train acc', 'Throughput', 'Time to Train',
                          'CPU Memory', 'GPU Memory Mean', 'GPU Memory Max',
                          'Uptime'],
-        'Training NLP' : ['Framework', 'Model', 'Benchmark', 'Instance Type', 'Precision',
+        'Training NLP' : ['Framework', 'Model', 'Benchmark Desc', 'Instance Type', 'Precision',
                           'Perplexity', 'Throughput', 'Time to Train', 'CPU Memory',
                           'GPU Memory Mean', 'GPU Memory Max', 'Uptime']
     }
