@@ -97,7 +97,7 @@ benchmarks:
     CPU Memory: cpu_memory_usage
     Throughput: images/sec(Inference with batch size 32)
 # ------------------ Tensorflow Horovod ----------------------------------------
-  - Metric Prefix: mxnet.tensorflow_horovod_resnet50_p3_16xlg_batch_2048 
+  - Metric Prefix: mxnet.tensorflow_horovod_resnet50_p3_16xlg_batch_2048
     Metric Suffix: nightly.p3_16x
     Type: Training CV
     Framework: Tensorflow Horovod
@@ -127,7 +127,7 @@ benchmarks:
 
 # ------------------ DAWNBench CIFAR-10 ----------------------------------------
   - Metric Prefix: mxnet.dawnbench_cifar10_resnet164_basic_gluon
-    Metric Suffix: _p3_2x_nightly 
+    Metric Suffix: _p3_2x_nightly
     Type: Training CV
     Framework: MXNet Gluon
     Model: ResNet-164
@@ -142,7 +142,7 @@ benchmarks:
     Uptime: uptime_in_seconds
 
   - Metric Prefix: mxnet.dawnbench_cifar10_resnet164_basic_gluon
-    Metric Suffix: _p3_2x_nightly 
+    Metric Suffix: _p3_2x_nightly
     Type: Inference
     Framework: MXNet
     Model: ResNet-164
@@ -150,7 +150,7 @@ benchmarks:
     Instance Type: p3.2xlarge
     Latency: inference_latency
     Throughput: inference_throughput
-    CPU Memory: cpu_memory_usage 
+    CPU Memory: cpu_memory_usage
     GPU Memory Max: gpu_memory_usage_max
     GPU Memory Mean: gpu_memory_usage_mean
     GPU Memory Std: gpu_memory_usage_std
@@ -165,12 +165,12 @@ benchmarks:
     Instance Type: c5.18xlarge
     Latency: inference_latency
     Throughput: inference_throughput
-    CPU Memory: cpu_memory_usage 
+    CPU Memory: cpu_memory_usage
     Uptime: uptime_in_seconds
 
 # ------------------ DAWNBench CIFAR-10 Gluon Hybrid ---------------------------
   - Metric Prefix: mxnet.dawnbench_cifar10_resnet164_basic_gluon_hybrid
-    Metric Suffix: _p3_2x_nightly 
+    Metric Suffix: _p3_2x_nightly
     Type: Training CV
     Framework: MXNet Gluon Hybrid
     Model: ResNet-164
@@ -185,7 +185,7 @@ benchmarks:
     Uptime: uptime_in_seconds
 
   - Metric Prefix: mxnet.dawnbench_cifar10_resnet164_basic_gluon_hybrid
-    Metric Suffix: _p3_2x_nightly 
+    Metric Suffix: _p3_2x_nightly
     Type: Inference
     Framework: MXNet
     Model: ResNet-164
@@ -194,7 +194,7 @@ benchmarks:
     Latency: inference_latency
     Throughput: inference_throughput
     Throughput: inference_throughput
-    CPU Memory: cpu_memory_usage 
+    CPU Memory: cpu_memory_usage
     GPU Memory Max: gpu_memory_usage_max
     GPU Memory Mean: gpu_memory_usage_mean
     GPU Memory Std: gpu_memory_usage_std
@@ -209,12 +209,12 @@ benchmarks:
     Instance Type: c5.18xlarge
     Latency: inference_latency
     Throughput: inference_throughput
-    CPU Memory: cpu_memory_usage 
+    CPU Memory: cpu_memory_usage
     Uptime: uptime_in_seconds
 
 # ------------------ DAWNBench CIFAR-10 Module ----------------------------
   - Metric Prefix: mxnet.dawnbench_cifar10_resnet164_basic_module
-    Metric Suffix: _p3_2x_nightly 
+    Metric Suffix: _p3_2x_nightly
     Type: Training CV
     Framework: MXNet Module
     Model: ResNet-164
@@ -229,7 +229,7 @@ benchmarks:
     Uptime: uptime_in_seconds
 
   - Metric Prefix: mxnet.dawnbench_cifar10_resnet164_basic_module
-    Metric Suffix: _p3_2x_nightly 
+    Metric Suffix: _p3_2x_nightly
     Type: Inference
     Framework: MXNet
     Model: ResNet-164
@@ -237,7 +237,7 @@ benchmarks:
     Instance Type: p3.2xlarge
     Latency: inference_latency
     Throughput: inference_throughput
-    CPU Memory: cpu_memory_usage 
+    CPU Memory: cpu_memory_usage
     GPU Memory Max: gpu_memory_usage_max
     GPU Memory Mean: gpu_memory_usage_mean
     GPU Memory Std: gpu_memory_usage_std
@@ -252,7 +252,7 @@ benchmarks:
     Instance Type: c5.18xlarge
     Latency: inference_latency
     Throughput: inference_throughput
-    CPU Memory: cpu_memory_usage 
+    CPU Memory: cpu_memory_usage
     Uptime: uptime_in_seconds
 
 # ------------------ LSTM PTB --------------------------------------------------
@@ -313,7 +313,7 @@ benchmarks:
     Validation Perplexity: validation_perplexity
     Uptime: uptime_in_seconds
   - Metric Prefix: mxnet.lstm_ptb_imperative
-    Metric Suffix: nightly.p3_x 
+    Metric Suffix: nightly.p3_x
     Type: Training NLP
     Framework: MXNet Imperative
     Model: LSTM
@@ -525,7 +525,7 @@ benchmarks:
     Uptime: uptime_in_seconds
 
 # ------------------ Resnet-50 --------------------------------------------------
-  - Metric Prefix: mxnet.resnet50_imagenet_sagemaker_mx_docker 
+  - Metric Prefix: mxnet.resnet50_imagenet_sagemaker_mx_docker
     Metric Suffix: nightly.p3_16x
     Type: Training CV
     Framework: Sagemaker
@@ -547,7 +547,7 @@ benchmarks:
     Uptime: uptime_in_seconds
 # ------------------ Resnet-50V1 ------------------------------------------------
   - Metric Prefix: mxnet.mxnet_resnet50v1_imagenet_gluon_fp16
-    Metric Suffix: daily.p3_16x 
+    Metric Suffix: daily.p3_16x
     Type: Training CV
     Framework: MXNet Gluon
     Model: ResNet-50V1
@@ -568,7 +568,7 @@ benchmarks:
     Uptime: uptime_in_seconds
 
   - Metric Prefix: mxnet.mxnet_resnet50v1_imagenet_symbolic_fp16
-    Metric Suffix: daily.p3_16x 
+    Metric Suffix: daily.p3_16x
     Type: Training CV
     Framework: MXNet Symbolic
     Model: ResNet-50V1
@@ -589,7 +589,7 @@ benchmarks:
     Uptime: uptime_in_seconds
 
   - Metric Prefix: mxnet.mxnet_resnet50v1_imagenet_symbolic_fp32
-    Metric Suffix: daily.p3_16x 
+    Metric Suffix: daily.p3_16x
     Type: Training CV
     Framework: MXNet Symbolic
     Model: ResNet-50V1
@@ -610,7 +610,7 @@ benchmarks:
     Uptime: uptime_in_seconds
 
   - Metric Prefix: mxnet.mxnet_resnet50v1_imagenet_symbolic_fp16_p38x
-    Metric Suffix: daily.p3_16x 
+    Metric Suffix: daily.p3_16x
     Type: Training CV
     Framework: MXNet Symbolic
     Model: ResNet-50V1
@@ -631,7 +631,7 @@ benchmarks:
     Uptime: uptime_in_seconds
 
   - Metric Prefix: mxnet.mxnet_resnet50v1_imagenet_symbolic_fp16_p38x
-    Metric Suffix: daily.p3_16x 
+    Metric Suffix: daily.p3_16x
     Type: Training CV
     Framework: MXNet Symbolic
     Model: ResNet-50V1
@@ -716,7 +716,7 @@ benchmarks:
 
 # ------------------ Resnet-50V2 ------------------------------------------------
   - Metric Prefix: mxnet.mxnet_resnet50v2_imagenet_symbolic_fp16
-    Metric Suffix: daily.p3_16x 
+    Metric Suffix: daily.p3_16x
     Type: Training CV
     Framework: MXNet Symbolic
     Model: ResNet-50V2
@@ -737,7 +737,7 @@ benchmarks:
     Uptime: uptime_in_seconds
 
   - Metric Prefix: mxnet.mxnet_resnet50v2_imagenet_symbolic_fp16
-    Metric Suffix: daily.p3_16x 
+    Metric Suffix: daily.p3_16x
     Type: Training CV
     Framework: MXNet Symbolic
     Model: ResNet-50V2
@@ -771,7 +771,7 @@ benchmarks:
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
     Metric Suffix: nightly.c5_18x
     Type: Inference
-    Framework: MXNet 
+    Framework: MXNet
     Model: BVLC GoogleNet
     Benchmark Desc: Import ONNX Model
     Instance Type: c5.18xlarge
@@ -781,7 +781,7 @@ benchmarks:
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
     Metric Suffix: nightly.c5_18x
     Type: Inference
-    Framework: MXNet 
+    Framework: MXNet
     Framework: ONNX CPU
     Model: DenseNet-121
     Benchmark Desc: Import ONNX Model
@@ -793,7 +793,7 @@ benchmarks:
     Metric Suffix: nightly.c5_18x
     Type: Inference
     Framework: ONNX CPU
-    Framework: MXNet 
+    Framework: MXNet
     Model: SqueezeNet
     Benchmark Desc: Import ONNX Model
     Instance Type: c5.18xlarge
@@ -805,7 +805,7 @@ benchmarks:
 #    Metric Suffix: nightly.c5_18x
 #    Type: Inference
 #    Framework: ONNX CPU
-#    Framework: MXNet 
+#    Framework: MXNet
 #    Model: Ref CaffeNet
 #    Benchmark Desc: Import ONNX Model
 #    Instance Type: c5.18xlarge
@@ -815,7 +815,7 @@ benchmarks:
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
     Metric Suffix: nightly.c5_18x
     Type: Inference
-    Framework: MXNet 
+    Framework: MXNet
     Model: BVLC Ref CaffeNet
     Benchmark Desc: Import ONNX Model
     Instance Type: c5.18xlarge
@@ -825,7 +825,7 @@ benchmarks:
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
     Metric Suffix: nightly.c5_18x
     Type: Inference
-    Framework: MXNet 
+    Framework: MXNet
     Model: ShuffleNet
     Benchmark Desc: Import ONNX Model
     Instance Type: c5.18xlarge
@@ -835,7 +835,7 @@ benchmarks:
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
     Metric Suffix: nightly.c5_18x
     Type: Inference
-    Framework: MXNet 
+    Framework: MXNet
     Model: BVLC Ref RCNN Ilsvrc13
     Benchmark Desc: Import ONNX Model
     Instance Type: c5.18xlarge
@@ -845,7 +845,7 @@ benchmarks:
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
     Metric Suffix: nightly.c5_18x
     Type: Inference
-    Framework: MXNet 
+    Framework: MXNet
     Model: VGG19
     Benchmark Desc: Import ONNX Model
     Instance Type: c5.18xlarge
@@ -855,7 +855,7 @@ benchmarks:
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
     Metric Suffix: nightly.c5_18x
     Type: Inference
-    Framework: MXNet 
+    Framework: MXNet
     Model: ResNet-50
     Benchmark Desc: Import ONNX Model
     Instance Type: c5.18xlarge
