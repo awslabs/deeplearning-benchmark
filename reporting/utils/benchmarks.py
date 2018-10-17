@@ -160,8 +160,8 @@ class Benchmarks(object):
         # TODO(vishaalk): Add functionality to fetch other time periods (e.g. last quarter).
         res = self.cw_.get_metric_statistics(Namespace='benchmarkai-metrics-prod',
                                        MetricName=metric,
-                                       StartTime=datetime.now() - timedelta(days=7), EndTime=datetime.now(),
-                                       Period=86400*7, Statistics=['Average'])
+                                       StartTime=datetime.now() - timedelta(days=1), EndTime=datetime.now(),
+                                       Period=86400, Statistics=['Average'])
         points = res['Datapoints']
         if points:
             if len(points) > 1:
