@@ -61,7 +61,7 @@ class Benchmarks(object):
     # use the following.
     DEFAULT_METRIC_KEYS = {
         'Throughput' : 'throughput',
-        'CPU Memory' : 'cpu_memory',
+        'CPU Memory' : 'cpu_memory_usage',
         'GPU Memory Max' : 'gpu_memory_usage_max',
         'GPU Memory Mean' : 'gpu_memory_usage_mean',
         'Time to Train' : 'time_to_train',

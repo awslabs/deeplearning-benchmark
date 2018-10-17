@@ -54,7 +54,7 @@
 #
 #      ### Default values will be used for the keys. They do not need to be specified, but can be overridden if
 #      ### necessary:
-#      CPU Memory: cpu_memory
+#      CPU Memory: cpu_memory_usage
 #      GPU Memory Max: gpu_memory_usage_max
 #      GPU Memory Mean: gpu_memory_usage_mean
 #      Throughput: throughput
@@ -62,65 +62,6 @@
 #      Uptime: uptime_in_seconds
 #
 benchmarks:
-# ------------------ Tensorflow MKL --------------------------------------------
-  - Metric Prefix: mxnet.tensorflow_mkl_c5_resnet50_18xlg
-    Metric Suffix: nightly.c5_18x
-    Type: Training CV
-    Framework: Tensorflow
-    Model: ResNet-50
-    Benchmark Desc: Batch size 1
-    Instance Type: c5.18xlarge
-    Throughput: images/sec(training with batch size 1)
-
-  - Metric Prefix: mxnet.tensorflow_mkl_c5_resnet50_18xlg
-    Metric Suffix: nightly.c5_18x
-    Type: Training CV
-    Framework: Tensorflow
-    Model: ResNet-50
-    Benchmark Desc: Batch size 32
-    Instance Type: c5.18xlarge
-    Throughput: images/sec(training with batch size 32)
-
-  - Metric Prefix: mxnet.tensorflow_mkl_c5_resnet50_18xlg
-    Metric Suffix: nightly.c5_18x
-    Type: Inference
-    Framework: Tensorflow
-    Model: ResNet-50
-    Benchmark Desc: Batch size 1
-    Instance Type: c5.18xlarge
-    Throughput: images/sec(Inference with batch size 1)
-
-  - Metric Prefix: mxnet.tensorflow_mkl_c5_resnet50_18xlg
-    Metric Suffix: nightly.c5_18x
-    Type: Inference
-    Framework: Tensorflow
-    Model: ResNet-50
-    Benchmark Desc: Batch size 32
-    Instance Type: c5.18xlarge
-    Throughput: images/sec(Inference with batch size 32)
-# ------------------ Tensorflow Horovod ----------------------------------------
-  - Metric Prefix: mxnet.tensorflow_horovod_resnet50_p3_16xlg_batch_2048
-    Metric Suffix: nightly.p3_16x
-    Type: Training CV
-    Framework: Tensorflow
-    Framework Desc: Horovod
-    Model: ResNet-50
-    Instance Type: p3.16xlarge
-    Top 1 Val Acc: Top 1 accuracy
-    Throughput: Images per sec
-    Time to Train: Time-to-train (seconds)
-# ------------------ Resnet-50 -------------------------------------------------
-# TODO(vishaalk): This test doesn't appear in the dashboards, should it be removed?
-  - Metric Prefix: chainer.resnet50_imagenet_sagemaker_ch_docker
-    Metric Suffix: nightly.p3_16x
-    Type: Training CV
-    Framework: Chainer
-    Framework Desc: SageMaker
-    Model: ResNet-50
-    Benchmark Desc: ImageNet
-    Instance Type: p3.16xlarge
-    Uptime: uptime_in_seconds
-
 # ------------------ DAWNBench CIFAR-10 ----------------------------------------
   - Metric Prefix: mxnet.dawnbench_cifar10_resnet164_basic_gluon
     Metric Suffix: _p3_2x_nightly
@@ -594,38 +535,6 @@ benchmarks:
     Throughput: speed
     Time to Train: total_training_time
 
-  - Metric Prefix: pytorch.resnet50_imagenet_sagemaker_pt_docker
-    Metric Suffix: nightly.p3_16x
-    Type: Training CV
-    Framework: PyTorch
-    Model: ResNet-50
-    Benchmark Desc: SageMaker/ImageNet 480x256-q95
-    Instance Type: p3.16xlarge
-    Num Instances:
-    Perplexity:
-# Unused:
-# top 1 precision
-# loss
-# top 5 precision
-# seconds
-
-  - Metric Prefix: tensorflow.resnet50_imagenet_sagemaker_tf_docker
-    Metric Suffix: nightly.p3_16x
-    Type: Training CV
-    Framework: Tensorflow
-    Model: ResNet-50
-    Benchmark Desc: SageMaker/ImageNet
-    Instance Type: p3.16xlarge
-    Num Instances:
-    Perplexity:
-# Unused:
-# train-error-top5
-# train-error-top1
-# queue_size
-# xentropy-loss
-# l2_regularize_loss
-# learning_rate
-
 # ------------------ Resnet-50V2 ------------------------------------------------
   - Metric Prefix: mxnet.mxnet_resnet50v2_imagenet_symbolic_fp16
     Metric Suffix: daily.p3_16x
@@ -743,4 +652,94 @@ benchmarks:
     Benchmark Desc: Import ONNX Model
     Instance Type: c5.18xlarge
     Latency: Average_inference_time_resnet50_cpu
+# ------------------ Tensorflow MKL --------------------------------------------
+  - Metric Prefix: mxnet.tensorflow_mkl_c5_resnet50_18xlg
+    Metric Suffix: nightly.c5_18x
+    Type: Training CV
+    Framework: Tensorflow
+    Model: ResNet-50
+    Benchmark Desc: Batch size 1
+    Instance Type: c5.18xlarge
+    Throughput: images/sec(training with batch size 1)
+
+  - Metric Prefix: mxnet.tensorflow_mkl_c5_resnet50_18xlg
+    Metric Suffix: nightly.c5_18x
+    Type: Training CV
+    Framework: Tensorflow
+    Model: ResNet-50
+    Benchmark Desc: Batch size 32
+    Instance Type: c5.18xlarge
+    Throughput: images/sec(training with batch size 32)
+
+  - Metric Prefix: mxnet.tensorflow_mkl_c5_resnet50_18xlg
+    Metric Suffix: nightly.c5_18x
+    Type: Inference
+    Framework: Tensorflow
+    Model: ResNet-50
+    Benchmark Desc: Batch size 1
+    Instance Type: c5.18xlarge
+    Throughput: images/sec(Inference with batch size 1)
+
+  - Metric Prefix: mxnet.tensorflow_mkl_c5_resnet50_18xlg
+    Metric Suffix: nightly.c5_18x
+    Type: Inference
+    Framework: Tensorflow
+    Model: ResNet-50
+    Benchmark Desc: Batch size 32
+    Instance Type: c5.18xlarge
+    Throughput: images/sec(Inference with batch size 32)
+# ------------------ Tensorflow Horovod ----------------------------------------
+  - Metric Prefix: mxnet.tensorflow_horovod_resnet50_p3_16xlg_batch_2048
+    Metric Suffix: nightly.p3_16x
+    Type: Training CV
+    Framework: Tensorflow
+    Framework Desc: Horovod
+    Model: ResNet-50
+    Instance Type: p3.16xlarge
+    Top 1 Val Acc: Top 1 accuracy
+    Throughput: Images per sec
+    Time to Train: Time-to-train (seconds)
+# -----------------------------------------------------------------------------
+  - Metric Prefix: tensorflow.resnet50_imagenet_sagemaker_tf_docker
+    Metric Suffix: nightly.p3_16x
+    Type: Training CV
+    Framework: Tensorflow
+    Model: ResNet-50
+    Benchmark Desc: SageMaker/ImageNet
+    Instance Type: p3.16xlarge
+    Num Instances:
+    Perplexity:
+# Unused:
+# train-error-top5
+# train-error-top1
+# queue_size
+# xentropy-loss
+# l2_regularize_loss
+# learning_rate
+# ------------------ Resnet-50 -------------------------------------------------
+# TODO(vishaalk): This test doesn't appear in the dashboards, should it be removed?
+  - Metric Prefix: chainer.resnet50_imagenet_sagemaker_ch_docker
+    Metric Suffix: nightly.p3_16x
+    Type: Training CV
+    Framework: Chainer
+    Framework Desc: SageMaker
+    Model: ResNet-50
+    Benchmark Desc: ImageNet
+    Instance Type: p3.16xlarge
+    Uptime: uptime_in_seconds
+# -----------------------------------------------------------------------------
+  - Metric Prefix: pytorch.resnet50_imagenet_sagemaker_pt_docker
+    Metric Suffix: nightly.p3_16x
+    Type: Training CV
+    Framework: PyTorch
+    Model: ResNet-50
+    Benchmark Desc: SageMaker/ImageNet 480x256-q95
+    Instance Type: p3.16xlarge
+    Num Instances:
+    Perplexity:
+# Unused:
+# top 1 precision
+# loss
+# top 5 precision
+# seconds
 # -----------------------------------------------------------------------------
