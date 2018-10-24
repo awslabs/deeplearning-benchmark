@@ -307,109 +307,138 @@ benchmarks:
     Validation Perplexity: validation_perplexity
     Uptime: uptime_in_seconds
 
-# ------------------ Resnet-18 --------------------------------------------------
-  - Metric Prefix: mxnet.mms_resnet18_gpu
-    Metric Suffix: nightly.p3_8x
+# ------------------ MXNet Model Server - GPU ----------------------------------
+  - Metric Prefix: mxnet.mms_lstm_ptb_gpu
+    Metric Suffix: nightly.p3_16x
     Type: Inference
     Framework: MXNet
-    Framework Desc: MMS
-    Model: ResNet-18
-    Benchmark Desc: 50 req 25
-    Instance Type: p3.8xlarge
-    Throughput: Throughput_concurrency_50_req_25
-    Error Rate: Error_rate_concurrency_50_req_25
-    Latency: Average_latency_concurrency_50_req_25
-    P50 Latency: Median_latency_concurrency_50_req_25
-    P90 Latency: P90_latency_concurrency_50_req_25
-  - Metric Prefix: mxnet.mms_resnet18_gpu
-    Metric Suffix: nightly.p3_8x
+    Framework Desc: MMS-GPU
+    Model: LSTM
+    Benchmark Desc: PTB
+    Instance Type: p3.16xlarge
+    Throughput: throughput_lstm_ptb_Inference_Request_Throughput
+    Error Rate: throughput_lstm_ptb_Inference_Request_aggregate_report_error
+    Latency: latency_lstm_ptb_Inference_Request_Average
+    P50 Latency: latency_lstm_ptb_Inference_Request_Median
+    P90 Latency: latency_lstm_ptb_Inference_Request_aggregate_report_90_line
+    P99 Latency: latency_lstm_ptb_Inference_Request_aggregate_report_99_line
+    # Unsupported in report.
+    # latency_lstm_ptb_Inference_Request_aggregate_report_error
+    # throughput_lstm_ptb_Inference_Request_Median
+    # throughput_lstm_ptb_Inference_Request_Average
+    # throughput_lstm_ptb_Inference_Request_aggregate_report_90_line
+    # throughput_lstm_ptb_Inference_Request_aggregate_report_99_line
+
+  - Metric Prefix: mxnet.mms_noop_gpu
+    Metric Suffix: nightly.p3_16x
     Type: Inference
     Framework: MXNet
-    Framework Desc: MMS
-    Model: ResNet-18
-    Benchmark Desc: 50 req 50
-    Instance Type: p3.8xlarge
-    Num Instances:
-    Throughput: Throughput_concurrency_50_req_50
-    Error Rate: Error_rate_concurrency_50_req_50
-    Latency: Average_latency_concurrency_50_req_50
-    P50 Latency: Median_latency_concurrency_50_req_50
-    P90 Latency: P90_latency_concurrency_50_req_50
-  - Metric Prefix: mxnet.mms_resnet18_gpu
-    Metric Suffix: nightly.p3_8x
+    Framework Desc: MMS-GPU
+    Model:
+    Benchmark Desc: NOOP
+    Instance Type: p3.16xlarge
+    Error Rate: throughput_noop_Inference_Request_aggregate_report_error
+    Throughput: throughput_noop_Inference_Request_Throughput
+    Latency: latency_noop_Inference_Request_Average
+    P50 Latency: latency_noop_Inference_Request_Median
+    P90 Latency: latency_noop-v1.0_Inference_Request_aggregate_report_90_line
+    P99 Latency: latency_noop_Inference_Request_aggregate_report_99_line
+    # Unsupported in report.
+    # latency_latency_noop_Inference_Request_aggregate_report_error
+    # throughput_noop_Inference_Request_Average
+    # throughput_noop_Inference_Request_Median
+    # throughput_noop_Inference_Request_aggregate_report_90_line
+    # throughput_noop_Inference_Request_aggregate_report_99_line
+
+  - Metric Prefix: mxnet.mms_resnet_18_gpu
+    Metric Suffix: nightly.p3_16x
     Type: Inference
     Framework: MXNet
-    Framework Desc: MMS
-    Model: ResNet-18
-    Benchmark Desc: 100 req 25
-    Instance Type: p3.8xlarge
-    Num Instances:
-    Precision:
-    Perplexity:
-    Top 1 Val Acc:
-    Top 1 Train Acc:
-    Throughput: Throughput_concurrency_100_req_25
-    Error Rate: Error_rate_concurrency_100_req_25
-    Latency: Average_latency_concurrency_100_req_25
-    P50 Latency: Median_latency_concurrency_100_req_25
-    P90 Latency: P90_latency_concurrency_100_req_25
-  - Metric Prefix: mxnet.mms_resnet18_gpu
-    Metric Suffix: nightly.p3_8x
+    Framework Desc: MMS-GPU
+    Model: Resnet-18
+    Benchmark Desc:
+    Instance Type: p3.16xlarge
+    Error Rate: throughput_resnet-18_Inference_Request_aggregate_report_error
+    Throughput: throughput_resnet-18_Inference_Request_Throughput
+    Latency: latency_resnet-18_Inference_Request_Average
+    P50 Latency: latency_resnet-18_Inference_Request_Median
+    # TODO: A corresponding metric should be added for the P90.
+    P90 Latency: latency_resnet-18_Inference_Request_aggregate_report_90_line
+    P99 Latency: latency_resnet-18_Inference_Request_aggregate_report_99_line
+    # Unsupported in report.
+    # latency_resnet-18_Inference_Request_aggregate_report_error
+    # throughput_resnet-18_Inference_Request_Average
+    # throughput_resnet-18_Inference_Request_Median
+    # throughput_resnet-18_Inference_Request_aggregate_report_90_line
+    # throughput_resnet-18_Inference_Request_aggregate_report_99_line
+
+# ------------------ MXNet Model Server - CPU ----------------------------------
+  - Metric Prefix: mxnet.mms_lstm_ptb_cpu
+    Metric Suffix: nightly.c5_2x
     Type: Inference
     Framework: MXNet
-    Framework Desc: MMS
-    Model: ResNet-18
-    Benchmark Desc: 50 req 100
-    Instance Type: p3.8xlarge
-    Num Instances:
-    Precision:
-    Perplexity:
-    Top 1 Val Acc:
-    Top 1 Train Acc:
-    Throughput: Throughput_concurrency_50_req_100
-    Error Rate: Error_rate_concurrency_50_req_100
-    Latency: Average_latency_concurrency_50_req_100
-    P50 Latency: Median_latency_concurrency_50_req_100
-    P90 Latency: P90_latency_concurrency_50_req_100
-    Uptime: uptime_in_seconds
-  - Metric Prefix: mxnet.mms_resnet18_gpu
-    Metric Suffix: nightly.p3_8x
+    Framework Desc: MMS-CPU
+    Model: LSTM
+    Benchmark Desc: PTB
+    Instance Type: c5.2xlarge
+    Error Rate: throughput_lstm_ptb_Inference_Request_aggregate_report_error
+    Throughput: throughput_lstm_ptb_Inference_Request_Throughput
+    Latency: latency_lstm_ptb_Inference_Request_Average
+    P50 Latency: latency_lstm_ptb_Inference_Request_Median
+    P90 Latency: latency_lstm_ptb_Inference_Request_aggregate_report_90_line
+    P99 Latency: latency_lstm_ptb_Inference_Request_aggregate_report_99_line
+    # Unsupported in report.
+    # latency_lstm_ptb_Inference_Request_aggregate_report_error
+    # throughput_lstm_ptb_Inference_Request_Average
+    # throughput_lstm_ptb_Inference_Request_Median
+    # throughput_lstm_ptb_Inference_Request_aggregate_report_90_line
+    # throughput_lstm_ptb_Inference_Request_aggregate_report_99_line
+
+  - Metric Prefix: mxnet.mms_noop_cpu
+    Metric Suffix: nightly.c5_2x
     Type: Inference
     Framework: MXNet
-    Framework Desc: MMS
-    Model: ResNet-18
-    Benchmark Desc: 100 req 50
-    Instance Type: p3.8xlarge
-    Num Instances:
-    Precision:
-    Perplexity:
-    Top 1 Val Acc:
-    Top 1 Train Acc:
-    Throughput: Throughput_concurrency_100_req_50
-    Error Rate: Error_rate_concurrency_100_req_50
-    Latency: Average_latency_concurrency_100_req_50
-    P50 Latency: Median_latency_concurrency_100_req_50
-    P90 Latency: P90_latency_concurrency_100_req_50
-    Uptime: uptime_in_seconds
-  - Metric Prefix: mxnet.mms_resnet18_gpu
-    Metric Suffix: nightly.p3_8x
+    Framework Desc: MMS-CPU
+    Model:
+    Benchmark Desc: NOOP
+    Instance Type: c5.2xlarge
+    Error Rate: throughput_noop_Inference_Request_aggregate_report_error
+    Throughput: throughput_noop_Inference_Request_Throughput
+    Latency: throughput_noop_Inference_Request_Average
+    P50 Latency: throughput_noop_Inference_Request_Median
+    P90 Latency: throughput_noop_Inference_Request_aggregate_report_90_line
+    P99 Latency: throughput_noop_Inference_Request_aggregate_report_99_line
+    Latency: latency_noop_Inference_Request_Average
+    P50 Latency: latency_noop_Inference_Request_Median
+    P90 Latency: latency_noop_Inference_Request_aggregate_report_99_line
+    P99 Latency: latency_noop_Inference_Request_aggregate_report_error
+    # Unsupported in report.
+    # latency_noop_Inference_Request_aggregate_report_error
+    # throughput_noop_Inference_Request_Average
+    # throughput_noop_Inference_Request_Median
+    # throughput_noop_Inference_Request_aggregate_report_90_line
+    # throughput_noop_Inference_Request_aggregate_report_99_line
+
+  - Metric Prefix: mxnet.mms_resnet_18_cpu
+    Metric Suffix: nightly.c5_2x
     Type: Inference
     Framework: MXNet
-    Framework Desc: MMS
+    Framework Desc: MMS-CPU
     Model: ResNet-18
-    Benchmark Desc: 100 req 100
-    Instance Type: p3.8xlarge
-    Num Instances:
-    Precision:
-    Perplexity:
-    Top 1 Val Acc:
-    Top 1 Train Acc:
-    Throughput: Throughput_concurrency_100_req_100
-    Error Rate: Error_rate_concurrency_100_req_100
-    Latency: Average_latency_concurrency_100_req_100
-    P50 Latency: Median_latency_concurrency_100_req_100
-    P90 Latency: P90_latency_concurrency_100_req_100
-    Uptime: uptime_in_seconds
+    Benchmark Desc:
+    Instance Type: c5.2xlarge
+    Error Rate: throughput_resnet-18_Inference_Request_aggregate_report_error
+    Throughput: throughput_resnet-18_Inference_Request_Throughput
+    Latency: latency_resnet-18_Inference_Request_Average
+    P50 Latency: latency_resnet-18_Inference_Request_Median
+    P90 Latency: latency_resnet-18_Inference_Request_aggregate_report_90_line
+    P99 Latency: latency_resnet-18_Inference_Request_aggregate_report_99_line
+    # Unsupported in report.
+    # latency_resnet-18_Inference_Request_aggregate_report_error
+    # throughput_resnet-18_Inference_Request_Average
+    # throughput_resnet-18_Inference_Request_Median
+    # throughput_resnet-18_Inference_Request_aggregate_report_90_line
+    # throughput_resnet-18_Inference_Request_aggregate_report_99_line
 
 # ------------------ Resnet-50 --------------------------------------------------
   - Metric Prefix: mxnet.resnet50_imagenet_sagemaker_mx_docker
@@ -688,6 +717,139 @@ benchmarks:
     Benchmark Desc: Batch size 32
     Instance Type: c5.18xlarge
     Throughput: images/sec(Inference with batch size 32)
+
+# ------------------ Scala GPU -------------------------------------------------
+  - Metric Prefix: mxnet.scala_inference_charrnn_gpu
+    Metric Suffix: nightly.p3_16x
+    Type: Inference
+    Framework: MXNet
+    Framework Desc: Scala
+    Model: Char-RNN
+    Benchmark Desc: Single
+    Instance Type: p3.16xlarge
+    Latency: single_inference_average
+    P50 Latency: single_inference_p50
+    P90 Latency: single_inference_p90
+    P99 Latency: single_inference_p99
+
+  - Metric Prefix: mxnet.scala_inference_gpu
+    Metric Suffix: nightly.p3_16x
+    Type: Inference
+    Framework: MXNet
+    Framework Desc: Scala
+    Model: 
+    Benchmark Desc: Single
+    Instance Type: p3.16xlarge
+    Latency: single_inference_average
+    P50 Latency: single_inference_p50
+    P90 Latency: single_inference_p90
+    P99 Latency: single_inference_p99
+
+  - Metric Prefix: mxnet.scala_inference_gpu
+    Metric Suffix: nightly.p3_16x
+    Type: Inference
+    Framework: MXNet
+    Framework Desc: Scala
+    Model: 
+    Benchmark Desc: Batch size 20
+    Instance Type: p3.16xlarge
+    Latency: batch_inference_average
+    P50 Latency: batch_inference_p50
+    P90 Latency: batch_inference_p90
+    P99 Latency: batch_inference_p99
+
+  - Metric Prefix: mxnet.scala_inference_ssd_gpu
+    Metric Suffix: nightly.p3_16x
+    Type: Inference
+    Framework: MXNet
+    Framework Desc: Scala
+    Model: SSD
+    Benchmark Desc: Single
+    Instance Type: p3.16xlarge
+    Latency: single_inference_average
+    P50 Latency: single_inference_p50
+    P90 Latency: single_inference_p90
+    P99 Latency: single_inference_p99
+
+  - Metric Prefix: mxnet.scala_inference_ssd_gpu
+    Metric Suffix: nightly.p3_16x
+    Type: Inference
+    Framework: MXNet
+    Framework Desc: Scala
+    Model: SSD
+    Benchmark Desc: Batch size 20
+    Instance Type: p3.16xlarge
+    Latency: batch_inference_average
+    P50 Latency: batch_inference_p50
+    P90 Latency: batch_inference_p90
+    P99 Latency: batch_inference_p99
+
+# ------------------ Scala CPU -------------------------------------------------
+  - Metric Prefix: mxnet.scala_inference_charrnn_cpu
+    Metric Suffix: nightly.c5_2x
+    Type: Inference
+    Framework: MXNet
+    Framework Desc: Scala
+    Model: Char-RNN
+    Benchmark Desc: Single 
+    Instance Type: c5.2xlarge
+    Latency: single_inference_average
+    P50 Latency: single_inference_p50
+    P90 Latency: single_inference_p90
+    P99 Latency: single_inference_p99
+
+  - Metric Prefix: mxnet.scala_inference_cpu
+    Metric Suffix: nightly.c5_2x
+    Type: Inference
+    Framework: MXNet
+    Framework Desc: Scala
+    Model: 
+    Benchmark Desc: Single
+    Instance Type: c5.2xlarge
+    Latency: single_inference_average
+    P50 Latency: single_inference_p50
+    P90 Latency: single_inference_p90
+    P99 Latency: single_inference_p99
+
+  - Metric Prefix: mxnet.scala_inference_cpu
+    Metric Suffix: nightly.c5_2x
+    Type: Inference
+    Framework: MXNet
+    Framework Desc: Scala
+    Model: 
+    Benchmark Desc: Batch size 20
+    Instance Type: c5.2xlarge
+    Latency: batch_inference_average
+    P50 Latency: batch_inference_p50
+    P90 Latency: batch_inference_p90
+    P99 Latency: batch_inference_p99
+
+  - Metric Prefix: mxnet.scala_inference_ssd_cpu
+    Metric Suffix: nightly.c5_2x
+    Type: Inference
+    Framework: MXNet
+    Framework Desc: Scala
+    Model: SSD
+    Benchmark Desc: Single
+    Instance Type: c5.2xlarge
+    Latency: single_inference_average
+    P50 Latency: single_inference_p50
+    P90 Latency: single_inference_p90
+    P99 Latency: single_inference_p99
+
+  - Metric Prefix: mxnet.scala_inference_ssd_cpu
+    Metric Suffix: nightly.c5_2x
+    Type: Inference
+    Framework: MXNet
+    Framework Desc: Scala
+    Model: SSD
+    Benchmark Desc: Batch size 20
+    Instance Type: c5.2xlarge
+    Latency: batch_inference_average
+    P50 Latency: batch_inference_p50
+    P90 Latency: batch_inference_p90
+    P99 Latency: batch_inference_p99
+
 # ------------------ Tensorflow Horovod ----------------------------------------
   - Metric Prefix: mxnet.tensorflow_horovod_resnet50_p3_16xlg_batch_2048
     Metric Suffix: nightly.p3_16x

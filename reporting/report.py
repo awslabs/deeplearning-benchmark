@@ -50,20 +50,27 @@ if __name__ == '__main__':
                         help='the file to save the benchmarks (for debugging).')
     parser.add_argument('-e', '--email-addr', default='',
                         help='send a report to e-mail address.')
+    parser.add_argument('-lm', '--list-all-metrics', default='false',
+                        help='gets all Benchmark.AI the metrics (for debugging')
 
     args = parser.parse_args()
+    if args.list_all_metrics == 'true':
+        benchmarks = Benchmarks(fetch_metrics=False)
+        print('\n'.join(benchmarks.list_all_metrics()))
+        sys.exit(0)
+
     if args.load_benchmarks:
         logging.info("Loading benchmarks from {}".format(args.load_benchmarks))
         benchmarks = pickle.load(open(args.load_benchmarks, 'rb'))
     else:
         logging.info("Reading configuration and fetching metrics from Cloudwatch.")
         benchmarks = Benchmarks()
+
         if args.save_benchmarks:
             logging.info("Saving benchmarks to {}".format(args.save_benchmarks))
             # For pickling, remove Boto client (we don't need the boto client after this point).
-            benchmarks.cw_ = None
+            benchmarks._cw = None
             pickle.dump(benchmarks, open(args.save_benchmarks, 'wb'))
-
 
     # TODO(vishaalk): If e-mail is requested and report file name not specified, use a temp file.
     if not args.report_file:
