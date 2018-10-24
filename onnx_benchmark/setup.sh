@@ -18,8 +18,8 @@ install_onnx()
 {
     echo "Installing protobuf ......."
     sudo apt-get -y install protobuf-compiler libprotoc-dev
-    echo "Installing ONNX version 1.1.1 ........"
-    sudo pip  install protobuf==3.5.2 onnx==1.1.1
+    echo "Installing ONNX version 1.3.0 ........"
+    sudo pip  install protobuf==3.5.2 onnx==1.3.0
 }
 
 
