@@ -362,7 +362,6 @@ benchmarks:
     Throughput: throughput_resnet-18_Inference_Request_Throughput
     Latency: latency_resnet-18_Inference_Request_Average
     P50 Latency: latency_resnet-18_Inference_Request_Median
-    # TODO: A corresponding metric should be added for the P90.
     P90 Latency: latency_resnet-18_Inference_Request_aggregate_report_90_line
     P99 Latency: latency_resnet-18_Inference_Request_aggregate_report_99_line
     # Unsupported in report.
@@ -404,10 +403,6 @@ benchmarks:
     Instance Type: c5.2xlarge
     Error Rate: throughput_noop_Inference_Request_aggregate_report_error
     Throughput: throughput_noop_Inference_Request_Throughput
-    Latency: throughput_noop_Inference_Request_Average
-    P50 Latency: throughput_noop_Inference_Request_Median
-    P90 Latency: throughput_noop_Inference_Request_aggregate_report_90_line
-    P99 Latency: throughput_noop_Inference_Request_aggregate_report_99_line
     Latency: latency_noop_Inference_Request_Average
     P50 Latency: latency_noop_Inference_Request_Median
     P90 Latency: latency_noop_Inference_Request_aggregate_report_99_line
