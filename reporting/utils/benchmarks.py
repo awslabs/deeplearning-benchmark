@@ -35,8 +35,8 @@ class Benchmarks(object):
     """
     HEADERS = {
         'Inference' : ['Framework', 'Framework Desc', 'Model', 'Benchmark Desc', 'Instance Type',
-                       'Latency', 'P50 Latency', 'P90 Latency', 'Throughput', 'CPU Memory',
-                       'GPU Memory Mean', 'GPU Memory Max', 'Uptime'],
+                       'Latency', 'P50 Latency', 'P90 Latency', 'P99 Latency', 'Throughput',
+                       'Error Rate', 'CPU Memory', 'GPU Memory Mean', 'GPU Memory Max', 'Uptime'],
         'Training CV' : ['Framework', 'Framework Desc', 'Model', 'Benchmark Desc', 'Instance Type',
                          'Precision', 'Top1 val acc', 'Top1 train acc', 'Throughput',
                          'Time to Train', 'CPU Memory', 'GPU Memory Mean', 'GPU Memory Max',
@@ -49,7 +49,9 @@ class Benchmarks(object):
         'Latency' : 'ms',
         'P50 Latency' : 'ms',
         'P90 Latency' : 'ms',
+        'P99 Latency' : 'ms',
         'Throughput' : '/s',
+        'Error Rate' : '%',
         'CPU Memory' : 'mb',
         'GPU Memory' : 'mb',
         'GPU Memory Max' : 'mb',
@@ -72,12 +74,15 @@ class Benchmarks(object):
                            'Num Instances', 'Precision']
 
 
-    def __init__(self):
-
-        self.cw_ = boto3.client('cloudwatch')
+    def __init__(self, fetch_metrics = True):
+        self._cw = boto3.client('cloudwatch')
         self._benchmarks = []
-        config = yaml.load(open('config/benchmarks.yaml', 'r'))
+        if fetch_metrics:
+            self.fetch_metrics_()
 
+
+    def fetch_metrics_(self):
+        config = yaml.load(open('config/benchmarks.yaml', 'r'))
         for benchmark_keys in config['benchmarks']:
             metric_prefix =  benchmark_keys['Metric Prefix']
             metric_suffix =  benchmark_keys['Metric Suffix']
@@ -112,6 +117,8 @@ class Benchmarks(object):
 
             self._benchmarks.append(benchmark)
 
+            self._metrics_fetched = True
+
 
     def get_benchmarks(self, type):
         """
@@ -129,6 +136,9 @@ class Benchmarks(object):
             headers depend on the type specified. See self.HEADERS[type] for the list of headers.
             Note: 'Type' is included  by default as a header.
         """
+        if not self._metrics_fetched:
+            self.fetch_metrics_()
+
         headers = Benchmarks.HEADERS[type]
         return list(filter(lambda x: x['Type'] == type, self._benchmarks)), headers
 
@@ -158,7 +168,7 @@ class Benchmarks(object):
         logging.info("Requesting data for metric {}".format(metric))
 
         # TODO(vishaalk): Add functionality to fetch other time periods (e.g. last quarter).
-        res = self.cw_.get_metric_statistics(Namespace='benchmarkai-metrics-prod',
+        res = self._cw.get_metric_statistics(Namespace='benchmarkai-metrics-prod',
                                        MetricName=metric,
                                        StartTime=datetime.now() - timedelta(days=1), EndTime=datetime.now(),
                                        Period=86400, Statistics=['Average'])
@@ -171,3 +181,19 @@ class Benchmarks(object):
         else:
             logging.warning("metric {} without datapoints".format(metric))
             return ''
+
+
+    def list_all_metrics(self):
+        """
+        Lists all metrics in the Benchmark.AI namespace.
+        TODO: Compare and contrast metrics with those stored in the configuration file.
+
+        Returns
+        -------
+        list of str
+            the list of all metrics as strings.
+        """
+        paginator = self._cw.get_paginator('list_metrics')
+        metrics_paginator = paginator.paginate(Namespace='benchmarkai-metrics-prod')
+        metrics = metrics_paginator.build_full_result()
+        return list(map(lambda x: x['MetricName'], metrics['Metrics']))
