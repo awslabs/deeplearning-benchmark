@@ -307,6 +307,35 @@ benchmarks:
     Validation Perplexity: validation_perplexity
     Uptime: uptime_in_seconds
 
+# ------------------ Question Answering - GPU ----------------------------------
+  - Metric Prefix: mxnet.bidaf_1gpu_float32
+    Metric Suffix: nightly.p3_2x
+    Type: Training NLP
+    Framework: MXNet
+    Framework Desc: Gluon
+    Model: BiDAF
+    Benchmark Desc: SQuAD
+    Instance Type: p3.2xlarge
+    Loss: train_loss
+    F1: F1
+    Exact Match: exact_match
+    Time to Train: total_training_time
+    Precision: FP32
+
+  - Metric Prefix: mxnet.bidaf_multigpu_float32
+    Metric Suffix: nightly.p3_8x
+    Type: Training NLP
+    Framework: MXNet
+    Framework Desc: Gluon
+    Model: BiDAF
+    Benchmark Desc: SQuAD
+    Instance Type: p3.8xlarge
+    Loss: train_loss
+    F1: F1
+    Exact Match: exact_match
+    Time to Train: total_training_time
+    Precision: FP32
+
 # ------------------ MXNet Model Server - GPU ----------------------------------
   - Metric Prefix: mxnet.mms_lstm_ptb_gpu
     Metric Suffix: nightly.p3_16x
