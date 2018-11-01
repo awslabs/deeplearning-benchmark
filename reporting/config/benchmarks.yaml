@@ -309,13 +309,13 @@ benchmarks:
 
 # ------------------ Question Answering - GPU ----------------------------------
   - Metric Prefix: mxnet.bidaf_1gpu_float32
-    Metric Suffix: nightly.p3_2x
+    Metric Suffix: nightly.p2_x
     Type: Training NLP
     Framework: MXNet
     Framework Desc: Gluon
     Model: BiDAF
     Benchmark Desc: SQuAD
-    Instance Type: p3.2xlarge
+    Instance Type: p2.xlarge
     Loss: train_loss
     F1: F1
     Exact Match: exact_match
@@ -323,13 +323,13 @@ benchmarks:
     Precision: FP32
 
   - Metric Prefix: mxnet.bidaf_multigpu_float32
-    Metric Suffix: nightly.p3_8x
+    Metric Suffix: nightly.p2_8x
     Type: Training NLP
     Framework: MXNet
     Framework Desc: Gluon
     Model: BiDAF
     Benchmark Desc: SQuAD
-    Instance Type: p3.8xlarge
+    Instance Type: p2.8xlarge
     Loss: train_loss
     F1: F1
     Exact Match: exact_match
