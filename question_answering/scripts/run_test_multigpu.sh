@@ -1,3 +1,6 @@
+#!/bin/bash
+set -exuo pipefail
+
 git clone https://github.com/Ishitori/gluon-nlp
 cd gluon-nlp/
 git checkout bidaf_assembled
