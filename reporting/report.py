@@ -85,25 +85,3 @@ if __name__ == '__main__':
         report_html = io.open(args.report_file + HTML_EXTENSION, mode='r', encoding='utf-8').read()
         email_report(report_html, args.email_addr)
 
-
-def lambda_handler(event, context):
-    """
-    Main entry point for AWS Lambda.
-    The EMAIL environment variable is required to be set.
-    """
-    logging.info("Reading configuration and fetching metrics from Cloudwatch.")
-    benchmarks = Benchmarks()
-
-    logging.info('Generating report.')
-    REPORT_FILE = '/tmp/bai-report'
-    generate_report(REPORT_FILE, benchmarks)
-    report_html = io.open(REPORT_FILE + HTML_EXTENSION, mode='r', encoding='utf-8').read()
-
-    logging.info('Emailing report.')
-    EMAIL = os.environ['EMAIL']
-    email_report(report_html, EMAIL)
-
-    return {
-        "statusCode": 200,
-        "body": json.dumps('Report successfully generated and e-mailed.')
-    }

@@ -7,7 +7,7 @@
 # * AWS_DEFAULT_REGION
 # Run this from the main directory, e.g. scripts/update_lambda.sh
 
-set -e
+set -exuo pipefail
 
 # Create a temporary directory and copy the code to that directory.
 TMP_DIR=$(mktemp -d)
