@@ -25,7 +25,9 @@ The boto3 clients require the environment variables to be set accordingly:
 """
 import argparse
 import io
+import json
 import logging
+import os
 import pickle
 import sys
 
@@ -42,7 +44,7 @@ logging.getLogger('botocore').setLevel(logging.CRITICAL)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Generate a Benchmark report.')
-    parser.add_argument('-f', '--report-file', default='report', help='the report file name \
+    parser.add_argument('-f', '--report-file', default='bai-report', help='the report file name \
                         minus the extension. An .xlsx and a .html report will be generated.')
     parser.add_argument('-l', '--load-benchmarks', default='',
                         help='whether to load benchmarks from file (for debugging).')
@@ -82,3 +84,26 @@ if __name__ == '__main__':
     if args.email_addr:
         report_html = io.open(args.report_file + HTML_EXTENSION, mode='r', encoding='utf-8').read()
         email_report(report_html, args.email_addr)
+
+
+def lambda_handler(event, context):
+    """
+    Main entry point for AWS Lambda.
+    The EMAIL environment variable is required to be set.
+    """
+    logging.info("Reading configuration and fetching metrics from Cloudwatch.")
+    benchmarks = Benchmarks()
+
+    logging.info('Generating report.')
+    REPORT_FILE = '/tmp/bai-report'
+    generate_report(REPORT_FILE, benchmarks)
+    report_html = io.open(REPORT_FILE + HTML_EXTENSION, mode='r', encoding='utf-8').read()
+
+    logging.info('Emailing report.')
+    EMAIL = os.environ['EMAIL']
+    email_report(report_html, EMAIL)
+
+    return {
+        "statusCode": 200,
+        "body": json.dumps('Report successfully generated and e-mailed.')
+    }

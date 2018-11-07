@@ -25,6 +25,7 @@ import yaml
 from datetime import datetime, timedelta
 
 
+
 class Benchmarks(object):
     """
     This class provides an interface to the Benchmark.AI metrics.
@@ -179,7 +180,7 @@ class Benchmarks(object):
             value = points[0]['Average']
             return round(value, 2)
         else:
-            logging.warning("metric {} without datapoints".format(metric))
+            logging.warning("metric {} is without datapoints".format(metric))
             return ''
 
 
