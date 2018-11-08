@@ -23,7 +23,7 @@ import datetime
 import logging
 
 REPORT_EMAIL_FROM = 'vishaalk@amazon.com'
-REPORT_MAILLIST = 'benchmark-ai-report@amazon.com'
+REPORT_MAILLIST = 'benchmark-ai-reports@amazon.com'
 
 def email_report(report_html, email_addr=REPORT_MAILLIST):
     """
