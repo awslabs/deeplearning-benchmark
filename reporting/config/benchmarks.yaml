@@ -29,13 +29,13 @@
 #
 #    - Metric Prefix: the metric prefix without trailing period  (required)
 #      Metric Suffix: the metric suffix without leading period  (required)
+#      DashboardUri: The (quoted) uri for the dashboard (recommended, but not required).
 #      Type: Training CV, Training NLP or Inference  (required)
 #      Framework: MXNet, Tensorflow, PyTorch, Caffe
 #      Framework Desc: Gluon, Module, Symbol, Gluon Hybrid, Horovod, SageMaker
 #      Model: the model architecture e.g. ResNet-50
 #      Benchmark Desc: Benchmark description/hyperparameters/dataset
 #      Instance Type: p3.18xlarge
-#      Num Instances: the number of instances
 
 #      ###  These keys for Inference tasks ###
 #      Latency:
@@ -65,6 +65,7 @@ benchmarks:
 # ------------------ DAWNBench CIFAR-10 ----------------------------------------
   - Metric Prefix: mxnet.dawnbench_cifar10_resnet164_basic_gluon
     Metric Suffix: _p3_2x_nightly
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=DAWNBench-MxNet-Resnet164-Cifar10-GPU-Single"
     Type: Training CV
     Framework: MXNet
     Framework Desc: Gluon
@@ -77,6 +78,7 @@ benchmarks:
 
   - Metric Prefix: mxnet.dawnbench_cifar10_resnet164_basic_gluon
     Metric Suffix: _p3_2x_nightly
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=DAWNBench-MxNet-Resnet164-Cifar10-GPU-Single"
     Type: Inference
     Framework: MXNet
     Framework Desc: Gluon
@@ -89,6 +91,8 @@ benchmarks:
 
   - Metric Prefix: mxnet.dawnbench_cifar10_resnet164_basic_gluon_infer
     Metric Suffix: _c5_18x_nightly
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=DAWNBench-MxNet-Resnet164-Cifar10-GPU-Single"
+    Type: Inference
     Type: Inference
     Framework: MXNet
     Framework Desc: Gluon
@@ -102,6 +106,7 @@ benchmarks:
 # ------------------ DAWNBench CIFAR-10 Gluon Hybrid ---------------------------
   - Metric Prefix: mxnet.dawnbench_cifar10_resnet164_basic_gluon_hybrid
     Metric Suffix: _p3_2x_nightly
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=DAWNBench-MxNet-Resnet164-Cifar10-GPU-Single"
     Type: Training CV
     Framework: MXNet
     Framework Desc: Gluon Hybrid
@@ -114,6 +119,7 @@ benchmarks:
 
   - Metric Prefix: mxnet.dawnbench_cifar10_resnet164_basic_gluon_hybrid
     Metric Suffix: _p3_2x_nightly
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=DAWNBench-MxNet-Resnet164-Cifar10-GPU-Single"
     Type: Inference
     Framework: MXNet
     Framework Desc: Gluon Hybrid
@@ -126,6 +132,7 @@ benchmarks:
 
   - Metric Prefix: mxnet.dawnbench_cifar10_resnet164_basic_gluon_hybrid_infer
     Metric Suffix: _c5_18x_nightly
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=DAWNBench-MxNet-Resnet164-Cifar10-GPU-Single"
     Type: Inference
     Framework: MXNet
     Framework Desc: Gluon Hybrid
@@ -139,6 +146,7 @@ benchmarks:
 # ------------------ DAWNBench CIFAR-10 Module ----------------------------
   - Metric Prefix: mxnet.dawnbench_cifar10_resnet164_basic_module
     Metric Suffix: _p3_2x_nightly
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=DAWNBench-MxNet-Resnet164-Cifar10-GPU-Single"
     Type: Training CV
     Framework: MXNet
     Framework Desc: Module
@@ -151,6 +159,7 @@ benchmarks:
 
   - Metric Prefix: mxnet.dawnbench_cifar10_resnet164_basic_module
     Metric Suffix: _p3_2x_nightly
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=DAWNBench-MxNet-Resnet164-Cifar10-GPU-Single"
     Type: Inference
     Framework: MXNet
     Framework Desc: Module
@@ -163,6 +172,7 @@ benchmarks:
 
   - Metric Prefix: mxnet.dawnbench_cifar10_resnet164_basic_module_infer
     Metric Suffix: _c5_18x_nightly
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=DAWNBench-MxNet-Resnet164-Cifar10-GPU-Single"
     Type: Inference
     Framework: MXNet
     Framework Desc: Module
@@ -176,6 +186,7 @@ benchmarks:
 # ------------------ LSTM PTB --------------------------------------------------
   - Metric Prefix: mxnet.lstm_ptb_imperative
     Metric Suffix: nightly.c4_8x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Training-MxNet-LSTM-PTB-CPU-Single"
     Type: Training NLP
     Framework: MXNet
     Framework Desc: Gluon
@@ -191,13 +202,13 @@ benchmarks:
     Uptime: uptime_in_seconds
   - Metric Prefix: mxnet.lstm_ptb_imperative
     Metric Suffix: nightly.c5_18x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Training-MxNet-LSTM-PTB-CPU-Single"
     Type: Training NLP
     Framework: MXNet
     Framework Desc: Gluon
     Model: LSTM
     Benchmark Desc: PTB
     Instance Type: c5.18xlarge
-    Precision:
     Loss: test_loss
     Perplexity: test_perplexity
     Throughput:
@@ -207,13 +218,13 @@ benchmarks:
     Uptime: uptime_in_seconds
   - Metric Prefix: mxnet.lstm_ptb_imperative
     Metric Suffix: nightly.p2_16x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Training-MxNet-LSTM-PTB-GPU-Single"
     Type: Training NLP
     Framework: MXNet
     Framework Desc: Gluon
     Model: LSTM
     Benchmark Desc: PTB
     Instance Type: p2.16xlarge
-    Precision:
     Loss: test_loss
     Perplexity: test_perplexity
     Throughput:
@@ -223,13 +234,13 @@ benchmarks:
     Uptime: uptime_in_seconds
   - Metric Prefix: mxnet.lstm_ptb_imperative
     Metric Suffix: nightly.p3_x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Training-MxNet-LSTM-PTB-GPU-Single"
     Type: Training NLP
     Framework: MXNet
     Framework Desc: Gluon
     Model: LSTM
     Benchmark Desc: PTB
     Instance Type: p3.8xlarge
-    Precision:
     Loss: test_loss
     Perplexity: test_perplexity
     Throughput:
@@ -240,68 +251,61 @@ benchmarks:
 
   - Metric Prefix: mxnet.lstm_ptb_symbolic
     Metric Suffix: nightly.c4_8x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Training-MxNet-LSTM-PTB-CPU-Single"
     Type: Training NLP
     Framework: MXNet
     Framework Desc: Symbol
     Model: LSTM
     Benchmark Desc: PTB
     Instance Type: c4.8xlarge
-    Precision:
     Loss: test_loss
-# TODO(vishaalk): Train perplexity should be test perplexity.
-    Perplexity: train_perplexity
-# TODO(vishaalk): Speed is likely wrong below. Investigate.
+    Perplexity: test_perplexity
     Throughput: speed
     Time to Train: total_training_time
     Validation Perplexity: validation_perplexity
     Uptime: uptime_in_seconds
   - Metric Prefix: mxnet.lstm_ptb_symbolic
     Metric Suffix: nightly.c5_18x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Training-MxNet-LSTM-PTB-CPU-Single"
     Type: Training NLP
     Framework: MXNet
     Framework Desc: Symbol
     Model: LSTM
     Benchmark Desc: PTB
     Instance Type: c5.18xlarge
-    Precision:
     Loss: test_loss
-# TODO(vishaalk): Train perplexity should be test perplexity.
-    Perplexity: train_perplexity
-# TODO(vishaalk): Speed is likely wrong below. Investigate.
+    Perplexity: test_perplexity
     Throughput: speed
     Time to Train: total_training_time
     Validation Perplexity: validation_perplexity
     Uptime: uptime_in_seconds
   - Metric Prefix: mxnet.lstm_ptb_symbolic
     Metric Suffix: nightly.p2_16x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Training-MxNet-LSTM-PTB-GPU-Single"
+    Type: Training NLP
     Type: Training NLP
     Framework: MXNet
     Framework Desc: Symbol
     Model: LSTM
     Benchmark Desc: PTB
     Instance Type: p2.16xlarge
-    Precision:
     Loss: test_loss
-# TODO(vishaalk): Train perplexity should be test perplexity.
-    Perplexity: train_perplexity
-# TODO(vishaalk): Speed is likely wrong below. Investigate.
+    Perplexity: test_perplexity
     Throughput: speed
     Time to Train: total_training_time
     Validation Perplexity: validation_perplexity
     Uptime: uptime_in_seconds
   - Metric Prefix: mxnet.lstm_ptb_symbolic
     Metric Suffix: nightly.p3_x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Training-MxNet-LSTM-PTB-GPU-Single"
     Type: Training NLP
     Framework: MXNet
     Framework Desc: Symbol
     Model: LSTM
     Benchmark Desc: PTB
     Instance Type: p3.8xlarge
-    Precision:
     Loss: test_loss
-# TODO(vishaalk): Train perplexity should be test perplexity.
-    Perplexity: train_perplexity
-# TODO(vishaalk): Speed is likely wrong below. Investigate.
+    Perplexity: test_perplexity
     Throughput: speed
     Time to Train: total_training_time
     Validation Perplexity: validation_perplexity
@@ -310,6 +314,7 @@ benchmarks:
 # ------------------ MXNet Model Server - GPU ----------------------------------
   - Metric Prefix: mxnet.mms_lstm_ptb_gpu
     Metric Suffix: nightly.p3_16x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=MMS-GPU"
     Type: Inference
     Framework: MXNet
     Framework Desc: MMS-GPU
@@ -331,6 +336,7 @@ benchmarks:
 
   - Metric Prefix: mxnet.mms_noop_gpu
     Metric Suffix: nightly.p3_16x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=MMS-GPU"
     Type: Inference
     Framework: MXNet
     Framework Desc: MMS-GPU
@@ -352,6 +358,7 @@ benchmarks:
 
   - Metric Prefix: mxnet.mms_resnet_18_gpu
     Metric Suffix: nightly.p3_16x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=MMS-GPU"
     Type: Inference
     Framework: MXNet
     Framework Desc: MMS-GPU
@@ -374,6 +381,7 @@ benchmarks:
 # ------------------ MXNet Model Server - CPU ----------------------------------
   - Metric Prefix: mxnet.mms_lstm_ptb_cpu
     Metric Suffix: nightly.c5_2x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=MMS-CPU"
     Type: Inference
     Framework: MXNet
     Framework Desc: MMS-CPU
@@ -395,6 +403,8 @@ benchmarks:
 
   - Metric Prefix: mxnet.mms_noop_cpu
     Metric Suffix: nightly.c5_2x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=MMS-CPU"
+    Type: Inference
     Type: Inference
     Framework: MXNet
     Framework Desc: MMS-CPU
@@ -416,6 +426,8 @@ benchmarks:
 
   - Metric Prefix: mxnet.mms_resnet_18_cpu
     Metric Suffix: nightly.c5_2x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=MMS-CPU"
+    Type: Inference
     Type: Inference
     Framework: MXNet
     Framework Desc: MMS-CPU
@@ -435,287 +447,129 @@ benchmarks:
     # throughput_resnet-18_Inference_Request_aggregate_report_90_line
     # throughput_resnet-18_Inference_Request_aggregate_report_99_line
 
-# ------------------ Resnet-50 --------------------------------------------------
-  - Metric Prefix: mxnet.resnet50_imagenet_sagemaker_mx_docker
-    Metric Suffix: nightly.p3_16x
-    Type: Training CV
-    Framework: MXNet
-    Model: ResNet-50
-    Benchmark Desc: SageMaker/ImageNet
-    Instance Type: p3.16xlarge
-    Num Instances:
-    Precision:
-    Perplexity:
-    Top 1 Val Acc: validation_acc
-    Top 1 Train Acc: training_acc
-# TODO(vishaalk): Is speed the throughput?
-    Throughput: speed
-    Time to Train: total_training_time
-    Uptime: uptime_in_seconds
 # ------------------ Resnet-50V1 ------------------------------------------------
   - Metric Prefix: mxnet.mxnet_resnet50v1_imagenet_gluon_fp16
     Metric Suffix: daily.p3_16x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Train-MXNet-Resnet50v1"
     Type: Training CV
     Framework: MXNet
     Framework Desc: Gluon
     Model: ResNet-50V1
     Benchmark Desc: ImageNet
     Instance Type: p3.16xlarge
-    Num Instances:
     Precision: FP16
     Perplexity:
     Top 1 Val Acc: validation_acc
     Top 1 Train Acc: training_acc
-# TODO(vishaalk): Is speed the throughput?
     Throughput: speed
     Time to Train: total_training_time
     Uptime: uptime_in_seconds
 
   - Metric Prefix: mxnet.mxnet_resnet50v1_imagenet_symbolic_fp16
     Metric Suffix: daily.p3_16x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Train-MXNet-Resnet50v1"
     Type: Training CV
     Framework: MXNet
     Framework Desc: Symbol
     Model: ResNet-50V1
     Benchmark Desc: ImageNet
     Instance Type: p3.16xlarge
-    Num Instances:
     Precision: FP16
     Perplexity:
     Top 1 Val Acc: validation_acc
     Top 1 Train Acc: training_acc
-# TODO(vishaalk): Is speed the throughput?
     Throughput: speed
     Time to Train: total_training_time
     Uptime: uptime_in_seconds
 
   - Metric Prefix: mxnet.mxnet_resnet50v1_imagenet_symbolic_fp32
     Metric Suffix: daily.p3_16x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Train-MXNet-Resnet50v1"
     Type: Training CV
     Framework: MXNet
     Framework Desc: Symbol
     Model: ResNet-50V1
     Benchmark Desc: ImageNet
     Instance Type: p3.16xlarge
-    Num Instances:
     Precision: FP32
     Perplexity:
     Top 1 Val Acc: validation_acc
     Top 1 Train Acc: training_acc
-# TODO(vishaalk): Is speed the throughput?
     Throughput: speed
     Time to Train: total_training_time
     Uptime: uptime_in_seconds
 
   - Metric Prefix: mxnet.mxnet_resnet50v1_imagenet_symbolic_fp16_p38x
     Metric Suffix: daily.p3_16x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Train-MXNet-Resnet50v1"
     Type: Training CV
     Framework: MXNet
     Framework Desc: Symbol
     Model: ResNet-50V1
     Benchmark Desc: ImageNet
     Instance Type: p3.16xlarge
-    Num Instances:
     Precision: FP16
     Perplexity:
     Top 1 Val Acc: validation_acc
     Top 1 Train Acc: training_acc
-# TODO(vishaalk): Is speed the throughput?
     Throughput: speed
     Time to Train: total_training_time
     Uptime: uptime_in_seconds
 
   - Metric Prefix: mxnet.mxnet_resnet50v1_imagenet_symbolic_fp16_p38x
     Metric Suffix: daily.p3_16x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Train-MXNet-Resnet50v1"
     Type: Training CV
     Framework: MXNet
     Framework Desc: Symbol
     Model: ResNet-50V1
     Benchmark Desc: ImageNet
     Instance Type: p3.16xlarge
-    Num Instances:
     Precision: FP16
     Perplexity:
     Top 1 Val Acc: validation_acc
     Top 1 Train Acc: training_acc
-# TODO(vishaalk): Is speed the throughput?
     Throughput: speed
     Time to Train: total_training_time
     Uptime: uptime_in_seconds
-
-  - Metric Prefix: mxnet.resnet50_imagenet-480px-256px-q95_p3_16x_fp16_docker
-    Metric Suffix: nightly.p3_16x
-    Type: Training CV
-    Framework: MXNet
-    Model: ResNet-50
-    Benchmark Desc: ImageNet 480x256-q95
-    Instance Type: p3.16xlarge
-    Num Instances:
-    Precision: FP16
-    Perplexity:
-    Top 1 Val Acc: validation_acc
-    Top 1 Train Acc: training_acc
-# TODO(vishaalk): Is speed the throughput?
-    Throughput: speed
-    Time to Train: total_training_time
 
 # ------------------ Resnet-50V2 ------------------------------------------------
   - Metric Prefix: mxnet.mxnet_resnet50v2_imagenet_symbolic_fp16
     Metric Suffix: daily.p3_16x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Train-MXNet-Resnet50v2"
     Type: Training CV
     Framework: MXNet
     Framework Desc: Symbol
     Model: ResNet-50V2
     Benchmark Desc: ImageNet
     Instance Type: p3.16xlarge
-    Num Instances:
     Precision: FP16
     Perplexity:
     Top 1 Val Acc: validation_acc
     Top 1 Train Acc: training_acc
-# TODO(vishaalk): Is speed the throughput?
     Throughput: speed
     Time to Train: total_training_time
 
   - Metric Prefix: mxnet.mxnet_resnet50v2_imagenet_symbolic_fp16
     Metric Suffix: daily.p3_16x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Train-MXNet-Resnet50v2"
     Type: Training CV
     Framework: MXNet
     Framework Desc: Symbol
     Model: ResNet-50V2
     Benchmark Desc: ImageNet
     Instance Type: p3.16xlarge
-    Num Instances:
     Precision: FP32
     Perplexity:
     Top 1 Val Acc: validation_acc
     Top 1 Train Acc: training_acc
-# TODO(vishaalk): Is speed the throughput?
     Throughput: speed
     Time to Train: total_training_time
-
-# ------------------ ONNX MXNet Import Model ------------------------------------
-  - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
-    Metric Suffix: nightly.c5_18x
-    Type: Inference
-    Framework: MXNet
-    Model: BVLC Alexnet
-    Benchmark Desc: Import ONNX Model
-    Instance Type: c5.18xlarge
-    Latency: Average_inference_time_bvlc_alexnet_cpu
-  - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
-    Metric Suffix: nightly.c5_18x
-    Type: Inference
-    Framework: MXNet
-    Model: BVLC GoogleNet
-    Benchmark Desc: Import ONNX Model
-    Instance Type: c5.18xlarge
-    Latency: Average_inference_time_bvlc_googlenet_cpu
-  - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
-    Metric Suffix: nightly.c5_18x
-    Type: Inference
-    Framework: MXNet
-    Model: DenseNet-121
-    Benchmark Desc: Import ONNX Model
-    Instance Type: c5.18xlarge
-    Latency: Average_inference_time_densenet121_cpu
-  - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
-    Metric Suffix: nightly.c5_18x
-    Type: Inference
-    Framework: MXNet
-    Model: SqueezeNet
-    Benchmark Desc: Import ONNX Model
-    Instance Type: c5.18xlarge
-    Latency: Average_inference_time_squeezenet_cpu
-# TODO(vishaalk): This is not in the dashboards and appears to be unused.
-#  - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
-#    Metric Suffix: nightly.c5_18x
-#    Type: Inference
-#    Framework: MXNet
-#    Model: Ref CaffeNet
-#    Benchmark Desc: Import ONNX Model
-#    Instance Type: c5.18xlarge
-#    Latency: Average_inference_time_reference_caffenet_cpu
-  - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
-    Metric Suffix: nightly.c5_18x
-    Type: Inference
-    Framework: MXNet
-    Model: BVLC Ref CaffeNet
-    Benchmark Desc: Import ONNX Model
-    Instance Type: c5.18xlarge
-    Latency: Average_inference_time_bvlc_reference_caffenet_cpu
-  - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
-    Metric Suffix: nightly.c5_18x
-    Type: Inference
-    Framework: MXNet
-    Model: ShuffleNet
-    Benchmark Desc: Import ONNX Model
-    Instance Type: c5.18xlarge
-    Latency: Average_inference_time_shufflenet_cpu
-  - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
-    Metric Suffix: nightly.c5_18x
-    Type: Inference
-    Framework: MXNet
-    Model: BVLC Ref RCNN Ilsvrc13
-    Benchmark Desc: Import ONNX Model
-    Instance Type: c5.18xlarge
-    Latency: Average_inference_time_bvlc_reference_rcnn_ilsvrc13_cpu
-  - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
-    Metric Suffix: nightly.c5_18x
-    Type: Inference
-    Framework: MXNet
-    Model: VGG19
-    Benchmark Desc: Import ONNX Model
-    Instance Type: c5.18xlarge
-    Latency: Average_inference_time_vgg19_cpu
-  - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
-    Metric Suffix: nightly.c5_18x
-    Type: Inference
-    Framework: MXNet
-    Model: ResNet-50
-    Benchmark Desc: Import ONNX Model
-    Instance Type: c5.18xlarge
-    Latency: Average_inference_time_resnet50_cpu
-# ------------------ Tensorflow MKL --------------------------------------------
-  - Metric Prefix: mxnet.tensorflow_mkl_c5_resnet50_18xlg
-    Metric Suffix: nightly.c5_18x
-    Type: Training CV
-    Framework: Tensorflow
-    Model: ResNet-50
-    Benchmark Desc: Batch size 1
-    Instance Type: c5.18xlarge
-    Throughput: images/sec(training with batch size 1)
-
-  - Metric Prefix: mxnet.tensorflow_mkl_c5_resnet50_18xlg
-    Metric Suffix: nightly.c5_18x
-    Type: Training CV
-    Framework: Tensorflow
-    Model: ResNet-50
-    Benchmark Desc: Batch size 32
-    Instance Type: c5.18xlarge
-    Throughput: images/sec(training with batch size 32)
-
-  - Metric Prefix: mxnet.tensorflow_mkl_c5_resnet50_18xlg
-    Metric Suffix: nightly.c5_18x
-    Type: Inference
-    Framework: Tensorflow
-    Model: ResNet-50
-    Benchmark Desc: Batch size 1
-    Instance Type: c5.18xlarge
-    Throughput: images/sec(Inference with batch size 1)
-
-  - Metric Prefix: mxnet.tensorflow_mkl_c5_resnet50_18xlg
-    Metric Suffix: nightly.c5_18x
-    Type: Inference
-    Framework: Tensorflow
-    Model: ResNet-50
-    Benchmark Desc: Batch size 32
-    Instance Type: c5.18xlarge
-    Throughput: images/sec(Inference with batch size 32)
 
 # ------------------ Scala GPU -------------------------------------------------
   - Metric Prefix: mxnet.scala_inference_charrnn_gpu
     Metric Suffix: nightly.p3_16x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Scala-Inference-GPU"
     Type: Inference
     Framework: MXNet
     Framework Desc: Scala
@@ -729,6 +583,7 @@ benchmarks:
 
   - Metric Prefix: mxnet.scala_inference_gpu
     Metric Suffix: nightly.p3_16x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Scala-Inference-GPU"
     Type: Inference
     Framework: MXNet
     Framework Desc: Scala
@@ -742,6 +597,7 @@ benchmarks:
 
   - Metric Prefix: mxnet.scala_inference_gpu
     Metric Suffix: nightly.p3_16x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Scala-Inference-GPU"
     Type: Inference
     Framework: MXNet
     Framework Desc: Scala
@@ -755,6 +611,7 @@ benchmarks:
 
   - Metric Prefix: mxnet.scala_inference_ssd_gpu
     Metric Suffix: nightly.p3_16x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Scala-Inference-GPU"
     Type: Inference
     Framework: MXNet
     Framework Desc: Scala
@@ -768,6 +625,7 @@ benchmarks:
 
   - Metric Prefix: mxnet.scala_inference_ssd_gpu
     Metric Suffix: nightly.p3_16x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Scala-Inference-GPU"
     Type: Inference
     Framework: MXNet
     Framework Desc: Scala
@@ -782,6 +640,7 @@ benchmarks:
 # ------------------ Scala CPU -------------------------------------------------
   - Metric Prefix: mxnet.scala_inference_charrnn_cpu
     Metric Suffix: nightly.c5_2x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Scala-Inference-CPU"
     Type: Inference
     Framework: MXNet
     Framework Desc: Scala
@@ -795,6 +654,7 @@ benchmarks:
 
   - Metric Prefix: mxnet.scala_inference_cpu
     Metric Suffix: nightly.c5_2x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Scala-Inference-CPU"
     Type: Inference
     Framework: MXNet
     Framework Desc: Scala
@@ -808,6 +668,7 @@ benchmarks:
 
   - Metric Prefix: mxnet.scala_inference_cpu
     Metric Suffix: nightly.c5_2x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Scala-Inference-CPU"
     Type: Inference
     Framework: MXNet
     Framework Desc: Scala
@@ -821,6 +682,7 @@ benchmarks:
 
   - Metric Prefix: mxnet.scala_inference_ssd_cpu
     Metric Suffix: nightly.c5_2x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Scala-Inference-CPU"
     Type: Inference
     Framework: MXNet
     Framework Desc: Scala
@@ -834,6 +696,7 @@ benchmarks:
 
   - Metric Prefix: mxnet.scala_inference_ssd_cpu
     Metric Suffix: nightly.c5_2x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Scala-Inference-CPU"
     Type: Inference
     Framework: MXNet
     Framework Desc: Scala
@@ -845,9 +708,221 @@ benchmarks:
     P90 Latency: batch_inference_p90
     P99 Latency: batch_inference_p99
 
+# ------------------ ONNX MXNet Import Model - GPU -----------------------------
+  - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_gpu
+    Metric Suffix: nightly.p3_8x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-GPU"
+    Type: Inference
+    Framework: MXNet
+    Model: BVLC Alexnet
+    Benchmark Desc: Import ONNX Model
+    Instance Type: p3.8xlarge
+    Latency: Average_inference_time_bvlc_alexnet_gpu
+  - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_gpu
+    Metric Suffix: nightly.p3_8x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-GPU"
+    Type: Inference
+    Framework: MXNet
+    Model: BVLC GoogleNet
+    Benchmark Desc: Import ONNX Model
+    Instance Type: p3.8xlarge
+    Latency: Average_inference_time_bvlc_googlenet_gpu
+  - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_gpu
+    Metric Suffix: nightly.p3_8x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-GPU"
+    Type: Inference
+    Framework: MXNet
+    Model: DenseNet-121
+    Benchmark Desc: Import ONNX Model
+    Instance Type: p3.8xlarge
+    Latency: Average_inference_time_densenet121_gpu
+  - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_gpu
+    Metric Suffix: nightly.p3_8x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-GPU"
+    Type: Inference
+    Type: Inference
+    Framework: MXNet
+    Model: SqueezeNet
+    Benchmark Desc: Import ONNX Model
+    Instance Type: p3.8xlarge
+    Latency: Average_inference_time_squeezenet_gpu
+  - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_gpu
+    Metric Suffix: nightly.p3_8x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-GPU"
+    Type: Inference
+    Type: Inference
+    Framework: MXNet
+    Model: BVLC Ref CaffeNet
+    Benchmark Desc: Import ONNX Model
+    Instance Type: p3.8xlarge
+    Latency: Average_inference_time_bvlc_reference_caffenet_gpu
+  - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_gpu
+    Metric Suffix: nightly.p3_8x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-GPU"
+    Type: Inference
+    Type: Inference
+    Framework: MXNet
+    Model: ShuffleNet
+    Benchmark Desc: Import ONNX Model
+    Instance Type: p3.8xlarge
+    Latency: Average_inference_time_shufflenet_gpu
+  - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_gpu
+    Metric Suffix: nightly.p3_8x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-GPU"
+    Type: Inference
+    Type: Inference
+    Framework: MXNet
+    Model: BVLC Ref RCNN Ilsvrc13
+    Benchmark Desc: Import ONNX Model
+    Instance Type: p3.8xlarge
+    Latency: Average_inference_time_bvlc_reference_rcnn_ilsvrc13_gpu
+  - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_gpu
+    Metric Suffix: nightly.p3_8x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-GPU"
+    Type: Inference
+    Type: Inference
+    Framework: MXNet
+    Model: VGG19
+    Benchmark Desc: Import ONNX Model
+    Instance Type: p3.8xlarge
+    Latency: Average_inference_time_vgg19_gpu
+  - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_gpu
+    Metric Suffix: nightly.p3_8x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-GPU"
+    Type: Inference
+    Type: Inference
+    Framework: MXNet
+    Model: ResNet-50
+    Benchmark Desc: Import ONNX Model
+    Instance Type: p3.8xlarge
+    Latency: Average_inference_time_resnet50_gpu
+# ------------------ ONNX MXNet Import Model - CPU -----------------------------
+  - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
+    Metric Suffix: nightly.c5_18x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-CPU"
+    Type: Inference
+    Framework: MXNet
+    Model: BVLC Alexnet
+    Benchmark Desc: Import ONNX Model
+    Instance Type: c5.18xlarge
+    Latency: Average_inference_time_bvlc_alexnet_cpu
+  - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
+    Metric Suffix: nightly.c5_18x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-CPU"
+    Type: Inference
+    Framework: MXNet
+    Model: BVLC GoogleNet
+    Benchmark Desc: Import ONNX Model
+    Instance Type: c5.18xlarge
+    Latency: Average_inference_time_bvlc_googlenet_cpu
+  - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
+    Metric Suffix: nightly.c5_18x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-CPU"
+    Type: Inference
+    Framework: MXNet
+    Model: DenseNet-121
+    Benchmark Desc: Import ONNX Model
+    Instance Type: c5.18xlarge
+    Latency: Average_inference_time_densenet121_cpu
+  - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
+    Metric Suffix: nightly.c5_18x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-CPU"
+    Type: Inference
+    Framework: MXNet
+    Model: SqueezeNet
+    Benchmark Desc: Import ONNX Model
+    Instance Type: c5.18xlarge
+    Latency: Average_inference_time_squeezenet_cpu
+  - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
+    Metric Suffix: nightly.c5_18x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-CPU"
+    Type: Inference
+    Framework: MXNet
+    Model: BVLC Ref CaffeNet
+    Benchmark Desc: Import ONNX Model
+    Instance Type: c5.18xlarge
+    Latency: Average_inference_time_bvlc_reference_caffenet_cpu
+  - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
+    Metric Suffix: nightly.c5_18x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-CPU"
+    Type: Inference
+    Framework: MXNet
+    Model: ShuffleNet
+    Benchmark Desc: Import ONNX Model
+    Instance Type: c5.18xlarge
+    Latency: Average_inference_time_shufflenet_cpu
+  - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
+    Metric Suffix: nightly.c5_18x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-CPU"
+    Type: Inference
+    Framework: MXNet
+    Model: BVLC Ref RCNN Ilsvrc13
+    Benchmark Desc: Import ONNX Model
+    Instance Type: c5.18xlarge
+    Latency: Average_inference_time_bvlc_reference_rcnn_ilsvrc13_cpu
+  - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
+    Metric Suffix: nightly.c5_18x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-CPU"
+    Type: Inference
+    Framework: MXNet
+    Model: VGG19
+    Benchmark Desc: Import ONNX Model
+    Instance Type: c5.18xlarge
+    Latency: Average_inference_time_vgg19_cpu
+  - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
+    Metric Suffix: nightly.c5_18x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-CPU"
+    Type: Inference
+    Framework: MXNet
+    Model: ResNet-50
+    Benchmark Desc: Import ONNX Model
+    Instance Type: c5.18xlarge
+    Latency: Average_inference_time_resnet50_cpu
+# ------------------ Tensorflow MKL --------------------------------------------
+  - Metric Prefix: mxnet.tensorflow_mkl_c5_resnet50_18xlg
+    Metric Suffix: nightly.c5_18x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Training-Inference-TensorFlow-MKL"
+    Type: Training CV
+    Framework: Tensorflow
+    Model: ResNet-50
+    Benchmark Desc: Batch size 1
+    Instance Type: c5.18xlarge
+    Throughput: images/sec(training with batch size 1)
+
+  - Metric Prefix: mxnet.tensorflow_mkl_c5_resnet50_18xlg
+    Metric Suffix: nightly.c5_18x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Training-Inference-TensorFlow-MKL"
+    Type: Training CV
+    Framework: Tensorflow
+    Model: ResNet-50
+    Benchmark Desc: Batch size 32
+    Instance Type: c5.18xlarge
+    Throughput: images/sec(training with batch size 32)
+
+  - Metric Prefix: mxnet.tensorflow_mkl_c5_resnet50_18xlg
+    Metric Suffix: nightly.c5_18x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Training-Inference-TensorFlow-MKL"
+    Type: Inference
+    Framework: Tensorflow
+    Model: ResNet-50
+    Benchmark Desc: Batch size 1
+    Instance Type: c5.18xlarge
+    Throughput: images/sec(Inference with batch size 1)
+
+  - Metric Prefix: mxnet.tensorflow_mkl_c5_resnet50_18xlg
+    Metric Suffix: nightly.c5_18x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Training-Inference-TensorFlow-MKL"
+    Type: Inference
+    Framework: Tensorflow
+    Model: ResNet-50
+    Benchmark Desc: Batch size 32
+    Instance Type: c5.18xlarge
+    Throughput: images/sec(Inference with batch size 32)
+
 # ------------------ Tensorflow Horovod ----------------------------------------
   - Metric Prefix: mxnet.tensorflow_horovod_resnet50_p3_16xlg_batch_2048
     Metric Suffix: nightly.p3_16x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Training-TensorFlow-Horovod-Resnet50V1-Imagenet-GPU-8"
     Type: Training CV
     Framework: Tensorflow
     Framework Desc: Horovod
@@ -856,47 +931,5 @@ benchmarks:
     Top 1 Val Acc: Top 1 accuracy
     Throughput: Images per sec
     Time to Train: Time-to-train (seconds)
-# -----------------------------------------------------------------------------
-  - Metric Prefix: tensorflow.resnet50_imagenet_sagemaker_tf_docker
-    Metric Suffix: nightly.p3_16x
-    Type: Training CV
-    Framework: Tensorflow
-    Model: ResNet-50
-    Benchmark Desc: SageMaker/ImageNet
-    Instance Type: p3.16xlarge
-    Num Instances:
-    Perplexity:
-# Unused:
-# train-error-top5
-# train-error-top1
-# queue_size
-# xentropy-loss
-# l2_regularize_loss
-# learning_rate
-# ------------------ Resnet-50 -------------------------------------------------
-# TODO(vishaalk): This test doesn't appear in the dashboards, should it be removed?
-  - Metric Prefix: chainer.resnet50_imagenet_sagemaker_ch_docker
-    Metric Suffix: nightly.p3_16x
-    Type: Training CV
-    Framework: Chainer
-    Framework Desc: SageMaker
-    Model: ResNet-50
-    Benchmark Desc: ImageNet
-    Instance Type: p3.16xlarge
-    Uptime: uptime_in_seconds
-# -----------------------------------------------------------------------------
-  - Metric Prefix: pytorch.resnet50_imagenet_sagemaker_pt_docker
-    Metric Suffix: nightly.p3_16x
-    Type: Training CV
-    Framework: PyTorch
-    Model: ResNet-50
-    Benchmark Desc: SageMaker/ImageNet 480x256-q95
-    Instance Type: p3.16xlarge
-    Num Instances:
-    Perplexity:
-# Unused:
-# top 1 precision
-# loss
-# top 5 precision
-# seconds
+
 # -----------------------------------------------------------------------------

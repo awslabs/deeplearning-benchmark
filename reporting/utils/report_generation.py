@@ -142,7 +142,12 @@ def _add_report(worksheet, formats, row, benchmarks, benchmark_type):
             else:
                 format = formats['number']
 
-            worksheet.write(row + i + 1, j + 1, val, format)
+            if header == 'Framework' and 'DashboardUri' in benchmark:
+                uri = str(benchmark['DashboardUri'])
+                worksheet.write_url(row + i + 1, j + 1, uri, cell_format=format, string=val)
+            else:
+                worksheet.write(row + i + 1, j + 1, val, format)
+
             max_width = max(max_width, len(val))
 
 

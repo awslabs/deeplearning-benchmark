@@ -39,11 +39,11 @@ class Benchmarks(object):
                        'Latency', 'P50 Latency', 'P90 Latency', 'P99 Latency', 'Throughput',
                        'Error Rate', 'CPU Memory', 'GPU Memory Mean', 'GPU Memory Max', 'Uptime'],
         'Training CV' : ['Framework', 'Framework Desc', 'Model', 'Benchmark Desc', 'Instance Type',
-                         'Precision', 'Top1 val acc', 'Top1 train acc', 'Throughput',
+                         'Precision', 'Top 1 Val Acc', 'Top 1 Train Acc', 'Throughput',
                          'Time to Train', 'CPU Memory', 'GPU Memory Mean', 'GPU Memory Max',
                          'Uptime'],
         'Training NLP' : ['Framework', 'Framework Desc', 'Model', 'Benchmark Desc', 'Instance Type',
-                          'Precision', 'Perplexity', 'Throughput', 'Time to Train', 'CPU Memory',
+                          'Perplexity', 'Throughput', 'Time to Train', 'CPU Memory',
                           'GPU Memory Mean', 'GPU Memory Max', 'Uptime']
     }
     HEADER_UNITS = {
@@ -73,6 +73,7 @@ class Benchmarks(object):
     CATEGORICAL_HEADERS = ['Metric Prefix', 'Metric Suffix', 'Type', 'Test', 'Framework',
                            'Framework Desc', 'Model', 'Benchmark Desc', 'Instance Type',
                            'Num Instances', 'Precision']
+    META_INFO_HEADERS = ['Type', 'DashboardUri']
 
 
     def __init__(self, fetch_metrics = True):
@@ -89,7 +90,7 @@ class Benchmarks(object):
             metric_suffix =  benchmark_keys['Metric Suffix']
             headers = Benchmarks.HEADERS[benchmark_keys['Type']]
             benchmark = {}
-            for k in ['Type', *headers]:
+            for k in [*self.META_INFO_HEADERS, *headers]:
                 # Find a key and value pair that corresponds to a header and metric.
                 v = None
                 if k in benchmark_keys:
@@ -99,7 +100,7 @@ class Benchmarks(object):
 
                 if v is None:
                     continue
-                elif k in Benchmarks.CATEGORICAL_HEADERS:
+                elif k in Benchmarks.CATEGORICAL_HEADERS or k in Benchmarks.META_INFO_HEADERS:
                     benchmark[k] = v
                 else:
                     metric = "{}.{}.{}".format(metric_prefix, v, metric_suffix)
@@ -171,8 +172,8 @@ class Benchmarks(object):
         # TODO(vishaalk): Add functionality to fetch other time periods (e.g. last quarter).
         res = self._cw.get_metric_statistics(Namespace='benchmarkai-metrics-prod',
                                        MetricName=metric,
-                                       StartTime=datetime.now() - timedelta(days=1), EndTime=datetime.now(),
-                                       Period=86400, Statistics=['Average'])
+                                       StartTime=datetime.now() - timedelta(days=7), EndTime=datetime.now(),
+                                       Period=86400*7, Statistics=['Average'])
         points = res['Datapoints']
         if points:
             if len(points) > 1:
