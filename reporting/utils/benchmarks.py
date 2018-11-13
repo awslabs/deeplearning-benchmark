@@ -90,6 +90,7 @@ class Benchmarks(object):
             metric_suffix =  benchmark_keys['Metric Suffix']
             headers = Benchmarks.HEADERS[benchmark_keys['Type']]
             benchmark = {}
+            alarms = {}
             for k in [*self.META_INFO_HEADERS, *headers]:
                 # Find a key and value pair that corresponds to a header and metric.
                 v = None
@@ -105,6 +106,7 @@ class Benchmarks(object):
                 else:
                     metric = "{}.{}.{}".format(metric_prefix, v, metric_suffix)
                     benchmark[k] = self._get_metric(metric)
+                    alarms[k] = self._get_alarm_uris(metric)
 
             benchmark_type = benchmark_keys['Type']
             if benchmark_type not in self.HEADERS:
@@ -117,7 +119,7 @@ class Benchmarks(object):
                 if h not in benchmark:
                     benchmark[h] = ''
 
-            self._benchmarks.append(benchmark)
+            self._benchmarks.append((benchmark, alarms))
 
             self._metrics_fetched = True
 
@@ -134,15 +136,22 @@ class Benchmarks(object):
         Returns
         -------
         a 2-tuple of benchmarks, headers
-            Each benchmark is a dict mapping the headers to a measurable or categorical value. The
-            headers depend on the type specified. See self.HEADERS[type] for the list of headers.
+            Benchmarks is a list of 'benchmark's. Each benchmark is a 2-tuple.
+              The first coordinate is a dict mapping the headers to a measurable or categorical
+              value.
+              The second coordinate is a dict mapping headers for measurable values to the alarm
+              URIs for those alarms that have triggered. If none have triggered, an empty list is
+              returned.
+            - The headers depend on the type specified. See self.HEADERS[type] for the list of
+            headers.
             Note: 'Type' is included  by default as a header.
+
         """
         if not self._metrics_fetched:
             self.fetch_metrics_()
 
         headers = Benchmarks.HEADERS[type]
-        return list(filter(lambda x: x['Type'] == type, self._benchmarks)), headers
+        return list(filter(lambda x: x[0]['Type'] == type, self._benchmarks)), headers
 
 
     def append_header_unit(header):
@@ -170,10 +179,11 @@ class Benchmarks(object):
         logging.info("Requesting data for metric {}".format(metric))
 
         # TODO(vishaalk): Add functionality to fetch other time periods (e.g. last quarter).
-        res = self._cw.get_metric_statistics(Namespace='benchmarkai-metrics-prod',
-                                       MetricName=metric,
-                                       StartTime=datetime.now() - timedelta(days=7), EndTime=datetime.now(),
-                                       Period=86400*7, Statistics=['Average'])
+        res = self._cw.get_metric_statistics(
+            Namespace='benchmarkai-metrics-prod',
+            MetricName=metric,
+            StartTime=datetime.now() - timedelta(days=7), EndTime=datetime.now(),
+            Period=86400*7, Statistics=['Average'])
         points = res['Datapoints']
         if points:
             if len(points) > 1:
@@ -183,6 +193,26 @@ class Benchmarks(object):
         else:
             logging.warning("metric {} is without datapoints".format(metric))
             return ''
+
+
+    def _get_alarm_uris(self, metric):
+        logging.info("Requesting alarms for metric {}".format(metric))
+
+        res = self._cw.describe_alarms_for_metric(
+            Namespace='benchmarkai-metrics-prod',
+            MetricName=metric
+        )
+
+        # Return true iff of the alarms is in the ALARM state.
+        ALARM_URI = 'https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#alarm:\'' \
+                    'alarmFilter=ANY;name={}'
+        alarms = filter(lambda x: x['StateValue'] == 'ALARM', res['MetricAlarms'])
+        alarm_uris = list(map(lambda x: ALARM_URI.format(x['AlarmName']), alarms))
+
+        return alarm_uris
+
+
+
 
 
     def list_all_metrics(self):

@@ -83,6 +83,15 @@ def generate_report(filename_prefix, benchmarks):
                 'border': 1,
                 'border_color': '#9ea3aa'
             }
+        ),
+        'number-alarm-state' : workbook.add_format(
+            {
+                'align': 'center',
+                # 'num_format': '0.00', Doesn't appear to be working.
+                'bg_color': '#e51b1b',
+                'border': 1,
+                'border_color': '#9ea3aa'
+            }
         )
     }
 
@@ -124,6 +133,7 @@ def _add_report(worksheet, formats, row, benchmarks, benchmark_type):
         the row number following the report
     """
     benchmarks, headers = benchmarks.get_benchmarks(benchmark_type)
+
     if benchmarks is None:
         logging.warning('No benchmarks found for type "{}", skipping report'.format(benchmark_type))
         return row
@@ -136,19 +146,29 @@ def _add_report(worksheet, formats, row, benchmarks, benchmark_type):
         max_width = len(header)
 
         for i, benchmark in enumerate(benchmarks):
-            val = str(benchmark[header])
+            values = benchmark[0]
+            alarms = benchmark[1]
+
+            value = str(values[header])
+            is_alarm_state = header in alarms and alarms[header]
             if header in Benchmarks.CATEGORICAL_HEADERS:
                 format = formats['categorical']
+            elif is_alarm_state:
+                format = formats['number-alarm-state']
             else:
                 format = formats['number']
 
-            if header == 'Framework' and 'DashboardUri' in benchmark:
-                uri = str(benchmark['DashboardUri'])
-                worksheet.write_url(row + i + 1, j + 1, uri, cell_format=format, string=val)
+            if header == 'Framework' and 'DashboardUri' in values:
+                uri = str(values['DashboardUri'])
+                worksheet.write_url(row + i + 1, j + 1, uri, cell_format=format, string=value)
+            elif is_alarm_state:
+                # We link to the first alarm only.
+                worksheet.write_url(row + i + 1, j + 1, alarms[header][0], cell_format=format,
+                                    string=value)
             else:
-                worksheet.write(row + i + 1, j + 1, val, format)
+                worksheet.write(row + i + 1, j + 1, value, format)
 
-            max_width = max(max_width, len(val))
+            max_width = max(max_width, len(value))
 
 
         # Set the width of the column to minimally fit all cells.

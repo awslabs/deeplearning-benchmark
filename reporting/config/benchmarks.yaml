@@ -29,7 +29,7 @@
 #
 #    - Metric Prefix: the metric prefix without trailing period  (required)
 #      Metric Suffix: the metric suffix without leading period  (required)
-#      DashboardUri: The (quoted) uri for the dashboard (recommended, but not required).
+#      DashboardUri: The uri for the dashboard (recommended, but not required).
 #      Type: Training CV, Training NLP or Inference  (required)
 #      Framework: MXNet, Tensorflow, PyTorch, Caffe
 #      Framework Desc: Gluon, Module, Symbol, Gluon Hybrid, Horovod, SageMaker
