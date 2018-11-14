@@ -1,0 +1,16 @@
+Babel==2.6.0
+boto3==1.9.31
+botocore==1.12.31
+docutils==0.14
+et-xmlfile==1.0.1
+jdcal==1.4
+jmespath==0.9.3
+openpyxl==2.5.9
+python-dateutil==2.7.4
+pytz==2018.6
+PyYAML==3.13
+s3transfer==0.1.13
+six==1.11.0
+urllib3==1.24
+git+git://github.com/vishaalkapoor/xlsx2html@hyperlink#egg=xlsx2html
+XlsxWriter==1.1.2
