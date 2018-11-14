@@ -44,7 +44,9 @@ class Benchmarks(object):
                          'Uptime'],
         'Training NLP' : ['Framework', 'Framework Desc', 'Model', 'Benchmark Desc', 'Instance Type',
                           'Perplexity', 'Throughput', 'Time to Train', 'CPU Memory',
-                          'GPU Memory Mean', 'GPU Memory Max', 'Uptime']
+                          'GPU Memory Mean', 'GPU Memory Max', 'Uptime'],
+        'Model Import' : ['Framework', 'Framework Desc', 'Model', 'Benchmark Desc', 'Instance Type',
+                          'Latency']
     }
     HEADER_UNITS = {
         'Latency' : 'ms',
@@ -70,9 +72,8 @@ class Benchmarks(object):
         'Time to Train' : 'time_to_train',
         'Uptime' : 'uptime_in_seconds'
     }
-    CATEGORICAL_HEADERS = ['Metric Prefix', 'Metric Suffix', 'Type', 'Test', 'Framework',
-                           'Framework Desc', 'Model', 'Benchmark Desc', 'Instance Type',
-                           'Num Instances', 'Precision']
+    CATEGORICAL_HEADERS = ['Metric Prefix', 'Metric Suffix', 'Test', 'Framework', 'Framework Desc',
+                           'Model', 'Benchmark Desc', 'Instance Type', 'Num Instances', 'Precision']
     META_INFO_HEADERS = ['Type', 'DashboardUri']
 
 

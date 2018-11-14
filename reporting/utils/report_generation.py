@@ -92,6 +92,11 @@ def generate_report(filename_prefix, benchmarks):
                 'border': 1,
                 'border_color': '#9ea3aa'
             }
+        ),
+        'bold' : workbook.add_format(
+            {
+                'bold': 'True'
+            }
         )
     }
 
@@ -99,11 +104,13 @@ def generate_report(filename_prefix, benchmarks):
     worksheet.set_column('A:A', 20)
 
     row = 0
-    row = _add_report(worksheet, formats, row, benchmarks, 'Inference')
-    row += 3
-    row = _add_report(worksheet, formats, row, benchmarks, 'Training CV')
-    row += 3
-    _add_report(worksheet, formats, row, benchmarks, 'Training NLP')
+    for benchmark_type in Benchmarks.HEADERS.keys():
+        row = _add_report(worksheet, formats, row, benchmarks, benchmark_type)
+        row += 3
+
+    REPORT_FOOTNOTE = "Note: Data averaged weekly."
+    worksheet.write(row, 0, REPORT_FOOTNOTE, formats['bold'])
+
 
     workbook.close()
     xlsx2html(xlsx_filename, html_filename)

@@ -29,8 +29,8 @@
 #
 #    - Metric Prefix: the metric prefix without trailing period  (required)
 #      Metric Suffix: the metric suffix without leading period  (required)
-#      DashboardUri: The uri for the dashboard (recommended, but not required).
-#      Type: Training CV, Training NLP or Inference  (required)
+#      DashboardUri: The URI for the dashboard (recommended, but not required).
+#      Type: Training CV, Training NLP, Inference, or Model Import (required)
 #      Framework: MXNet, Tensorflow, PyTorch, Caffe
 #      Framework Desc: Gluon, Module, Symbol, Gluon Hybrid, Horovod, SageMaker
 #      Model: the model architecture e.g. ResNet-50
@@ -712,7 +712,7 @@ benchmarks:
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_gpu
     Metric Suffix: nightly.p3_8x
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-GPU"
-    Type: Inference
+    Type: Model Import
     Framework: MXNet
     Model: BVLC Alexnet
     Benchmark Desc: Import ONNX Model
@@ -721,7 +721,7 @@ benchmarks:
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_gpu
     Metric Suffix: nightly.p3_8x
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-GPU"
-    Type: Inference
+    Type: Model Import
     Framework: MXNet
     Model: BVLC GoogleNet
     Benchmark Desc: Import ONNX Model
@@ -730,7 +730,7 @@ benchmarks:
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_gpu
     Metric Suffix: nightly.p3_8x
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-GPU"
-    Type: Inference
+    Type: Model Import
     Framework: MXNet
     Model: DenseNet-121
     Benchmark Desc: Import ONNX Model
@@ -739,8 +739,7 @@ benchmarks:
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_gpu
     Metric Suffix: nightly.p3_8x
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-GPU"
-    Type: Inference
-    Type: Inference
+    Type: Model Import
     Framework: MXNet
     Model: SqueezeNet
     Benchmark Desc: Import ONNX Model
@@ -749,8 +748,7 @@ benchmarks:
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_gpu
     Metric Suffix: nightly.p3_8x
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-GPU"
-    Type: Inference
-    Type: Inference
+    Type: Model Import
     Framework: MXNet
     Model: BVLC Ref CaffeNet
     Benchmark Desc: Import ONNX Model
@@ -759,8 +757,7 @@ benchmarks:
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_gpu
     Metric Suffix: nightly.p3_8x
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-GPU"
-    Type: Inference
-    Type: Inference
+    Type: Model Import
     Framework: MXNet
     Model: ShuffleNet
     Benchmark Desc: Import ONNX Model
@@ -769,8 +766,7 @@ benchmarks:
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_gpu
     Metric Suffix: nightly.p3_8x
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-GPU"
-    Type: Inference
-    Type: Inference
+    Type: Model Import
     Framework: MXNet
     Model: BVLC Ref RCNN Ilsvrc13
     Benchmark Desc: Import ONNX Model
@@ -779,8 +775,7 @@ benchmarks:
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_gpu
     Metric Suffix: nightly.p3_8x
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-GPU"
-    Type: Inference
-    Type: Inference
+    Type: Model Import
     Framework: MXNet
     Model: VGG19
     Benchmark Desc: Import ONNX Model
@@ -789,8 +784,7 @@ benchmarks:
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_gpu
     Metric Suffix: nightly.p3_8x
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-GPU"
-    Type: Inference
-    Type: Inference
+    Type: Model Import
     Framework: MXNet
     Model: ResNet-50
     Benchmark Desc: Import ONNX Model
@@ -800,7 +794,7 @@ benchmarks:
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
     Metric Suffix: nightly.c5_18x
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-CPU"
-    Type: Inference
+    Type: Model Import
     Framework: MXNet
     Model: BVLC Alexnet
     Benchmark Desc: Import ONNX Model
@@ -809,7 +803,7 @@ benchmarks:
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
     Metric Suffix: nightly.c5_18x
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-CPU"
-    Type: Inference
+    Type: Model Import
     Framework: MXNet
     Model: BVLC GoogleNet
     Benchmark Desc: Import ONNX Model
@@ -818,7 +812,7 @@ benchmarks:
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
     Metric Suffix: nightly.c5_18x
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-CPU"
-    Type: Inference
+    Type: Model Import
     Framework: MXNet
     Model: DenseNet-121
     Benchmark Desc: Import ONNX Model
@@ -827,7 +821,7 @@ benchmarks:
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
     Metric Suffix: nightly.c5_18x
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-CPU"
-    Type: Inference
+    Type: Model Import
     Framework: MXNet
     Model: SqueezeNet
     Benchmark Desc: Import ONNX Model
@@ -836,7 +830,7 @@ benchmarks:
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
     Metric Suffix: nightly.c5_18x
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-CPU"
-    Type: Inference
+    Type: Model Import
     Framework: MXNet
     Model: BVLC Ref CaffeNet
     Benchmark Desc: Import ONNX Model
@@ -845,7 +839,7 @@ benchmarks:
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
     Metric Suffix: nightly.c5_18x
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-CPU"
-    Type: Inference
+    Type: Model Import
     Framework: MXNet
     Model: ShuffleNet
     Benchmark Desc: Import ONNX Model
@@ -854,7 +848,7 @@ benchmarks:
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
     Metric Suffix: nightly.c5_18x
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-CPU"
-    Type: Inference
+    Type: Model Import
     Framework: MXNet
     Model: BVLC Ref RCNN Ilsvrc13
     Benchmark Desc: Import ONNX Model
@@ -863,7 +857,7 @@ benchmarks:
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
     Metric Suffix: nightly.c5_18x
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-CPU"
-    Type: Inference
+    Type: Model Import
     Framework: MXNet
     Model: VGG19
     Benchmark Desc: Import ONNX Model
@@ -872,7 +866,7 @@ benchmarks:
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
     Metric Suffix: nightly.c5_18x
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-CPU"
-    Type: Inference
+    Type: Model Import
     Framework: MXNet
     Model: ResNet-50
     Benchmark Desc: Import ONNX Model
