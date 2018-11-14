@@ -38,6 +38,8 @@ def email_report(report_html, email_addr=REPORT_MAILLIST):
         the e-mail address to send the report to
     """
 
+    EMAIL_FOOTNOTE = '<i>Note: Values are averaged over the last 7 days.</i>'
+    html = "{}<br/><br/>{}".format(report_html, EMAIL_FOOTNOTE)
     logging.info("Sending e-mail report.")
     ses = boto3.client('ses')
     response = ses.send_email(
@@ -51,7 +53,7 @@ def email_report(report_html, email_addr=REPORT_MAILLIST):
             },
             'Body': {
                 'Html': {
-                    'Data': report_html
+                    'Data': html
                 }
             }
         }

@@ -32,8 +32,8 @@ import os
 
 from utils.benchmarks import Benchmarks
 from utils.email import email_report
-from utils.reports import HTML_EXTENSION
-from utils.reports import generate_report
+from utils.report_generation import HTML_EXTENSION
+from utils.report_generation import generate_report
 
 
 logging.getLogger().setLevel(logging.INFO)
