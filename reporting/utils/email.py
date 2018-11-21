@@ -25,7 +25,7 @@ import logging
 REPORT_EMAIL_FROM = 'vishaalk@amazon.com'
 REPORT_MAILLIST = 'benchmark-ai-reports@amazon.com'
 
-def email_report(report_html, email_addr=REPORT_MAILLIST):
+def email_report(report_html, email_addr=REPORT_MAILLIST, footnotes=''):
     """
     Send a Benchmark.AI report to an e-mail address
     TODO(vishaalk): Validate the e-mail address format.
@@ -34,12 +34,14 @@ def email_report(report_html, email_addr=REPORT_MAILLIST):
     ----------
     report_html : str
         the report formatted in HTML
-    email_addr : string
+    email_addr : str
         the e-mail address to send the report to
+    footnotes : str
+        any additional information to append to the information (e.g. non-public links). This should
+        be formatted with HTML tags.
     """
 
-    EMAIL_FOOTNOTE = '<i>Note: Values are averaged over the last 7 days.</i>'
-    html = "{}<br/><br/>{}".format(report_html, EMAIL_FOOTNOTE)
+    html = "{}<br/><br/>{}".format(report_html, footnotes)
     logging.info("Sending e-mail report.")
     ses = boto3.client('ses')
     response = ses.send_email(

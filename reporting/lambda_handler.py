@@ -56,7 +56,8 @@ def lambda_handler(event, context):
 
     logging.info('Emailing report.')
     EMAIL = os.environ['EMAIL']
-    email_report(report_html, EMAIL)
+    FOOTNOTES = os.environ['FOOTNOTES']  # allows passing in non-public information.
+    email_report(report_html, EMAIL, footnotes=FOOTNOTES)
 
     return {
         "statusCode": 200,
