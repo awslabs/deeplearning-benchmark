@@ -62,6 +62,160 @@
 #      Uptime: uptime_in_seconds
 #
 benchmarks:
+# ------------------ MXNET_Engine_Inference ------------------------------------
+  - Metric Prefix: mxnet.mxnet_resnet50_imagenet_inference_symbolic_fp16
+    Metric Suffix: daily.p3_2x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=MXNET_Engine_Inference"
+    Type: Inference
+    Framework: MXNet
+    Framework Desc: MKL/Symbol
+    Model: ResNet-50
+    Benchmark Desc: ImageNet
+    Instance Type: p3.2xlarge
+    Throughput: speed
+    Precision: FP16
+
+  - Metric Prefix: mxnet.mxnet_resnet50_imagenet_inference_symbolic_fp32
+    Metric Suffix: daily.p3_2x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=MXNET_Engine_Inference"
+    Type: Inference
+    Framework: MXNet
+    Framework Desc: MKL/Symbol
+    Model: ResNet-50
+    Benchmark Desc: ImageNet
+    Instance Type: p3.2xlarge
+    Precision: FP32
+    Throughput: speed
+
+  - Metric Prefix: mxnet.mxnet_resnet50_imagenet_inference_hybrid_fp32
+    Metric Suffix: daily.p3_2x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=MXNET_Engine_Inference"
+    Type: Inference
+    Framework: MXNet
+    Framework Desc: MKL/Hybrid
+    Model: ResNet-50
+    Benchmark Desc: ImageNet
+    Instance Type: p3.2xlarge
+    Precision: FP32
+    Throughput: speed
+
+  - Metric Prefix: mxnet.mxnet_resnet50_imagenet_inference_hybrid_mkl
+    Metric Suffix: daily.c5_18x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=MXNET_Engine_Inference"
+    Type: Inference
+    Framework: MXNet
+    Framework Desc: MKL/Hybrid
+    Model: ResNet-50
+    Benchmark Desc: ImageNet
+    Instance Type: c5.18xlarge
+    Throughput: speed
+
+  - Metric Prefix: mxnet.mxnet_resnet50_imagenet_inference_hybrid_nomkl
+    Metric Suffix: daily.c5_18x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=MXNET_Engine_Inference"
+    Type: Inference
+    Framework: MXNet
+    Framework Desc: Symbol
+    Model: ResNet-50
+    Benchmark Desc: ImageNet
+    Instance Type: c5.18xlarge
+    Throughput: speed
+
+  - Metric Prefix: mxnet.mxnet_resnet50_imagenet_inference_symbolic_mkl
+    Metric Suffix: daily.c5_18x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=MXNET_Engine_Inference"
+    Type: Inference
+    Framework: MXNet
+    Framework Desc: MKL/Symbol
+    Model: ResNet-50
+    Benchmark Desc: ImageNet
+    Instance Type: c5.18xlarge
+    Throughput: speed
+
+  - Metric Prefix: mxnet.mxnet_resnet50_imagenet_inference_symbolic_nomkl
+    Metric Suffix: daily.c5_18x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=MXNET_Engine_Inference"
+    Type: Inference
+    Framework: MXNet
+    Framework Desc: Symbol
+    Model: ResNet-50
+    Benchmark Desc: ImageNet
+    Instance Type: c5.18xlarge
+    Throughput: speed
+
+# ------------------ MXNET_Engine_Training -------------------------------------
+  - Metric Prefix: mxnet.mkl_resnet18_cifar10_symbolic
+    Metric Suffix: daily.c5_18x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=MXNET_Engine_Training"
+    Type: Training CV
+    Framework: MXNet
+    Framework Desc: MKL/Symbol
+    Model: ResNet-18
+    Benchmark Desc: CIFAR-10
+    Instance Type: c5.18xlarge
+    Throughput: speed
+    Time to Train: total_training_time
+    Top 1 Val Acc: validation_acc
+    Top 1 Train Acc: training_acc
+
+  - Metric Prefix: mxnet.mxnet_mkl_resnet50v1_imagenet_symbolic_fp32
+    Metric Suffix: daily.c5_18x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name="
+    Type: Training CV
+    Framework: MXNet
+    Framework Desc: MKL/Symbol
+    Model: ResNet50-V1
+    Benchmark Desc: ImageNet
+    Instance Type: c5.18xlarge
+    Throughput: speed
+    Precision: FP32
+    Time to Train: total_training_time
+      #
+# ------------------ MXNET_MKL_LSTM_PTB_Imperative_Training --------------------
+  - Metric Prefix: mxnet.mkl_lstm_ptb_imperative
+    Metric Suffix: daily.c5_18x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=MXNET_MKL_LSTM_PTB_Imperative_Training"
+    Type: Training NLP
+    Framework: MXNet
+    Framework Desc: MKL/Gluon
+    Model: LSTM
+    Benchmark Desc: PTB
+    Instance Type: c5.18xlarge
+    Throughput: speed
+    Time to Train: total_training_time
+    Validation Loss: validation_loss
+    Validation Perplexity: validation_perplexity
+
+# ------------------ MXNET_MKL_LSTM_PTB_Symbolic_Training ----------------------
+  - Metric Prefix: mxnet.mkl_lstm_ptb_symbolic
+    Metric Suffix: daily.c5_18x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=MXNET_MKL_LSTM_PTB_Symbolic_Training"
+    Type: Training NLP
+    Framework: MXNet
+    Framework Desc: MKL/Symbol
+    Model: LSTM
+    Benchmark Desc: PTB
+    Instance Type: c5.18xlarge
+    Throughput: speed
+    Time to Train: total_training_time
+    Validation Loss: validation_loss
+    Validation Perplexity: validation_perplexity
+
+# ------------------ MXNET_MKL_LSTM_PTB_Hybrid_Training ----------------------
+  - Metric Prefix: mxnet.mkl_lstm_ptb_hybrid
+    Metric Suffix: daily.c5_18x
+    DashboardUri:
+    Type: Training NLP
+    Framework: MXNet
+    Framework Desc: MKL/Hybrid
+    Model: LSTM
+    Benchmark Desc: PTB
+    Instance Type: c5.18xlarge
+    Throughput: speed
+    Time to Train: total_training_time
+    Validation Loss: validation_loss
+    Validation Perplexity: validation_perplexity
+
 # ------------------ DAWNBench CIFAR-10 ----------------------------------------
   - Metric Prefix: mxnet.dawnbench_cifar10_resnet164_basic_gluon
     Metric Suffix: _p3_2x_nightly
@@ -74,7 +228,6 @@ benchmarks:
     Instance Type: p3.2xlarge
     Throughput: training_throughput
     Time to Train: training_duration
-    Uptime: uptime_in_seconds
 
   - Metric Prefix: mxnet.dawnbench_cifar10_resnet164_basic_gluon
     Metric Suffix: _p3_2x_nightly
@@ -87,7 +240,6 @@ benchmarks:
     Instance Type: p3.2xlarge
     Latency: inference_latency
     Throughput: inference_throughput
-    Uptime: uptime_in_seconds
 
   - Metric Prefix: mxnet.dawnbench_cifar10_resnet164_basic_gluon_infer
     Metric Suffix: _c5_18x_nightly
@@ -101,7 +253,6 @@ benchmarks:
     Instance Type: c5.18xlarge
     Latency: inference_latency
     Throughput: inference_throughput
-    Uptime: uptime_in_seconds
 
 # ------------------ DAWNBench CIFAR-10 Gluon Hybrid ---------------------------
   - Metric Prefix: mxnet.dawnbench_cifar10_resnet164_basic_gluon_hybrid
@@ -115,7 +266,6 @@ benchmarks:
     Instance Type: p3.2xlarge
     Throughput: training_throughput
     Time to Train: training_duration
-    Uptime: uptime_in_seconds
 
   - Metric Prefix: mxnet.dawnbench_cifar10_resnet164_basic_gluon_hybrid
     Metric Suffix: _p3_2x_nightly
@@ -128,7 +278,6 @@ benchmarks:
     Instance Type: p3.2xlarge
     Latency: inference_latency
     Throughput: inference_throughput
-    Uptime: uptime_in_seconds
 
   - Metric Prefix: mxnet.dawnbench_cifar10_resnet164_basic_gluon_hybrid_infer
     Metric Suffix: _c5_18x_nightly
@@ -141,7 +290,6 @@ benchmarks:
     Instance Type: c5.18xlarge
     Latency: inference_latency
     Throughput: inference_throughput
-    Uptime: uptime_in_seconds
 
 # ------------------ DAWNBench CIFAR-10 Module ----------------------------
   - Metric Prefix: mxnet.dawnbench_cifar10_resnet164_basic_module
@@ -155,7 +303,6 @@ benchmarks:
     Instance Type: p3.2xlarge
     Throughput: training_throughput
     Time to Train: training_duration
-    Uptime: uptime_in_seconds
 
   - Metric Prefix: mxnet.dawnbench_cifar10_resnet164_basic_module
     Metric Suffix: _p3_2x_nightly
@@ -168,7 +315,6 @@ benchmarks:
     Instance Type: p3.2xlarge
     Latency: inference_latency
     Throughput: inference_throughput
-    Uptime: uptime_in_seconds
 
   - Metric Prefix: mxnet.dawnbench_cifar10_resnet164_basic_module_infer
     Metric Suffix: _c5_18x_nightly
@@ -181,7 +327,6 @@ benchmarks:
     Instance Type: c5.18xlarge
     Latency: inference_latency
     Throughput: inference_throughput
-    Uptime: uptime_in_seconds
 
 # ------------------ LSTM PTB --------------------------------------------------
   - Metric Prefix: mxnet.lstm_ptb_imperative
@@ -199,7 +344,6 @@ benchmarks:
     Time to Train: total_training_time
     Validation Loss: validation_loss
     Validation Perplexity: validation_perplexity
-    Uptime: uptime_in_seconds
   - Metric Prefix: mxnet.lstm_ptb_imperative
     Metric Suffix: nightly.c5_18x
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Training-MxNet-LSTM-PTB-CPU-Single"
@@ -215,7 +359,6 @@ benchmarks:
     Time to Train: total_training_time
     Validation Loss: validation_loss
     Validation Perplexity: validation_perplexity
-    Uptime: uptime_in_seconds
   - Metric Prefix: mxnet.lstm_ptb_imperative
     Metric Suffix: nightly.p2_16x
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Training-MxNet-LSTM-PTB-GPU-Single"
@@ -231,7 +374,6 @@ benchmarks:
     Time to Train: total_training_time
     Validation Loss: validation_loss
     Validation Perplexity: validation_perplexity
-    Uptime: uptime_in_seconds
   - Metric Prefix: mxnet.lstm_ptb_imperative
     Metric Suffix: nightly.p3_x
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Training-MxNet-LSTM-PTB-GPU-Single"
@@ -247,7 +389,6 @@ benchmarks:
     Time to Train: total_training_time
     Validation Loss: validation_loss
     Validation Perplexity: validation_perplexity
-    Uptime: uptime_in_seconds
 
   - Metric Prefix: mxnet.lstm_ptb_symbolic
     Metric Suffix: nightly.c4_8x
@@ -263,7 +404,6 @@ benchmarks:
     Throughput: speed
     Time to Train: total_training_time
     Validation Perplexity: validation_perplexity
-    Uptime: uptime_in_seconds
   - Metric Prefix: mxnet.lstm_ptb_symbolic
     Metric Suffix: nightly.c5_18x
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Training-MxNet-LSTM-PTB-CPU-Single"
@@ -278,7 +418,6 @@ benchmarks:
     Throughput: speed
     Time to Train: total_training_time
     Validation Perplexity: validation_perplexity
-    Uptime: uptime_in_seconds
   - Metric Prefix: mxnet.lstm_ptb_symbolic
     Metric Suffix: nightly.p2_16x
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Training-MxNet-LSTM-PTB-GPU-Single"
@@ -294,7 +433,6 @@ benchmarks:
     Throughput: speed
     Time to Train: total_training_time
     Validation Perplexity: validation_perplexity
-    Uptime: uptime_in_seconds
   - Metric Prefix: mxnet.lstm_ptb_symbolic
     Metric Suffix: nightly.p3_x
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Training-MxNet-LSTM-PTB-GPU-Single"
@@ -309,7 +447,6 @@ benchmarks:
     Throughput: speed
     Time to Train: total_training_time
     Validation Perplexity: validation_perplexity
-    Uptime: uptime_in_seconds
 
 # ------------------ MXNet Model Server - GPU ----------------------------------
   - Metric Prefix: mxnet.mms_lstm_ptb_gpu
@@ -447,6 +584,7 @@ benchmarks:
     # throughput_resnet-18_Inference_Request_aggregate_report_90_line
     # throughput_resnet-18_Inference_Request_aggregate_report_99_line
 
+
 # ------------------ Resnet-50V1 ------------------------------------------------
   - Metric Prefix: mxnet.mxnet_resnet50v1_imagenet_gluon_fp16
     Metric Suffix: daily.p3_16x
@@ -463,7 +601,6 @@ benchmarks:
     Top 1 Train Acc: training_acc
     Throughput: speed
     Time to Train: total_training_time
-    Uptime: uptime_in_seconds
 
   - Metric Prefix: mxnet.mxnet_resnet50v1_imagenet_symbolic_fp16
     Metric Suffix: daily.p3_16x
@@ -480,7 +617,6 @@ benchmarks:
     Top 1 Train Acc: training_acc
     Throughput: speed
     Time to Train: total_training_time
-    Uptime: uptime_in_seconds
 
   - Metric Prefix: mxnet.mxnet_resnet50v1_imagenet_symbolic_fp32
     Metric Suffix: daily.p3_16x
@@ -497,7 +633,6 @@ benchmarks:
     Top 1 Train Acc: training_acc
     Throughput: speed
     Time to Train: total_training_time
-    Uptime: uptime_in_seconds
 
   - Metric Prefix: mxnet.mxnet_resnet50v1_imagenet_symbolic_fp16_p38x
     Metric Suffix: daily.p3_16x
@@ -514,7 +649,6 @@ benchmarks:
     Top 1 Train Acc: training_acc
     Throughput: speed
     Time to Train: total_training_time
-    Uptime: uptime_in_seconds
 
   - Metric Prefix: mxnet.mxnet_resnet50v1_imagenet_symbolic_fp16_p38x
     Metric Suffix: daily.p3_16x
@@ -531,7 +665,6 @@ benchmarks:
     Top 1 Train Acc: training_acc
     Throughput: speed
     Time to Train: total_training_time
-    Uptime: uptime_in_seconds
 
 # ------------------ Resnet-50V2 ------------------------------------------------
   - Metric Prefix: mxnet.mxnet_resnet50v2_imagenet_symbolic_fp16
@@ -587,7 +720,7 @@ benchmarks:
     Type: Inference
     Framework: MXNet
     Framework Desc: Scala
-    Model: 
+    Model:
     Benchmark Desc: Single
     Instance Type: p3.16xlarge
     Latency: single_inference_average
@@ -601,7 +734,7 @@ benchmarks:
     Type: Inference
     Framework: MXNet
     Framework Desc: Scala
-    Model: 
+    Model:
     Benchmark Desc: Batch size 20
     Instance Type: p3.16xlarge
     Latency: batch_inference_average
@@ -645,20 +778,6 @@ benchmarks:
     Framework: MXNet
     Framework Desc: Scala
     Model: Char-RNN
-    Benchmark Desc: Single 
-    Instance Type: c5.2xlarge
-    Latency: single_inference_average
-    P50 Latency: single_inference_p50
-    P90 Latency: single_inference_p90
-    P99 Latency: single_inference_p99
-
-  - Metric Prefix: mxnet.scala_inference_cpu
-    Metric Suffix: nightly.c5_2x
-    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Scala-Inference-CPU"
-    Type: Inference
-    Framework: MXNet
-    Framework Desc: Scala
-    Model: 
     Benchmark Desc: Single
     Instance Type: c5.2xlarge
     Latency: single_inference_average
@@ -672,7 +791,21 @@ benchmarks:
     Type: Inference
     Framework: MXNet
     Framework Desc: Scala
-    Model: 
+    Model:
+    Benchmark Desc: Single
+    Instance Type: c5.2xlarge
+    Latency: single_inference_average
+    P50 Latency: single_inference_p50
+    P90 Latency: single_inference_p90
+    P99 Latency: single_inference_p99
+
+  - Metric Prefix: mxnet.scala_inference_cpu
+    Metric Suffix: nightly.c5_2x
+    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Scala-Inference-CPU"
+    Type: Inference
+    Framework: MXNet
+    Framework Desc: Scala
+    Model:
     Benchmark Desc: Batch size 20
     Instance Type: c5.2xlarge
     Latency: batch_inference_average
@@ -878,6 +1011,7 @@ benchmarks:
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Training-Inference-TensorFlow-MKL"
     Type: Training CV
     Framework: Tensorflow
+    FrameworkDesc: MKL
     Model: ResNet-50
     Benchmark Desc: Batch size 1
     Instance Type: c5.18xlarge
@@ -888,6 +1022,7 @@ benchmarks:
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Training-Inference-TensorFlow-MKL"
     Type: Training CV
     Framework: Tensorflow
+    FrameworkDesc: MKL
     Model: ResNet-50
     Benchmark Desc: Batch size 32
     Instance Type: c5.18xlarge
@@ -898,6 +1033,7 @@ benchmarks:
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Training-Inference-TensorFlow-MKL"
     Type: Inference
     Framework: Tensorflow
+    FrameworkDesc: MKL
     Model: ResNet-50
     Benchmark Desc: Batch size 1
     Instance Type: c5.18xlarge
@@ -908,6 +1044,7 @@ benchmarks:
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Training-Inference-TensorFlow-MKL"
     Type: Inference
     Framework: Tensorflow
+    FrameworkDesc: MKL
     Model: ResNet-50
     Benchmark Desc: Batch size 32
     Instance Type: c5.18xlarge
