@@ -214,8 +214,6 @@ class Benchmarks(object):
 
 
 
-
-
     def list_all_metrics(self):
         """
         Lists all metrics in the Benchmark.AI namespace.
