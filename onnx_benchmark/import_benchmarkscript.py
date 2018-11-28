@@ -37,6 +37,7 @@ def profile_model(model_path, test_data, context):
                   if graph_input not in arg_params and graph_input not in aux_params]
 
     inference_time = 0
+    inference_time_list = []
     for data_idx, _ in enumerate(test_data):
         data_shapes = []
         data_forward = []
@@ -62,9 +63,10 @@ def profile_model(model_path, test_data, context):
         # total_time = "{:.9f}".format(total_time)
         # log_data.update({test_data_name: total_time})
         inference_time += total_time
+        inference_time_list.append(total_time)
 
     avg_inference_time = inference_time / len(test_data)
-    return avg_inference_time
+    return avg_inference_time, inference_time_list
 
 
 if __name__ == '__main__':
@@ -77,6 +79,12 @@ if __name__ == '__main__':
             model_path = os.path.join(model_dir, "model.onnx")
             test_data = get_model_input(model_dir)
 
-            avg_infer_time = profile_model(model_path, test_data, ctx)
+            avg_infer_time, infer_time_list = profile_model(model_path, test_data, ctx)
+            p50_infer_time = np.percentile(infer_time_list, 50)
+            p90_infer_time = np.percentile(infer_time_list, 90)
+            p99_infer_time = np.percentile(infer_time_list, 99)
 
             print('Average_inference_time_{}_{}: {:.9f}'.format(directory, ctx, avg_infer_time))
+            print('P50_inference_time_{}_{}: {:.9f}'.format(directory, ctx, p50_infer_time))
+            print('P90_inference_time_{}_{}: {:.9f}'.format(directory, ctx, p90_infer_time))
+            print('P99_inference_time_{}_{}: {:.9f}'.format(directory, ctx, p99_infer_time))
