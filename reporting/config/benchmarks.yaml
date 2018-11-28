@@ -1011,7 +1011,7 @@ benchmarks:
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Training-Inference-TensorFlow-MKL"
     Type: Training CV
     Framework: Tensorflow
-    FrameworkDesc: MKL
+    Framework Desc: MKL
     Model: ResNet-50
     Benchmark Desc: Batch size 1
     Instance Type: c5.18xlarge
@@ -1022,33 +1022,34 @@ benchmarks:
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Training-Inference-TensorFlow-MKL"
     Type: Training CV
     Framework: Tensorflow
-    FrameworkDesc: MKL
+    Framework Desc: MKL
     Model: ResNet-50
     Benchmark Desc: Batch size 32
     Instance Type: c5.18xlarge
     Throughput: images/sec(training with batch size 32)
 
-  - Metric Prefix: mxnet.tensorflow_mkl_c5_resnet50_18xlg
-    Metric Suffix: nightly.c5_18x
-    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Training-Inference-TensorFlow-MKL"
-    Type: Inference
-    Framework: Tensorflow
-    FrameworkDesc: MKL
-    Model: ResNet-50
-    Benchmark Desc: Batch size 1
-    Instance Type: c5.18xlarge
-    Throughput: images/sec(Inference with batch size 1)
-
-  - Metric Prefix: mxnet.tensorflow_mkl_c5_resnet50_18xlg
-    Metric Suffix: nightly.c5_18x
-    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Training-Inference-TensorFlow-MKL"
-    Type: Inference
-    Framework: Tensorflow
-    FrameworkDesc: MKL
-    Model: ResNet-50
-    Benchmark Desc: Batch size 32
-    Instance Type: c5.18xlarge
-    Throughput: images/sec(Inference with batch size 32)
+# The Tensorflow MKL Inference benchmarks are not live.
+# - Metric Prefix: mxnet.tensorflow_mkl_c5_resnet50_18xlg
+#   Metric Suffix: nightly.c5_18x
+#   DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Training-Inference-TensorFlow-MKL"
+#   Type: Inference
+#   Framework: Tensorflow
+#   Framework  Desc: MKL
+#   Model: ResNet-50
+#   Benchmark Desc: Batch size 1
+#   Instance Type: c5.18xlarge
+#   Throughput: images/sec(Inference with batch size 1)
+#
+# - Metric Prefix: mxnet.tensorflow_mkl_c5_resnet50_18xlg
+#   Metric Suffix: nightly.c5_18x
+#   DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Training-Inference-TensorFlow-MKL"
+#   Type: Inference
+#   Framework: Tensorflow
+#   Framework Desc: MKL
+#   Model: ResNet-50
+#   Benchmark Desc: Batch size 32
+#   Instance Type: c5.18xlarge
+#   Throughput: images/sec(Inference with batch size 32)
 
 # ------------------ Tensorflow Horovod ----------------------------------------
   - Metric Prefix: mxnet.tensorflow_horovod_resnet50_p3_16xlg_batch_2048
