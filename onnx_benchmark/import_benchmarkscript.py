@@ -25,6 +25,11 @@ def get_model_input(model_dir):
                 tensor.ParseFromString(f.read())
             model_inputs.append(numpy_helper.to_array(tensor))
 
+    input_shape = model_inputs[-1].shape
+    # generating 1000 data points for inference time test
+    for _ in range(1000 - len(model_inputs)):
+        model_inputs.append(np.random.randn(*input_shape))
+
     return model_inputs
 
 
