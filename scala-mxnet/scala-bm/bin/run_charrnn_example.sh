@@ -26,7 +26,7 @@ CURR_DIR=$(cd $(dirname $0)/../; pwd)
 echo $CURR_DIR
 echo $platform-$hw_type
 
-mvn clean install dependency:copy-dependencies package -Dmxnet.profile=$platform-$hw_type -Dmxnet.scalaprofile=$SCALA_VERSION_PROFILE -Dmxnet.version=$MXNET_VERSION
+./mvnw clean install dependency:copy-dependencies package -Dmxnet.profile=$platform-$hw_type -Dmxnet.scalaprofile=$SCALA_VERSION_PROFILE -Dmxnet.version=$MXNET_VERSION
 
 CURR_DIR=$(cd $(dirname $0)/../; pwd)
 
