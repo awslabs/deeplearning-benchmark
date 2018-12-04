@@ -41,7 +41,6 @@ def profile_model(model_path, test_data, context):
     data_names = [graph_input for graph_input in sym.list_inputs()
                   if graph_input not in arg_params and graph_input not in aux_params]
 
-    inference_time = 0
     inference_time_list = []
     for data_idx, _ in enumerate(test_data):
         data_shapes = []
@@ -64,12 +63,10 @@ def profile_model(model_path, test_data, context):
         start = time.time()
         mod.forward(mx.io.DataBatch(data_forward))
         _ = mod.get_outputs()[0].asnumpy()
-        total_time = (time.time() - start) * 1000
-        inference_time += total_time
-        inference_time_list.append(total_time)
+        total_time_in_ms = (time.time() - start) * 1000
+        inference_time_list.append(total_time_in_ms)
 
-    avg_inference_time = inference_time / len(test_data)
-    return avg_inference_time, inference_time_list
+    return inference_time_list
 
 
 if __name__ == '__main__':
@@ -82,7 +79,8 @@ if __name__ == '__main__':
             model_path = os.path.join(model_dir, "model.onnx")
             test_data = get_model_input(model_dir)
 
-            avg_infer_time, infer_time_list = profile_model(model_path, test_data, ctx)
+            infer_time_list = profile_model(model_path, test_data, ctx)
+            avg_infer_time = np.average(infer_time_list)
             p50_infer_time = np.percentile(infer_time_list, 50)
             p90_infer_time = np.percentile(infer_time_list, 90)
             p99_infer_time = np.percentile(infer_time_list, 99)
