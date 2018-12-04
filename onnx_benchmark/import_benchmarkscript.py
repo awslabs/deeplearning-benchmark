@@ -37,7 +37,7 @@ def profile_model(model_path, test_data, context):
     import mxnet as mx
 
     sym, arg_params, aux_params = mx.contrib.onnx.import_model(model_path)
-    ctx = mx.gpu() if context == "gpu" else mx.cpu()
+    ctx = mx.gpu(0) if context == "gpu" else mx.cpu()
     data_names = [graph_input for graph_input in sym.list_inputs()
                   if graph_input not in arg_params and graph_input not in aux_params]
 
@@ -55,10 +55,11 @@ def profile_model(model_path, test_data, context):
         mod.set_params(arg_params=arg_params, aux_params=aux_params)
 
     for val in test_data:
-        data_forward = [mx.nd.array(val)]
+        data_forward = [mx.nd.array(val, ctx=ctx)]
         start = time.time()
         mod.forward(mx.io.DataBatch(data_forward))
-        _ = mod.get_outputs()[0].asnumpy()
+        for output in mod.get_outputs():
+            output.wait_to_read()
         total_time_in_ms = (time.time() - start) * 1000
         inference_time_list.append(total_time_in_ms)
 
