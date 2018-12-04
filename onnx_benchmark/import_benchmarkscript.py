@@ -42,24 +42,20 @@ def profile_model(model_path, test_data, context):
                   if graph_input not in arg_params and graph_input not in aux_params]
 
     inference_time_list = []
-    for data_idx, _ in enumerate(test_data):
-        data_shapes = []
-        data_forward = []
-        for idx, input_name in enumerate(data_names):
-            val = test_data[idx + data_idx]
-            data_shapes.append((input_name, val.shape))
-            data_forward.append(mx.nd.array(val))
+    data_shapes = [(data_names[0], test_data[0].shape)]
 
-        # create a module
-        mod = mx.mod.Module(symbol=sym, data_names=data_names, context=ctx, label_names=None)
-        mod.bind(for_training=False, data_shapes=data_shapes, label_shapes=None)
+    # create a module
+    mod = mx.mod.Module(symbol=sym, data_names=data_names, context=ctx, label_names=None)
+    mod.bind(for_training=False, data_shapes=data_shapes, label_shapes=None)
 
-        # initializing parameters for calculating result of each individual node
-        if arg_params is None and aux_params is None:
-            mod.init_params()
-        else:
-            mod.set_params(arg_params=arg_params, aux_params=aux_params)
+     # initializing parameters for calculating result of each individual node
+    if arg_params is None and aux_params is None:
+        mod.init_params()
+    else:
+        mod.set_params(arg_params=arg_params, aux_params=aux_params)
 
+    for val in test_data:
+        data_forward = [mx.nd.array(val)]
         start = time.time()
         mod.forward(mx.io.DataBatch(data_forward))
         _ = mod.get_outputs()[0].asnumpy()
