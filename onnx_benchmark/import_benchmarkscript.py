@@ -65,8 +65,6 @@ def profile_model(model_path, test_data, context):
         mod.forward(mx.io.DataBatch(data_forward))
         _ = mod.get_outputs()[0].asnumpy()
         total_time = (time.time() - start) * 1000
-        # total_time = "{:.9f}".format(total_time)
-        # log_data.update({test_data_name: total_time})
         inference_time += total_time
         inference_time_list.append(total_time)
 
