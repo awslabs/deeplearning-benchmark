@@ -54,6 +54,8 @@ def profile_model(model_path, test_data, context):
     else:
         mod.set_params(arg_params=arg_params, aux_params=aux_params)
 
+    mx.nd.waitall()
+
     for val in test_data:
         data_forward = [mx.nd.array(val, ctx=ctx)]
         start = time.time()
