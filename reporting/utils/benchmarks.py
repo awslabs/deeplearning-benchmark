@@ -46,7 +46,8 @@ class Benchmarks(object):
         'Training NLP' : ['Framework', 'Framework Desc', 'Model', 'Benchmark Desc', 'Instance Type',
                           'Perplexity', 'Throughput', 'Time to Train', 'CPU Memory',
                           'GPU Memory Mean', 'GPU Memory Max', 'Uptime'],
-        'Model Import' : ['Framework', 'Model', 'Benchmark Desc', 'Instance Type', 'Latency']
+        'Model Import' : ['Framework', 'Model', 'Benchmark Desc', 'Instance Type', 'Latency',
+                          'P50 Latency', 'P90 Latency', 'P99 Latency']
     }
     HEADER_UNITS = {
         'Latency' : 'ms',
