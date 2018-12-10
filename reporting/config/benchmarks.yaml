@@ -872,86 +872,114 @@ benchmarks:
 
 # ------------------ ONNX MXNet Import Model - GPU -----------------------------
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_gpu
-    Metric Suffix: nightly.p3_8x
+    Metric Suffix: nightly.p3_2x
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-GPU"
     Type: Model Import
     Framework: MXNet
     Model: BVLC Alexnet
     Benchmark Desc: Import ONNX Model
-    Instance Type: p3.8xlarge
+    Instance Type: p3.2xlarge
+    Instance Type: p3.2xlarge
     Latency: Average_inference_time_bvlc_alexnet_gpu
+    P50 Latency: P50_inference_time_bvlc_alexnet_gpu
+    P90 Latency: P90_inference_time_bvlc_alexnet_gpu
+    P99 Latency: P99_inference_time_bvlc_alexnet_gpu
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_gpu
-    Metric Suffix: nightly.p3_8x
+    Metric Suffix: nightly.p3_2x
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-GPU"
     Type: Model Import
     Framework: MXNet
     Model: BVLC GoogleNet
     Benchmark Desc: Import ONNX Model
-    Instance Type: p3.8xlarge
+    Instance Type: p3.2xlarge
     Latency: Average_inference_time_bvlc_googlenet_gpu
+    P50 Latency: P50_inference_time_bvlc_googlenet_gpu
+    P90 Latency: P90_inference_time_bvlc_googlenet_gpu
+    P99 Latency: P99_inference_time_bvlc_googlenet_gpu
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_gpu
-    Metric Suffix: nightly.p3_8x
+    Metric Suffix: nightly.p3_2x
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-GPU"
     Type: Model Import
     Framework: MXNet
     Model: DenseNet-121
     Benchmark Desc: Import ONNX Model
-    Instance Type: p3.8xlarge
+    Instance Type: p3.2xlarge
     Latency: Average_inference_time_densenet121_gpu
+    P50 Latency: P50_inference_time_densenet121_gpu
+    P90 Latency: P90_inference_time_densenet121_gpu
+    P99 Latency: P99_inference_time_densenet121_gpu
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_gpu
-    Metric Suffix: nightly.p3_8x
+    Metric Suffix: nightly.p3_2x
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-GPU"
     Type: Model Import
     Framework: MXNet
     Model: SqueezeNet
     Benchmark Desc: Import ONNX Model
-    Instance Type: p3.8xlarge
+    Instance Type: p3.2xlarge
     Latency: Average_inference_time_squeezenet_gpu
+    P50 Latency: P50_inference_time_squeezenet_gpu
+    P90 Latency: P90_inference_time_squeezenet_gpu
+    P99 Latency: P99_inference_time_squeezenet_gpu
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_gpu
-    Metric Suffix: nightly.p3_8x
+    Metric Suffix: nightly.p3_2x
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-GPU"
     Type: Model Import
     Framework: MXNet
     Model: BVLC Ref CaffeNet
     Benchmark Desc: Import ONNX Model
-    Instance Type: p3.8xlarge
+    Instance Type: p3.2xlarge
     Latency: Average_inference_time_bvlc_reference_caffenet_gpu
+    P50 Latency: P50_inference_time_bvlc_reference_caffenet_gpu
+    P90 Latency: P90_inference_time_bvlc_reference_caffenet_gpu
+    P99 Latency: P99_inference_time_bvlc_reference_caffenet_gpu
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_gpu
-    Metric Suffix: nightly.p3_8x
+    Metric Suffix: nightly.p3_2x
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-GPU"
     Type: Model Import
     Framework: MXNet
     Model: ShuffleNet
     Benchmark Desc: Import ONNX Model
-    Instance Type: p3.8xlarge
+    Instance Type: p3.2xlarge
     Latency: Average_inference_time_shufflenet_gpu
+    P50 Latency: P50_inference_time_shufflenet_gpu
+    P90 Latency: P90_inference_time_shufflenet_gpu
+    P99 Latency: P99_inference_time_shufflenet_gpu
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_gpu
-    Metric Suffix: nightly.p3_8x
+    Metric Suffix: nightly.p3_2x
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-GPU"
     Type: Model Import
     Framework: MXNet
     Model: BVLC Ref RCNN Ilsvrc13
     Benchmark Desc: Import ONNX Model
-    Instance Type: p3.8xlarge
+    Instance Type: p3.2xlarge
     Latency: Average_inference_time_bvlc_reference_rcnn_ilsvrc13_gpu
+    P50 Latency: P50_inference_time_bvlc_reference_rcnn_ilsvrc13_gpu
+    P90 Latency: P90_inference_time_bvlc_reference_rcnn_ilsvrc13_gpu
+    P99 Latency: P99_inference_time_bvlc_reference_rcnn_ilsvrc13_gpu
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_gpu
-    Metric Suffix: nightly.p3_8x
+    Metric Suffix: nightly.p3_2x
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-GPU"
     Type: Model Import
     Framework: MXNet
     Model: VGG19
     Benchmark Desc: Import ONNX Model
-    Instance Type: p3.8xlarge
+    Instance Type: p3.2xlarge
     Latency: Average_inference_time_vgg19_gpu
+    P50 Latency: P50_inference_time_vgg19_gpu
+    P90 Latency: P90_inference_time_vgg19_gpu
+    P99 Latency: P99_inference_time_vgg19_gpu
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_gpu
-    Metric Suffix: nightly.p3_8x
+    Metric Suffix: nightly.p3_2x
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-GPU"
     Type: Model Import
     Framework: MXNet
     Model: ResNet-50
     Benchmark Desc: Import ONNX Model
-    Instance Type: p3.8xlarge
+    Instance Type: p3.2xlarge
     Latency: Average_inference_time_resnet50_gpu
+    P50 Latency: P50_inference_time_resnet50_gpu
+    P90 Latency: P90_inference_time_resnet50_gpu
+    P99 Latency: P99_inference_time_resnet50_gpu
 # ------------------ ONNX MXNet Import Model - CPU -----------------------------
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
     Metric Suffix: nightly.c5_18x
@@ -962,6 +990,9 @@ benchmarks:
     Benchmark Desc: Import ONNX Model
     Instance Type: c5.18xlarge
     Latency: Average_inference_time_bvlc_alexnet_cpu
+    P50 Latency: P50_inference_time_bvlc_alexnet_cpu
+    P90 Latency: P90_inference_time_bvlc_alexnet_cpu
+    P99 Latency: P99_inference_time_bvlc_alexnet_cpu
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
     Metric Suffix: nightly.c5_18x
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-CPU"
@@ -971,6 +1002,9 @@ benchmarks:
     Benchmark Desc: Import ONNX Model
     Instance Type: c5.18xlarge
     Latency: Average_inference_time_bvlc_googlenet_cpu
+    P50 Latency: P50_inference_time_bvlc_googlenet_cpu
+    P90 Latency: P90_inference_time_bvlc_googlenet_cpu
+    P99 Latency: P99_inference_time_bvlc_googlenet_cpu
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
     Metric Suffix: nightly.c5_18x
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-CPU"
@@ -980,6 +1014,9 @@ benchmarks:
     Benchmark Desc: Import ONNX Model
     Instance Type: c5.18xlarge
     Latency: Average_inference_time_densenet121_cpu
+    P50 Latency: P50_inference_time_densenet121_cpu
+    P90 Latency: P90_inference_time_densenet121_cpu
+    P99 Latency: P99_inference_time_densenet121_cpu
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
     Metric Suffix: nightly.c5_18x
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-CPU"
@@ -989,6 +1026,9 @@ benchmarks:
     Benchmark Desc: Import ONNX Model
     Instance Type: c5.18xlarge
     Latency: Average_inference_time_squeezenet_cpu
+    P50 Latency: P50_inference_time_squeezenet_cpu
+    P90 Latency: P90_inference_time_squeezenet_cpu
+    P99 Latency: P99_inference_time_squeezenet_cpu
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
     Metric Suffix: nightly.c5_18x
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-CPU"
@@ -998,6 +1038,9 @@ benchmarks:
     Benchmark Desc: Import ONNX Model
     Instance Type: c5.18xlarge
     Latency: Average_inference_time_bvlc_reference_caffenet_cpu
+    P50 Latency: P50_inference_time_bvlc_reference_caffenet_cpu
+    P90 Latency: P90_inference_time_bvlc_reference_caffenet_cpu
+    P99 Latency: P99_inference_time_bvlc_reference_caffenet_cpu
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
     Metric Suffix: nightly.c5_18x
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-CPU"
@@ -1007,6 +1050,9 @@ benchmarks:
     Benchmark Desc: Import ONNX Model
     Instance Type: c5.18xlarge
     Latency: Average_inference_time_shufflenet_cpu
+    P50 Latency: P50_inference_time_shufflenet_cpu
+    P90 Latency: P90_inference_time_shufflenet_cpu
+    P99 Latency: P99_inference_time_shufflenet_cpu
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
     Metric Suffix: nightly.c5_18x
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-CPU"
@@ -1016,6 +1062,9 @@ benchmarks:
     Benchmark Desc: Import ONNX Model
     Instance Type: c5.18xlarge
     Latency: Average_inference_time_bvlc_reference_rcnn_ilsvrc13_cpu
+    P50 Latency: P50_inference_time_bvlc_reference_rcnn_ilsvrc13_cpu
+    P90 Latency: P90_inference_time_bvlc_reference_rcnn_ilsvrc13_cpu
+    P99 Latency: P99_inference_time_bvlc_reference_rcnn_ilsvrc13_cpu
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
     Metric Suffix: nightly.c5_18x
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-CPU"
@@ -1025,6 +1074,9 @@ benchmarks:
     Benchmark Desc: Import ONNX Model
     Instance Type: c5.18xlarge
     Latency: Average_inference_time_vgg19_cpu
+    P50 Latency: P50_inference_time_vgg19_cpu
+    P90 Latency: P90_inference_time_vgg19_cpu
+    P99 Latency: P99_inference_time_vgg19_cpu
   - Metric Prefix: mxnet.onnx_mxnet_import_model_inference_test_cpu
     Metric Suffix: nightly.c5_18x
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=Inference-ONNX-MXNET-Import-CPU"
@@ -1034,6 +1086,9 @@ benchmarks:
     Benchmark Desc: Import ONNX Model
     Instance Type: c5.18xlarge
     Latency: Average_inference_time_resnet50_cpu
+    P50 Latency: P50_inference_time_resnet50_cpu
+    P90 Latency: P90_inference_time_resnet50_cpu
+    P99 Latency: P99_inference_time_resnet50_cpu
 # ------------------ Tensorflow MKL --------------------------------------------
   - Metric Prefix: mxnet.tensorflow_mkl_c5_resnet50_18xlg
     Metric Suffix: nightly.c5_18x
