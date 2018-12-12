@@ -894,7 +894,7 @@ benchmarks:
     Model: SSD
     Benchmark Desc: Batch size 16
     Instance Type: p3.16xlarge
-    Latency: batch_inference_4x_average
+    Latency: batch_inference_average
     P50 Latency: batch_inference_p50
     P90 Latency: batch_inference_p90
     P99 Latency: batch_inference_p99
@@ -923,7 +923,7 @@ benchmarks:
     Model: SSD
     Benchmark Desc: Batch size 16
     Instance Type: c5.2xlarge
-    Latency: batch_inference_4x_average
+    Latency: batch_inference_average
     P50 Latency: batch_inference_p50
     P90 Latency: batch_inference_p90
     P99 Latency: batch_inference_p99
