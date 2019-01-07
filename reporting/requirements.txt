@@ -8,7 +8,7 @@ jmespath==0.9.3
 openpyxl==2.5.9
 python-dateutil==2.7.4
 pytz==2018.6
-PyYAML==3.13
+PyYAML>=4.2b1
 s3transfer==0.1.13
 six==1.11.0
 urllib3==1.24
