@@ -88,7 +88,7 @@ def generate_report(filename_prefix, benchmarks):
             {
                 'align': 'center',
                 # 'num_format': '0.00', Doesn't appear to be working.
-                'bg_color': '#e51b1b',
+                'bg_color': '#ff4d4d',
                 'border': 1,
                 'border_color': '#9ea3aa'
             }
