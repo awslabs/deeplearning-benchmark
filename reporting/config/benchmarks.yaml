@@ -1206,7 +1206,7 @@ benchmarks:
     Throughput: Images per sec
     Time to Train: Time-to-train (seconds)
 
-# ------------------ DLAMI Training Benchmarks ----------------------------------------
+# ------------------ DLAMI Training Benchmarks - MXNet -------------------------
   - Metric Prefix: mxnet.mxnet_p27_resnet50_synthetic_fp32
     Metric Suffix: DLAMI_UL
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=DLAMI_Training_Performance"
@@ -1218,17 +1218,7 @@ benchmarks:
     Throughput: speed(samples/sec)
     Benchmark Desc: p27-DLAMI-UL
     Precision: FP32
-  - Metric Prefix: mxnet.mxnet_p27_resnet50_synthetic_fp32
-    Metric Suffix: DLAMI_AML
-    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=DLAMI_Training_Performance"
-    Type: Training CV
-    Framework: MXNet
-    Framework Desc: Gluon/Synthetic
-    Model: ResNet-50
-    Instance Type: p3.16xlarge
-    Throughput: speed(samples/sec)
-    Benchmark Desc: p27-DLAMI-AL
-    Precision: FP32
+
   - Metric Prefix: mxnet.mxnet_p36_resnet50_synthetic_fp32
     Metric Suffix: DLAMI_UL
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=DLAMI_Training_Performance"
@@ -1240,18 +1230,8 @@ benchmarks:
     Throughput: speed(samples/sec)
     Benchmark Desc: p36-DLAMI-UL
     Precision: FP32
-  - Metric Prefix: mxnet.mxnet_p36_resnet50_synthetic_fp32
-    Metric Suffix: DLAMI_AML
-    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=DLAMI_Training_Performance"
-    Type: Training CV
-    Framework: MXNet
-    Framework Desc: Gluon/Synthetic
-    Model: ResNet-50
-    Instance Type: p3.16xlarge
-    Throughput: speed(samples/sec)
-    Benchmark Desc: p36-DLAMI-AL
-    Precision: FP32
 
+# ------------------ DLAMI Training Benchmarks - Tensorflow --------------------
   - Metric Prefix: tensorflow.tensorflow_p27_resnet50_synthetic_fp32
     Metric Suffix: DLAMI_UL
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=DLAMI_Training_Performance"
@@ -1263,17 +1243,7 @@ benchmarks:
     Throughput: Speed(Images/sec)
     Benchmark Desc: p27-DLAMI-UL
     Precision: FP32
-  - Metric Prefix: tensorflow.tensorflow_p27_resnet50_synthetic_fp32
-    Metric Suffix: DLAMI_AML
-    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=DLAMI_Training_Performance"
-    Type: Training CV
-    Framework: Tensorflow
-    Framework Desc: MKL/Synthetic
-    Model: ResNet-50
-    Instance Type: p3.16xlarge
-    Throughput: Speed(Images/sec)
-    Benchmark Desc: p27-DLAMI-AL
-    Precision: FP32
+
   - Metric Prefix: tensorflow.tensorflow_p36_resnet50_synthetic_fp32
     Metric Suffix: DLAMI_UL
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=DLAMI_Training_Performance"
@@ -1285,63 +1255,33 @@ benchmarks:
     Throughput: Speed(Images/sec)
     Benchmark Desc: p36-DLAMI-UL
     Precision: FP32
-  - Metric Prefix: tensorflow.tensorflow_p36_resnet50_synthetic_fp32
-    Metric Suffix: DLAMI_AML
-    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=DLAMI_Training_Performance"
-    Type: Training CV
-    Framework: Tensorflow
-    Framework Desc: MKL/Synthetic
-    Model: ResNet-50
-    Instance Type: p3.16xlarge
-    Throughput: Speed(Images/sec)
-    Benchmark Desc: p36-DLAMI-AL
-    Precision: FP32
 
+# ------------------ DLAMI Training Benchmarks - PyTorch -----------------------
   - Metric Prefix: pytorch.pytorch_p27_resnet50_synthetic_fp32
     Metric Suffix: DLAMI_UL
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=DLAMI_Training_Performance"
     Type: Training CV
-    Framework: Pytorch
+    Framework: PyTorch
     Framework Desc: MKL-DNN/Synthetic
     Model: ResNet-50
     Instance Type: p3.16xlarge
     Throughput: speed(samples/sec)
     Benchmark Desc: p27-DLAMI-UL
     Precision: FP32
-  - Metric Prefix: pytorch.pytorch_p27_resnet50_synthetic_fp32
-    Metric Suffix: DLAMI_AML
-    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=DLAMI_Training_Performance"
-    Type: Training CV
-    Framework: Pytorch
-    Framework Desc: MKL-DNN/Synthetic
-    Model: ResNet-50
-    Instance Type: p3.16xlarge
-    Throughput: speed(samples/sec)
-    Benchmark Desc: p27-DLAMI-AL
-    Precision: FP32
+
   - Metric Prefix: pytorch.pytorch_p36_resnet50_synthetic_fp32
     Metric Suffix: DLAMI_UL
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=DLAMI_Training_Performance"
     Type: Training CV
-    Framework: Pytorch
+    Framework: PyTorch
     Framework Desc: MKL-DNN/Synthetic
     Model: ResNet-50
     Instance Type: p3.16xlarge
     Throughput: speed(samples/sec)
     Benchmark Desc: p36-DLAMI-UL
-    Precision: FP32
-  - Metric Prefix: pytorch.pytorch_p36_resnet50_synthetic_fp32
-    Metric Suffix: DLAMI_AML
-    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=DLAMI_Training_Performance"
-    Type: Training CV
-    Framework: Pytorch
-    Framework Desc: MKL-DNN/Synthetic
-    Model: ResNet-50
-    Instance Type: p3.16xlarge
-    Throughput: speed(samples/sec)
-    Benchmark Desc: p36-DLAMI-AL
     Precision: FP32
 
+# ------------------ DLAMI Training Benchmarks - Chainer -----------------------
   - Metric Prefix: chainer.chainer_p36_resnet50_synthetic_fp32
     Metric Suffix: DLAMI_UL
     DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=DLAMI_Training_Performance"
@@ -1353,15 +1293,5 @@ benchmarks:
     Throughput: speed(samples/sec)
     Benchmark Desc: p36-DLAMI-UL
     Precision: FP32
-  - Metric Prefix: chainer.chainer_p36_resnet50_synthetic_fp32
-    Metric Suffix: DLAMI_AML
-    DashboardUri: "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=DLAMI_Training_Performance"
-    Type: Training CV
-    Framework: Chainer
-    Framework Desc: iDeep/Synthetic
-    Model: ResNet-50
-    Instance Type: p3.16xlarge
-    Throughput: speed(samples/sec)
-    Benchmark Desc: p36-DLAMI-AL
-    Precision: FP32
+
 # -----------------------------------------------------------------------------
