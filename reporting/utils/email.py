@@ -22,7 +22,7 @@ import boto3
 import datetime
 import logging
 
-REPORT_EMAIL_FROM = 'vishaalk@amazon.com'
+REPORT_EMAIL_FROM = 'benchmark-ai@amazon.com'
 REPORT_MAILLIST = 'benchmark-ai-reports@amazon.com'
 
 def email_report(report_html, email_addr=REPORT_MAILLIST, footnotes=''):
