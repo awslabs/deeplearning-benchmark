@@ -7,8 +7,8 @@
   <packaging>pom</packaging>
   <properties>
     <mxnet.scalaprofile>2.11</mxnet.scalaprofile>
-    <mxnet.profile>osx-x86_64-cpu</mxnet.profile>
     <mxnet.version>[1.5.0-SNAPSHOT,)</mxnet.version>
+    <mxnet.hw_type>cpu</mxnet.hw_type>
   </properties>
 
   <repositories>
@@ -17,6 +17,32 @@
       <url>https://repository.apache.org/content/groups/snapshots</url>
     </repository>
   </repositories>
+
+  <profiles>
+    <profile>
+      <id>osx-x86_64</id>
+      <activation>
+        <os>
+          <family>mac</family>
+        </os>
+      </activation>
+      <properties>
+        <mxnet.profile>osx-x86_64-cpu</mxnet.profile>
+      </properties>
+    </profile>
+    <profile>
+      <id>linux-x86_64</id>
+      <activation>
+        <os>
+          <family>unix</family>
+          <name>Linux</name>
+        </os>
+      </activation>
+      <properties>
+        <mxnet.profile>linux-x86_64-${mxnet.hw_type}</mxnet.profile>
+      </properties>
+    </profile>
+  </profiles>
 
   <dependencies>
     <dependency>
