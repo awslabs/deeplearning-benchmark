@@ -83,7 +83,7 @@ class BenchmarkResultManager(object):
             name = self.metric_names[i]
             metric = re.findall(pattern, self.log_file)
             if len(metric) == 0:
-                raise utils.errors.MetricPatternError("Can not locate provided metric pattern.")
+                raise utils.errors.MetricPatternError("Can not locate metric pattern: {}.".format(pattern))
             metric = map(self.__get_float_number, metric)
             metric_result = BenchmarkMetricComputeMethod.compute(
                 metric_compute_method=self.metric_compute_methods[i],
