@@ -161,7 +161,7 @@ echo "Model latency P90: ${MODEL_P90}" >> /tmp/benchmark/report.txt
 echo "Model latency P99: ${MODEL_P99}" >> /tmp/benchmark/report.txt
 echo "MMS throughput: ${MMS_TPS}" >> /tmp/benchmark/report.txt
 echo "MMS latency P50: ${MMS_P50}" >> /tmp/benchmark/report.txt
-echo "MMS latency  P90: ${MMS_P90}" >> /tmp/benchmark/report.txt
+echo "MMS latency P90: ${MMS_P90}" >> /tmp/benchmark/report.txt
 echo "MMS latency P99: ${MMS_P99}" >> /tmp/benchmark/report.txt
 echo "MMS latency mean: ${MMS_MEAN}" >> /tmp/benchmark/report.txt
 echo "MMS error rate: ${MMS_ERROR_RATE}%" >> /tmp/benchmark/report.txt
