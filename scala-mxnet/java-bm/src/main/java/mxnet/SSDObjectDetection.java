@@ -45,7 +45,7 @@ public class SSDObjectDetection {
         return nd;
     }
     
-    double[] runInference(String modelPathPrefix, String inputImagePath, List<Context> context, int batchSize, int times) {
+    double[] runSingleInference(String modelPathPrefix, String inputImagePath, List<Context> context, int times) {
         ObjectDetector loadedModel = loadModel(modelPathPrefix, context, batchSize);
         List<Double> inferenceTimes = new ArrayList<Double>();
         List<NDArray> dataset = new ArrayList<>();
@@ -72,6 +72,31 @@ public class SSDObjectDetection {
         return result;
     }
     
+    double[] runBatchInference(String modelPathPrefix, String inputImagePath, List<Context> context, int batchSize, int times) {
+        ObjectDetector loadedModel = loadModel(modelPathPrefix, context, batchSize);
+        List<Double> inferenceTimes = new ArrayList<Double>();
+        List<NDArray> dataset = loadBatchImage(inputImagePath, batchSize, context);
+        
+        // Warm up intervals
+        // println("Warming up the system")
+        for (int i = 0; i < 5; i++) {
+            try(ResourceScope scope = new ResourceScope()) {
+                List<List<ObjectDetectorOutput>> output = loadedModel.objectDetectWithNDArray(dataset, 3);
+            }
+        }
+        // println("Warm up done")
+        
+        double[] result = new double[times];
+        for (int i = 0; i < times; i++) {
+            try(ResourceScope scope = new ResourceScope()) {
+                long startTime = System.nanoTime();
+                List<List<ObjectDetectorOutput>> output = loadedModel.objectDetectWithNDArray(dataset, 3);
+                result[i] = (System.nanoTime() - startTime) / (1e6 * 1.0);
+                System.out.printf("Inference time at iteration: %d is : %f \n", i, result[i]);
+            }
+        }
+        return result;
+    }
     
     public static void main(String[] args) {
         SSDObjectDetection inst = new SSDObjectDetection();
@@ -81,24 +106,24 @@ public class SSDObjectDetection {
     
         try(ResourceScope scope = new ResourceScope()) {
             System.out.println("Running single inference");
-            double[] inferenceTimes = inst.runInference(modelPathPrefix, inputImagePath, context, 1, times);
+            double[] inferenceTimes = inst.runSingleInference(modelPathPrefix, inputImagePath, context, times);
             Utils.printStatistics(inferenceTimes, "single_inference");
         }
         try(ResourceScope scope = new ResourceScope()) {
             System.out.println("Running batch inference with batsize : " + batchSize);
-            double[] inferenceTimes = inst.runInference(modelPathPrefix, inputImagePath, context, batchSize, times);
+            double[] inferenceTimes = inst.runBatchInference(modelPathPrefix, inputImagePath, context, batchSize, times);
             Utils.printStatistics(inferenceTimes, "single_inference");
         }
     
         try(ResourceScope scope = new ResourceScope()) {
             System.out.println("Running batch inference with batsize : " + 2 * batchSize);
-            double[] inferenceTimes = inst.runInference(modelPathPrefix, inputImagePath, context, 2 * batchSize, times);
+            double[] inferenceTimes = inst.runBatchInference(modelPathPrefix, inputImagePath, context, 2 * batchSize, times);
             Utils.printStatistics(inferenceTimes, "single_inference");
         }
     
         try(ResourceScope scope = new ResourceScope()) {
             System.out.println("Running batch inference with batsize : " + 4 * batchSize);
-            double[] inferenceTimes = inst.runInference(modelPathPrefix, inputImagePath, context, 4 * batchSize, times);
+            double[] inferenceTimes = inst.runBatchInference(modelPathPrefix, inputImagePath, context, 4 * batchSize, times);
             Utils.printStatistics(inferenceTimes, "single_inference");
         }
     }
