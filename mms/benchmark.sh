@@ -59,7 +59,7 @@ if [[ -z "${URL}" ]]; then
     exit 1
 fi
 
-if [[ -x "$(command -v nvida-docker)" ]]; then
+if [[ -x "$(command -v nvidia-docker)" ]]; then
     GPU=true
 else
     GPU=false
@@ -152,6 +152,7 @@ MMS_ERROR_RATE=`echo "scale=2;100 * ${MMS_ERROR}/${REQUESTS}" | bc | awk '{print
 
 echo "" > /tmp/benchmark/report.txt
 echo "======================================" >> /tmp/benchmark/report.txt
+echo "CPU/GPU: ${HW_TYPE}" >> /tmp/benchmark/report.txt
 echo "Model: ${MODEL}" >> /tmp/benchmark/report.txt
 echo "Concurrency: ${CONCURRENCY}" >> /tmp/benchmark/report.txt
 echo "Requests: ${REQUESTS}" >> /tmp/benchmark/report.txt
