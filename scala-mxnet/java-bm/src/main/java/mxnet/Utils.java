@@ -11,7 +11,19 @@ public class Utils {
     
     private static boolean runBatch = false;
     
-    public static void parse(Object inst, String[] args) {
+    public static List<Context> getContext() {
+        
+        List<Context> context = new ArrayList<Context>();
+        if (System.getenv().containsKey("SCALA_TEST_ON_GPU") &&
+                Integer.parseInt(System.getenv("SCALA_TEST_ON_GPU")) == 1) {
+            context.add(Context.gpu());
+        } else {
+            context.add(Context.cpu());
+        }
+        return context;
+    }
+    
+    public static CmdLineParser parse(Object inst, String[] args) {
         CmdLineParser parser  = new CmdLineParser(inst);
         try {
             parser.parseArgument(args);
@@ -20,32 +32,30 @@ public class Utils {
             parser.printUsage(System.err);
             System.exit(1);
         }
+        return parser;
     }
     
-    private static long percentile(int p, long[] seq) {
+    private static double percentile(int p, double[] seq) {
         Arrays.sort(seq);
         int k = (int) Math.ceil((seq.length - 1) * (p / 100.0));
         return seq[k];
     }
     
-    private static void printStatistics(long[] inferenceTimesRaw, String metricsPrefix)  {
-        long[] inferenceTimes = inferenceTimesRaw;
-        // remove head and tail
-        if (inferenceTimes.length > 2) {
-            inferenceTimes = Arrays.copyOfRange(inferenceTimesRaw,
-                    1, inferenceTimesRaw.length - 1);
-        }
-        double p50 = percentile(50, inferenceTimes) / 1.0e6;
-        double p99 = percentile(99, inferenceTimes) / 1.0e6;
-        double p90 = percentile(90, inferenceTimes) / 1.0e6;
-        long sum = 0;
-        for (long time: inferenceTimes) sum += time;
-        double average = sum / (inferenceTimes.length * 1.0e6);
+    public static void printStatistics(double[] inferenceTimes, String metricsPrefix)  {
         
-        System.out.println(
-                String.format("\n%s_p99 %fms\n%s_p90 %fms\n%s_p50 %fms\n%s_average %1.2fms",
-                        metricsPrefix, p99, metricsPrefix, p90,
-                        metricsPrefix, p50, metricsPrefix, average)
-        );
+        double[] times = inferenceTimes;
+        double p50 = percentile(50, times);
+        double p99 = percentile(99, times);
+        double p90 = percentile(90, times);
+    
+        double sum = 0;
+    
+        for (double i : times)
+            sum += i;
+        double average = sum / (times.length * 1.0);
+        
+        System.out.printf("\n%s_p99 %1.2f, %s_p90 %1.2f, %s_p50 %1.2f, %s_average %1.2f\n", metricsPrefix,
+                p99, metricsPrefix, p90, metricsPrefix, p50, metricsPrefix, average);
+        
     }
 }

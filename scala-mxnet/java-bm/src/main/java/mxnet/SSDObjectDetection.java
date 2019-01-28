@@ -5,7 +5,7 @@ import org.apache.mxnet.javaapi.*;
 import org.apache.mxnet.ResourceScope;
 import org.kohsuke.args4j.Option;
 
-import java.awt.image.BufferedImage
+import java.awt.image.BufferedImage;
 import org.kohsuke.args4j.CmdLineParser;
 
 import java.util.ArrayList;
@@ -13,18 +13,18 @@ import java.util.List;
 
 public class SSDObjectDetection {
     @Option(name = "--modelPathPrefix", usage = "The model to benchmark")
-    String modelPathPrefix = "/tmp/resnet50_ssd/resnet50_ssd_model";
+    private static String modelPathPrefix = "/tmp/resnet50_ssd/resnet50_ssd_model";
     @Option(name = "--inputImagePath", usage = "Input image path for single inference")
-    String inputImagePath = "/tmp/resnet50_ssd/images/dog.jpg";
+    private static String inputImagePath = "/tmp/resnet50_ssd/images/dog.jpg";
     @Option(name = "--batchSize", usage = "Batchsize of the model")
-    int batchSize = 1;
+    private static int batchSize = 1;
     @Option(name = "--times", usage = "Number of times to run the benchmark")
-    int times = 1;
+    private static int times = 1;
     
     ObjectDetector loadModel(String modelPathPrefix, List<Context> context, int batchSize) {
         Shape inputShape = new Shape(new int[] {batchSize, 3, 512, 512});
         List<DataDesc> inputDescriptors = new ArrayList<>();
-        inputDescriptors.add(new DataDesc("data", inputShape, DType.Float32(), "NCHW"));f
+        inputDescriptors.add(new DataDesc("data", inputShape, DType.Float32(), "NCHW"));
         return new ObjectDetector(modelPathPrefix, inputDescriptors, context, 0);
     }
     
@@ -45,16 +45,16 @@ public class SSDObjectDetection {
         return nd;
     }
     
-    double[] runSingleInference(String modelPathPrefix, String inputImagePath, List<Context> context, int batchSize, int times) {
+    double[] runInference(String modelPathPrefix, String inputImagePath, List<Context> context, int batchSize, int times) {
         ObjectDetector loadedModel = loadModel(modelPathPrefix, context, batchSize);
-        List<double> inferenceTimes = new ArrayList();
+        List<Double> inferenceTimes = new ArrayList<Double>();
         List<NDArray> dataset = new ArrayList<>();
         dataset.add(loadSingleImage(inputImagePath, context));
         
         // Warm up intervals
         // println("Warming up the system")
         for (int i = 0; i < 5; i++) {
-            try(new ResourceScope()) {
+            try(ResourceScope scope = new ResourceScope()) {
                 List<List<ObjectDetectorOutput>> output = loadedModel.objectDetectWithNDArray(dataset, 3);
             }
         }
@@ -62,35 +62,44 @@ public class SSDObjectDetection {
         
         double[] result = new double[times];
         for (int i = 0; i < times; i++) {
-            try(new ResourceScope()) {
+            try(ResourceScope scope = new ResourceScope()) {
                 long startTime = System.nanoTime();
                 List<List<ObjectDetectorOutput>> output = loadedModel.objectDetectWithNDArray(dataset, 3);
                 result[i] = (System.nanoTime() - startTime) / (1e6 * 1.0);
-                
-                
-                // println("Inference time at iteration: %d is : %f \n".format(i, estimatedTime))
+                System.out.printf("Inference time at iteration: %d is : %f \n", i, result[i]);
             }
         }
         return result;
     }
     
+    
     public static void main(String[] args) {
-        CmdLineParser parser = new CmdLineParser();
-        Utils.parse(parser, args);
-    
-        // val context = Utils.getContext()
-        String modelPathPrefix = parser.getOptions(modelPathPrefix);
-        String inputImagePath = parser.inputImagePath;
-        int batchSize = parser.batchSize;
-        int times = parser.times;
-    
-        /*
-        NDArrayCollector.auto().withScope {
-            println("Running single inference")
-            val inferenceTimeSingle = runSingleInference(modelPathPrefix, inputImagePath, context, 1, times)
+        SSDObjectDetection inst = new SSDObjectDetection();
+        CmdLineParser parser = Utils.parse(inst, args);
         
-            Utils.printStatistics(inferenceTimeSingle, "single_inference")
+        List<Context> context = Utils.getContext();
+    
+        try(ResourceScope scope = new ResourceScope()) {
+            System.out.println("Running single inference");
+            double[] inferenceTimes = inst.runInference(modelPathPrefix, inputImagePath, context, 1, times);
+            Utils.printStatistics(inferenceTimes, "single_inference");
         }
-        */
+        try(ResourceScope scope = new ResourceScope()) {
+            System.out.println("Running batch inference with batsize : " + batchSize);
+            double[] inferenceTimes = inst.runInference(modelPathPrefix, inputImagePath, context, batchSize, times);
+            Utils.printStatistics(inferenceTimes, "single_inference");
+        }
+    
+        try(ResourceScope scope = new ResourceScope()) {
+            System.out.println("Running batch inference with batsize : " + 2 * batchSize);
+            double[] inferenceTimes = inst.runInference(modelPathPrefix, inputImagePath, context, 2 * batchSize, times);
+            Utils.printStatistics(inferenceTimes, "single_inference");
+        }
+    
+        try(ResourceScope scope = new ResourceScope()) {
+            System.out.println("Running batch inference with batsize : " + 4 * batchSize);
+            double[] inferenceTimes = inst.runInference(modelPathPrefix, inputImagePath, context, 4 * batchSize, times);
+            Utils.printStatistics(inferenceTimes, "single_inference");
+        }
     }
 }
