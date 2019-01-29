@@ -24,7 +24,7 @@ def get_argument_parser():
     return parser.parse_args()
 
 
-def load_model(model_path_prefix, ctx, batchSize, epoch_num = 0):
+def load_model(model_path_prefix, ctx, batchSize, epoch_num=0):
     sym, arg_params, aux_params = mx.model.load_checkpoint(model_path_prefix, epoch_num)
     mod = mx.mod.Module(symbol=sym, context=ctx, label_names=None)
     data_shape = [('data', (batchSize, channels, input_height, input_width))]
@@ -64,12 +64,12 @@ def run_single_inference(model_path_prefix, input_image_path, ctx, times):
     print(data.shape)
     data_iter = mx.io.NDArrayIter([data], None, 1)
 
-    print ("warming up the system")
+    print("warming up the system")
     for i in range(1, 5):
         prediction_op = model.predict(data_iter)
         prediction_op.wait_to_read()
 
-    print ("Warm up done")
+    print("Warm up done")
 
     time_readings = list()
 
@@ -81,7 +81,7 @@ def run_single_inference(model_path_prefix, input_image_path, ctx, times):
         # print results[0]
         end = time.time()
         time_readings.append(end - start)
-        print ("Inference time at iteration %d is %f ms \n" % (i, (end - start) * 1000))
+        print("Inference time at iteration %d is %f ms \n" % (i, (end - start) * 1000))
 
         time_readings.sort()
     return time_readings
@@ -91,15 +91,15 @@ def run_batch_inference(model_path_prefix, input_image_path, ctx, times, batchSi
     model = load_model(model_path_prefix, ctx, batchSize=batchSize)
     data = get_batch_image_ndarray(input_image_path, ctx, batchSize)
 
-    print (data.shape)
+    print(data.shape)
     data_iter = mx.io.NDArrayIter([data], None, batchSize)
 
-    print ("warming up the system")
+    print("warming up the system")
     for i in range(1, 5):
         prediction_op = model.predict(data_iter)
         prediction_op.wait_to_read()
 
-    print ("Warm up done")
+    print("Warm up done")
 
     time_readings = list()
 
@@ -111,7 +111,7 @@ def run_batch_inference(model_path_prefix, input_image_path, ctx, times, batchSi
         # print (results[0])
         end = time.time()
         time_readings.append(end - start)
-        print ("Inference time at iteration %d is %f ms \n" % (i, (end - start) * 1000))
+        print("Inference time at iteration %d is %f ms \n" % (i, (end - start) * 1000))
 
         time_readings.sort()
     return time_readings
