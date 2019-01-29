@@ -4,10 +4,6 @@ from mxnet import ndarray as nd
 import time
 import math
 
-input_height = 512
-input_width = 512
-channels = 3
-
 
 def get_argument_parser():
     parser = argparse.ArgumentParser("Parameters for running SSD")
@@ -17,6 +13,8 @@ def get_argument_parser():
                         help="The model path prefix", default="/tmp/resnet50_ssd/resnet50_ssd_model")
     parser.add_argument("--inputImagePath",
                         help="Path of the input image to be tested", default="/tmp/resnet50_ssd/images/dog.jpg")
+    parser.add_argument("--inputShape",
+                        help="Input Shape ", default=[3, 512, 512], nargs='+')
     parser.add_argument("--batchSize",
                         help="batch size of the images to be tested", default=4, type=int)
     parser.add_argument("--times",
@@ -24,9 +22,12 @@ def get_argument_parser():
     return parser.parse_args()
 
 
-def load_model(model_path_prefix, ctx, batchSize, epoch_num=0):
+def load_model(model_path_prefix, ctx, batchSize, input_shape, epoch_num=0):
     sym, arg_params, aux_params = mx.model.load_checkpoint(model_path_prefix, epoch_num)
     mod = mx.mod.Module(symbol=sym, context=ctx, label_names=None)
+    channels = input_shape[0]
+    input_height = input_shape[1]
+    input_width = input_shape[2]
     data_shape = [('data', (batchSize, channels, input_height, input_width))]
     label_shape = mod._label_shapes
 
@@ -35,8 +36,12 @@ def load_model(model_path_prefix, ctx, batchSize, epoch_num=0):
     return mod
 
 
-def get_single_image_ndarray(input_image_path, ctx):
+def get_single_image_ndarray(input_image_path, input_shape, ctx):
     img = mx.image.imread(input_image_path)
+    channels = input_shape[0]
+    input_height = input_shape[1]
+    input_width = input_shape[2]
+
     img = mx.image.imresize(img, input_height, input_width)
     img = img.transpose((2, 0, 1))  # Channel first
     img = img.expand_dims(axis=0)  # Add a new axis
@@ -44,8 +49,12 @@ def get_single_image_ndarray(input_image_path, ctx):
     return img.as_in_context(ctx)
 
 
-def get_batch_image_ndarray(input_image_path, ctx, batchSize):
+def get_batch_image_ndarray(input_image_path, input_shape, ctx, batchSize):
     img = mx.image.imread(input_image_path)
+    channels = input_shape[0]
+    input_height = input_shape[1]
+    input_width = input_shape[2]
+
     img = mx.image.imresize(img, input_height, input_width)
     img = img.transpose((2, 0, 1))  # Channel first
     img = img.expand_dims(axis=0)  # Add a new axis
@@ -57,9 +66,13 @@ def get_batch_image_ndarray(input_image_path, ctx, batchSize):
     return result_img.as_in_context(ctx)
 
 
-def run_single_inference(model_path_prefix, input_image_path, ctx, times):
-    model = load_model(model_path_prefix, ctx, batchSize=1)
-    data = get_single_image_ndarray(input_image_path, ctx)
+def run_single_inference(model_path_prefix, input_image_path, ctx, times, input_shape):
+    model = load_model(model_path_prefix, ctx, batchSize=1, input_shape=input_shape)
+    data = get_single_image_ndarray(input_image_path, input_shape=input_shape, ctx=ctx)
+
+    channels = input_shape[0]
+    input_height = input_shape[1]
+    input_width = input_shape[2]
 
     print(data.shape)
     data_iter = mx.io.NDArrayIter([data], None, 1)
@@ -87,9 +100,9 @@ def run_single_inference(model_path_prefix, input_image_path, ctx, times):
     return time_readings
 
 
-def run_batch_inference(model_path_prefix, input_image_path, ctx, times, batchSize):
-    model = load_model(model_path_prefix, ctx, batchSize=batchSize)
-    data = get_batch_image_ndarray(input_image_path, ctx, batchSize)
+def run_batch_inference(model_path_prefix, input_image_path, ctx, times, batchSize, input_shape):
+    model = load_model(model_path_prefix, ctx, batchSize=batchSize, input_shape=input_shape)
+    data = get_batch_image_ndarray(input_image_path, ctx=ctx, batchSize=batchSize, input_shape=input_shape)
 
     print(data.shape)
     data_iter = mx.io.NDArrayIter([data], None, batchSize)
@@ -139,22 +152,24 @@ if __name__ == "__main__":
 
     ctx = mx.cpu(0) if args.context == "cpu" else mx.gpu(0)
 
+    input_shape = map(int, args.inputShape)
+
     print("Running single inference")
     single_inference_times = run_single_inference(args.modelPathPrefix, args.inputImagePath, ctx,
-                                                  args.times)
+                                                  args.times, input_shape)
     emit_metrics(single_inference_times, "single_inference")
 
     print("Running batch inference with batch size : %d" % args.batchSize)
     batch_inference_1x_times = run_batch_inference(args.modelPathPrefix, args.inputImagePath, ctx,
-                                                   args.times, args.batchSize)
+                                                   args.times, args.batchSize, input_shape)
     emit_metrics(batch_inference_1x_times, "batch_inference_1x")
 
     print("Running batch inference with batch size : %d" % (2 * args.batchSize))
     batch_inference_2x_times = run_batch_inference(args.modelPathPrefix, args.inputImagePath, ctx,
-                                                   args.times, 2 * args.batchSize)
+                                                   args.times, 2 * args.batchSize, input_shape)
     emit_metrics(batch_inference_2x_times, "batch_inference_2x")
 
     print("Running batch inference with batch size : %d" % (4 * args.batchSize))
     batch_inference_4x_times = run_batch_inference(args.modelPathPrefix, args.inputImagePath, ctx,
-                                                   args.times, 4 * args.batchSize)
+                                                   args.times, 4 * args.batchSize, input_shape)
     emit_metrics(batch_inference_4x_times, "batch_inference_4x")
