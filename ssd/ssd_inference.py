@@ -4,6 +4,10 @@ from mxnet import ndarray as nd
 import time
 import math
 
+input_height = 512
+input_width = 512
+channels = 3
+
 
 def get_argument_parser():
     parser = argparse.ArgumentParser("Parameters for running SSD")
@@ -22,8 +26,8 @@ def get_argument_parser():
 
 def load_model(model_path_prefix, ctx, batchSize, epoch_num = 0):
     sym, arg_params, aux_params = mx.model.load_checkpoint(model_path_prefix, epoch_num)
-    mod = mx.mod.Module(symbol=sym, context=ctx, label_names=('label', ))
-    data_shape = [('data', (batchSize, 3, 512, 512))]
+    mod = mx.mod.Module(symbol=sym, context=ctx, label_names=None)
+    data_shape = [('data', (batchSize, channels, input_height, input_width))]
     label_shape = mod._label_shapes
 
     mod.bind(for_training=False, data_shapes=data_shape, label_shapes=label_shape)
@@ -33,7 +37,7 @@ def load_model(model_path_prefix, ctx, batchSize, epoch_num = 0):
 
 def get_single_image_ndarray(input_image_path, ctx):
     img = mx.image.imread(input_image_path)
-    img = mx.image.imresize(img, 512, 512)
+    img = mx.image.imresize(img, input_height, input_width)
     img = img.transpose((2, 0, 1))  # Channel first
     img = img.expand_dims(axis=0)  # Add a new axis
 
@@ -42,13 +46,13 @@ def get_single_image_ndarray(input_image_path, ctx):
 
 def get_batch_image_ndarray(input_image_path, ctx, batchSize):
     img = mx.image.imread(input_image_path)
-    img = mx.image.imresize(img, 512, 512)
+    img = mx.image.imresize(img, input_height, input_width)
     img = img.transpose((2, 0, 1))  # Channel first
     img = img.expand_dims(axis=0)  # Add a new axis
 
     result_img = img
     for i in range(1, batchSize):
-        result_img = nd.concat(result_img, img, dim = 0)
+        result_img = nd.concat(result_img, img, dim=0)
 
     return result_img.as_in_context(ctx)
 
@@ -57,7 +61,7 @@ def run_single_inference(model_path_prefix, input_image_path, ctx, times):
     model = load_model(model_path_prefix, ctx, batchSize=1)
     data = get_single_image_ndarray(input_image_path, ctx)
 
-    print (data.shape)
+    print(data.shape)
     data_iter = mx.io.NDArrayIter([data], None, 1)
 
     print ("warming up the system")
