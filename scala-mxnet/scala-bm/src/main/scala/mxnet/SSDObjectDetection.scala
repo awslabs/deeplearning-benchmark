@@ -22,6 +22,9 @@ object SSDObjectDetection {
     @Option(name = "--times", usage = "Number of times to run the benchmark")
     val times: Int = 1
 
+    @Option(name = "--context", usage = "Context to run on")
+    val context: String = "cpu"
+
   }
 
   def loadModel(modelPathPrefix: String, context: Array[Context], batchSize: Int): ObjectDetector = {
@@ -127,7 +130,7 @@ object SSDObjectDetection {
 
     parser.parseArgument(args.toList.asJava)
 
-    val context = Utils.getContext()
+    val context = Utils.getContext(inst.context)
 
     val modelPathPrefix = inst.modelPathPrefix
 

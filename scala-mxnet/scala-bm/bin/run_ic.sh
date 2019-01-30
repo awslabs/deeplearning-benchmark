@@ -36,4 +36,5 @@ java -Xmx8G -Dmxnet.traceLeakedObjects=true -cp $CLASSPATH mxnet.ImageClassifica
 --modelPathPrefix $MODEL_PATH_PREFIX \
 --inputImagePath $INPUT_IMG \
 --batchSize $BATCHSIZE \
---times $RUNS
+--times $RUNS \
+--context $hw_type
