@@ -23,6 +23,9 @@ object CharRnnExample {
     @Option(name = "--times", usage = "Number of times to run the benchmark")
     val times: Int = 1
 
+    @Option(name = "--context", usage = "Context to run on")
+    val context: String = "cpu"
+
   }
 
 
@@ -81,7 +84,7 @@ object CharRnnExample {
 
     parser.parseArgument(args.toList.asJava)
 
-    var context = Utils.getContext()
+    var context = Utils.getContext(inst.context)
 
     val modelPathPrefix = inst.modelPathPrefix
 
