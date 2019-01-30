@@ -107,7 +107,7 @@ if [[ ! -z "${WORKER}" ]]; then
     echo "default_workers_per_model=${WORKER}" >> /tmp/benchmark/conf/config.properties
 fi
 
-if [[ -z "${INPUT}" ]] && [[ -f "${BASEDIR}/${INPUT}" ]]; then
+if [[ ! -z "${INPUT}" ]] && [[ -f "${BASEDIR}/${INPUT}" ]]; then
     CONTENT_TYPE="application/json"
     cp -rf ${BASEDIR}/${INPUT} /tmp/benchmark/input
 else
