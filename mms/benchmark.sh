@@ -33,6 +33,11 @@ do
         shift
         shift
         ;;
+        -w|--worker)
+        WORKER="$2"
+        shift
+        shift
+        ;;
         -s|--s3)
         UPLOAD="$2"
         shift
@@ -98,6 +103,9 @@ mkdir -p /tmp/benchmark/logs
 cp -f ${BASEDIR}/config.properties /tmp/benchmark/conf/config.properties
 echo "" >> /tmp/benchmark/conf/config.properties
 echo "load_models=benchmark=${URL}" >> /tmp/benchmark/conf/config.properties
+if [[ ! -z "${WORKER}" ]]; then
+    echo "default_workers_per_model=${WORKER}" >> /tmp/benchmark/conf/config.properties
+fi
 
 if [[ -z "${INPUT}" ]] && [[ -f "${BASEDIR}/${INPUT}" ]]; then
     CONTENT_TYPE="application/json"
@@ -117,11 +125,15 @@ docker run ${DOCKER_RUNTIME} --name mms -p 8080:8080 -p 8081:8081 \
     -u root -itd ${IMAGE} mxnet-model-server --start \
     --mms-config /opt/ml/conf/config.properties
 
-until curl "http://localhost:8080/ping"
+MMS_VERSION=`docker exec -it mms pip freeze | grep mxnet-model-server`
+
+until curl -s "http://localhost:8080/ping" > /dev/null
 do
   echo "Waiting for docker start..."
   sleep 3
 done
+
+sleep 3
 
 result_file="/tmp/benchmark/result.txt"
 metric_log="/tmp/benchmark/logs/model_metrics.log"
@@ -152,6 +164,8 @@ MMS_ERROR_RATE=`echo "scale=2;100 * ${MMS_ERROR}/${REQUESTS}" | bc | awk '{print
 
 echo "" > /tmp/benchmark/report.txt
 echo "======================================" >> /tmp/benchmark/report.txt
+curl -s http://localhost:8081/models/benchmark >> /tmp/benchmark/report.txt
+echo "MMS version: ${MMS_VERSION}" >> /tmp/benchmark/report.txt
 echo "CPU/GPU: ${HW_TYPE}" >> /tmp/benchmark/report.txt
 echo "Model: ${MODEL}" >> /tmp/benchmark/report.txt
 echo "Concurrency: ${CONCURRENCY}" >> /tmp/benchmark/report.txt

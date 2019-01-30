@@ -36,7 +36,7 @@ If `nvidia-docker` is installed, the benchmark will be run against GPU instance.
 Run benchmark test on resnet-50v1 model.
 It use kitten.jpg image as input from: https://s3.amazonaws.com/model-server/inputs/kitten.jpg 
 ```bash
-./benchmark.py -u https://s3.amazonaws.com/model-server/model_archive_1.0/onnx-resnet50v1.mar
+./benchmark.sh -u https://s3.amazonaws.com/model-server/model_archive_1.0/onnx-resnet50v1.mar
 ```
 
 Run benchmark test on lstm_ptb model with json input
@@ -46,15 +46,15 @@ benchmark.sh -i lstm.json -u https://s3.amazonaws.com/model-server/model_archive
 
 By default, the script will use 100 concurrency and run 1000 requests. to change concurrent:
 ```bash
-./benchmark.py -c 200 -n 2000 -u https://s3.amazonaws.com/model-server/model_archive_1.0/noop-v1.0.mar
+./benchmark.sh -c 200 -n 2000 -u https://s3.amazonaws.com/model-server/model_archive_1.0/noop-v1.0.mar
 ```
 
 You can pass `-s` parameter to upload results to S3:
 ```bash
-./benchmark.py -s -u https://s3.amazonaws.com/model-server/model_archive_1.0/noop-v1.0.mar
+./benchmark.sh -s -u https://s3.amazonaws.com/model-server/model_archive_1.0/noop-v1.0.mar
 ```
 
 You can also choose your local docker image to run benchmark
 ```bash
-./benchmark.py -d mms-cpu-local -u https://s3.amazonaws.com/model-server/model_archive_1.0/noop-v1.0.mar
+./benchmark.sh -d mms-cpu-local -u https://s3.amazonaws.com/model-server/model_archive_1.0/noop-v1.0.mar
 ```
