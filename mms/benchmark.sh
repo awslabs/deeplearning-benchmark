@@ -133,7 +133,7 @@ do
   sleep 3
 done
 
-sleep 3
+sleep 10
 
 result_file="/tmp/benchmark/result.txt"
 metric_log="/tmp/benchmark/logs/model_metrics.log"
