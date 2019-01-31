@@ -169,7 +169,7 @@ echo "Inference result:" >> /tmp/benchmark/report.txt
 curl -s -X POST http://127.0.0.1:8080/predictions/benchmark -H "Content-Type: ${CONTENT_TYPE}" \
     -T /tmp/benchmark/input >> /tmp/benchmark/report.txt
 echo "" >> /tmp/benchmark/report.txt
-echo "" ?> /tmp/benchmark/report.txt
+echo "" >> /tmp/benchmark/report.txt
 
 echo "======================================" >> /tmp/benchmark/report.txt
 echo "MMS version: ${MMS_VERSION}" >> /tmp/benchmark/report.txt
