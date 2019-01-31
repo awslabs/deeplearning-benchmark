@@ -165,6 +165,9 @@ MMS_ERROR_RATE=`echo "scale=2;100 * ${MMS_ERROR}/${REQUESTS}" | bc | awk '{print
 echo "" > /tmp/benchmark/report.txt
 echo "======================================" >> /tmp/benchmark/report.txt
 curl -s http://localhost:8081/models/benchmark >> /tmp/benchmark/report.txt
+curl -s -X POST http://127.0.0.1:8080/predictions/benchmark -H "Content-Type: ${CONTENT_TYPE}" \
+    -T /tmp/benchmark/input >> /tmp/benchmark/report.txt
+
 echo "MMS version: ${MMS_VERSION}" >> /tmp/benchmark/report.txt
 echo "CPU/GPU: ${HW_TYPE}" >> /tmp/benchmark/report.txt
 echo "Model: ${MODEL}" >> /tmp/benchmark/report.txt
