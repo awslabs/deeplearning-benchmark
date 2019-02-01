@@ -150,7 +150,7 @@ object SSDObjectDetection {
 
     NDArrayCollector.auto().withScope {
       println("Running batch inference with batsize : " + (batchSize))
-      val inferenceTimeBatch = runBatchInference(modelPathPrefix, inputImagePath, context, batchSize, times)
+      val inferenceTimeBatch = runBatchInference(modelPathPrefix, inputImagePath, context, batchSize, times/batchSize)
 
       Utils.printStatistics(inferenceTimeBatch, "batch_inference_1x")
 
@@ -158,7 +158,7 @@ object SSDObjectDetection {
 
     NDArrayCollector.auto().withScope {
       println("Running batch inference with batsize : " + (batchSize * 2))
-      val inferenceTimeBatch = runBatchInference(modelPathPrefix, inputImagePath, context, batchSize * 2, times)
+      val inferenceTimeBatch = runBatchInference(modelPathPrefix, inputImagePath, context, batchSize * 2, times/(2 * batchSize))
 
       Utils.printStatistics(inferenceTimeBatch, "batch_inference_2x")
 
@@ -166,7 +166,7 @@ object SSDObjectDetection {
 
     NDArrayCollector.auto().withScope {
       println("Running batch inference with batsize : " + (batchSize * 4))
-      val inferenceTimeBatch = runBatchInference(modelPathPrefix, inputImagePath, context, batchSize * 4, times)
+      val inferenceTimeBatch = runBatchInference(modelPathPrefix, inputImagePath, context, batchSize * 4, times/(4 * batchSize))
 
       Utils.printStatistics(inferenceTimeBatch, "batch_inference_4x")
 

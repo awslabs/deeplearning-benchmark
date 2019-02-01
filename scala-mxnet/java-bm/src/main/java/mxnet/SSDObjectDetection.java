@@ -111,19 +111,19 @@ public class SSDObjectDetection {
         }
         try(ResourceScope scope = new ResourceScope()) {
             System.out.println("Running batch inference with batsize : " + batchSize);
-            double[] inferenceTimes = inst.runBatchInference(modelPathPrefix, inputImagePath, context, batchSize, times);
+            double[] inferenceTimes = inst.runBatchInference(modelPathPrefix, inputImagePath, context, batchSize, times / batchSize);
             Utils.printStatistics(inferenceTimes, "batch_inference_1x");
         }
     
         try(ResourceScope scope = new ResourceScope()) {
             System.out.println("Running batch inference with batsize : " + 2 * batchSize);
-            double[] inferenceTimes = inst.runBatchInference(modelPathPrefix, inputImagePath, context, 2 * batchSize, times);
+            double[] inferenceTimes = inst.runBatchInference(modelPathPrefix, inputImagePath, context, 2 * batchSize, times / (2 * batchSize));
             Utils.printStatistics(inferenceTimes, "batch_inference_2x");
         }
     
         try(ResourceScope scope = new ResourceScope()) {
             System.out.println("Running batch inference with batsize : " + 4 * batchSize);
-            double[] inferenceTimes = inst.runBatchInference(modelPathPrefix, inputImagePath, context, 4 * batchSize, times);
+            double[] inferenceTimes = inst.runBatchInference(modelPathPrefix, inputImagePath, context, 4 * batchSize, times / (4 * batchSize));
             Utils.printStatistics(inferenceTimes, "batch_inference_4x");
         }
     }
