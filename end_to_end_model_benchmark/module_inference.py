@@ -11,7 +11,7 @@ from collections import namedtuple
 Batch = namedtuple('Batch', ['data'])
 
 class InferenceHelper(object):
-    def __init__(self, opt):
+    def __init__(self, opt, batch_size):
         # Pre-processing details
         self.input_shape = (224, 224)
         self.norm_mean = (0.485, 0.456, 0.406)
@@ -21,7 +21,7 @@ class InferenceHelper(object):
         self.model_name = opt.model_name
         self.iterations = opt.iterations
         self.is_end_to_end = opt.end_to_end.lower() == 'true'
-        self.batch_size = opt.batch_size
+        self.batch_size = batch_size
 
         self.ctx = mx.gpu(0) if int(opt.use_gpus) > 0 else mx.cpu()
 
@@ -94,8 +94,8 @@ class InferenceHelper(object):
             pred_time_ms = (time.time() - tic) * 1000
             total_time_ms += pred_time_ms
 
-        print ("Total prediction time per sample : {} ms".format(total_time_ms))
-        print ("Average prediction time per sample : {} ms".format(total_time_ms/(self.batch_size * self.iterations)))
+        # Return Average prediction time per sample
+        return total_time_ms/(self.batch_size * self.iterations)
 
 if  __name__ == '__main__':
     # Model Path - https://s3.us-east-2.amazonaws.com/mxnet-public/end_to_end_models/
@@ -112,17 +112,24 @@ if  __name__ == '__main__':
     parser.add_argument('--use_gpus', type=int, default=0,
                         help="Indicate whether to use gpus")
     parser.add_argument('--end_to_end', type=str, default='false', help="If the model is end to end or not.")
-    parser.add_argument('--batch_size', type=int, default=1,
-                        help='Batch size for inference. 1 by default.')
     opt = parser.parse_args()
     
     # Following sleep is added so that process runs until cpu-gpu profiler process starts.
     time.sleep(10)
 
-    inference_helper = InferenceHelper(opt)
+    # Run benchmarks for single request inference
+    inference_helper = InferenceHelper(opt, batch_size=1)
     inference_helper.download_model()
     inference_helper.load_model()
-    inference_helper.inference_benchmark()
+    avg_pred_time_per_sample = inference_helper.inference_benchmark()
+    print ("Single Inference: Average prediction time per sample: {} ms".format(avg_pred_time_per_sample))
+
+    # Run benchmarks for batch inference
+    inference_helper = InferenceHelper(opt, batch_size=25)
+    inference_helper.download_model()
+    inference_helper.load_model()
+    avg_pred_time_per_sample = inference_helper.inference_benchmark()
+    print ("Batch Inference: Average prediction time per sample: {} ms".format(avg_pred_time_per_sample))
 
     print ("Done")
     exit()
