@@ -1,11 +1,6 @@
 import argparse, time
-import logging
-logging.basicConfig(level=logging.INFO)
-
 import numpy as np
 import mxnet as mx
-import cv2
-from collections import namedtuple
 
 from collections import namedtuple
 Batch = namedtuple('Batch', ['data'])
