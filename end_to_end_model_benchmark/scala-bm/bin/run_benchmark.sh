@@ -12,10 +12,10 @@ fi
 
 if [[ $1 = e2e ]]
 then
-    model_path="models/end_to_end_model/resnet18_v1_end_to_end"
+    model_path="models/resnet18_v1_end_to_end"
     end_to_end="--end-to-end"
 else
-    model_path="models/not_end_to_end_model/resnet18_v1"
+    model_path="models/resnet18_v1"
     end_to_end=""
 fi
 
@@ -23,7 +23,7 @@ SCALA_VERSION_PROFILE=2.11
 MXNET_VERSION="[1.5.0-SNAPSHOT,)"
 
 # use maven wrapper to avoid dead lock when using the apt install maven but sudo apt update still running on background
-# ./mvnw clean install dependency:copy-dependencies package -Dmxnet.hw_type=$hw_type -Dmxnet.scalaprofile=$SCALA_VERSION_PROFILE -Dmxnet.version=$MXNET_VERSION
+./mvnw clean install dependency:copy-dependencies package -Dmxnet.hw_type=$hw_type -Dmxnet.scalaprofile=$SCALA_VERSION_PROFILE -Dmxnet.version=$MXNET_VERSION
 
 CURR_DIR=$(cd $(dirname $0)/../; pwd)
 
