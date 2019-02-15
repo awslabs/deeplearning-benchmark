@@ -12,8 +12,11 @@ else
     model_url="https://s3.us-east-2.amazonaws.com/mxnet-public/end_to_end_models"
     model_name="resnet18_v1"
 fi
-
-mkdir models
-cd models
-wget "$model_url/$model_name-symbol.json"
-wget "$model_url/$model_name-0000.params"
+model_path=models/
+if [! -d "$model_path" ]; then
+    mkdir models
+fi
+if [! -f "$model_path" ]; then
+    wget "$model_url/$model_name-symbol.json" -P $model_path
+    wget "$model_url/$model_name-0000.params" -P $model_path
+fi
