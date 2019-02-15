@@ -13,10 +13,11 @@ else
     model_name="resnet18_v1"
 fi
 model_path=models/
-if [! -d "$model_path" ]; then
-    mkdir models
+if [ ! -d "$model_path" ]; then
+    mkdir -p "$model_path"
 fi
-if [! -f "$model_path" ]; then
+
+if [ ! -f "$model_path" ]; then
     wget "$model_url/$model_name-symbol.json" -P $model_path
     wget "$model_url/$model_name-0000.params" -P $model_path
 fi
