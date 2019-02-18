@@ -51,22 +51,24 @@ public class EndToEndModelWoPreprocessing {
 
     // process the image explicitly Resize -> ToTensor -> Normalize
     private static NDArray preprocessImage(NDArray nd) {
-        NDArray resizeImg;
-        NDArray[] arr = new NDArray[nd.shape().get(0)];
-        for (int i = 0; i < nd.shape().get(0); i++) {
-            arr[i] = Image.imResize(nd.at(i), 224, 224);
+        try(ResourceScope scope = new ResourceScope()) {
+            NDArray resizeImg;
+            NDArray[] arr = new NDArray[nd.shape().get(0)];
+            for (int i = 0; i < nd.shape().get(0); i++) {
+                arr[i] = Image.imResize(nd.at(i), 224, 224);
+            }
+            resizeImg = NDArray.stack(arr, 0, arr.length, null)[0];
+
+            resizeImg = NDArray.cast(resizeImg, "float32", null)[0];
+            resizeImg = resizeImg.div(255.0);
+            NDArray totensorImg = (NDArray.swapaxes(NDArray.new swapaxesParam(resizeImg).setDim1(1).setDim2(3)))[0];
+            // use 0.456 instead of (0.485, 0.456, 0.406) to simply the logic
+            totensorImg = totensorImg.subtract(0.456);
+            // use 0.224 instead of 0.229, 0.224, 0.225 to simply the logic
+            NDArray preprocessedImg = totensorImg.div(0.224);
+
+            return preprocessedImg;
         }
-        resizeImg = NDArray.stack(arr, 0, arr.length, null)[0];
-
-        resizeImg = NDArray.cast(resizeImg, "float32", null)[0];
-        resizeImg = resizeImg.div(255.0);
-        NDArray totensorImg = (NDArray.swapaxes(NDArray.new swapaxesParam(resizeImg).setDim1(1).setDim2(3)))[0];
-        // use 0.456 instead of (0.485, 0.456, 0.406) to simply the logic
-        totensorImg = totensorImg.subtract(0.456);
-        // use 0.224 instead of 0.229, 0.224, 0.225 to simply the logic
-        NDArray preprocessedImg = totensorImg.div(0.224);
-
-        return preprocessedImg;
     }
 
     private static void printAvg(double[] inferenceTimes, String metricsPrefix, int batchSize)  {

@@ -89,8 +89,7 @@ object EndToEndModelWoPreprocessing {
     val times: Array[Double] = Array.fill(numOfRuns){0}
 
     for (n <- 0 until numOfRuns + timesOfWarmUp) {
-      NDArrayCollector.auto().withScope {
-
+      ResourceScope.using() {
         val nd = NDArray.api.random_uniform(Some(0), Some(255), Some(Shape(batchSize, 300, 300, 3)))
         val img = NDArray.api.cast(nd, "uint8")
         var imgWithBatchNum: NDArray = null
