@@ -18,12 +18,16 @@ else
     model_path="../models/resnet18_v1"
     end_to_end=""
 fi
-
+# copy the maven wrapper related script into scala or java folder and
 # enter either java or scala folder
 if [[ $1 = scala ]]
 then
+    cp -r ./.mvn scala-bm
+    cp -r ./mvnw* scala-bm
     cd scala-bm
 else
+    cp -r ./.mvn scala-bm
+    cp -r ./mvnw* scala-bm
     cd java-bm
 fi
 # build the project
@@ -55,10 +59,10 @@ do
     --warm-up 1 \
     $end_to_end \
     $use_gpu)
-    value=$(echo $output_batch | grep -oP '(E2E|Non E2E) (single|batch)_inference_average \K(\d+.\d+)(?=ms)')
+    value=$(echo $output_batch | ggrep -oP '(E2E|Non E2E) (single|batch)_inference_average \K(\d+.\d+)(?=ms)')
     # use awk to support float calculation
     sum=$(awk "BEGIN {print $sum+$value}")
 done
 
-metrix=$(echo $output_batch | grep -oE '(single|batch)_inference_average')
+metrix=$(echo $output_batch | ggrep -oE '(single|batch)_inference_average')
 echo "$output_single $metrix $(awk "BEGIN {print $sum / $num_iter}")ms"
