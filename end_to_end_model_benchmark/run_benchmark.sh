@@ -26,8 +26,8 @@ then
     cp -r ./mvnw* scala-bm
     cd scala-bm
 else
-    cp -r ./.mvn scala-bm
-    cp -r ./mvnw* scala-bm
+    cp -r ./.mvn java-bm
+    cp -r ./mvnw* java-bm
     cd java-bm
 fi
 # build the project
