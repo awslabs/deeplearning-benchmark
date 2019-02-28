@@ -5,6 +5,8 @@ if [[ $3 = gpu ]]
 then
     hw_type=gpu
     use_gpu="--use-gpu"
+    # setting the path for cuda
+    sudo ldconfig /usr/local/cuda-9.2/lib64
 else
     hw_type=cpu
     use_gpu=""
