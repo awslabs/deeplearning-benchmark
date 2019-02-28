@@ -1,4 +1,4 @@
-iimport argparse, time, logging, os
+import argparse, time, logging, os
 import numpy as np
 import mxnet as mx
 from mxnet import gluon, nd
