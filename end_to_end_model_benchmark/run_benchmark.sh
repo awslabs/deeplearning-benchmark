@@ -35,6 +35,7 @@ bash bin/build.sh $hw_type
 
 CURR_DIR=$(pwd)
 CLASSPATH=$CLASSPATH:$CURR_DIR/target/*:$CLASSPATH:$CURR_DIR/target/dependency/*:$CLASSPATH:$CURR_DIR/target/classes/lib/*
+if [[ $3 = gpu ]]; then sudo ldconfig /usr/local/cuda-9.2/lib64; fi
 # run single inference
 output_single=$(java -Xmx8G  -cp $CLASSPATH mxnet.EndToEndModelWoPreprocessing \
 --model-path-prefix $model_path \
