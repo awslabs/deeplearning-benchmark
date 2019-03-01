@@ -5,8 +5,6 @@ if [[ $3 = gpu ]]
 then
     hw_type=gpu
     use_gpu="--use-gpu"
-    # setting the path for cuda
-    sudo ldconfig /usr/local/cuda-9.2/lib64
 else
     hw_type=cpu
     use_gpu=""
@@ -54,6 +52,7 @@ if (( $4 < 25 )); then num_runs=$4; fi
 if (( $num_iter == 0 )); then num_iter=1; fi
 for n in `seq 1 $num_iter`
 do
+    if [[ $3 = gpu ]]; then sudo ldconfig /usr/local/cuda-9.2/lib64; fi
     output_batch=$(java -Xmx8G  -cp $CLASSPATH mxnet.EndToEndModelWoPreprocessing \
     --model-path-prefix $model_path \
     --num-runs $num_runs \
