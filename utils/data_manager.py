@@ -19,6 +19,10 @@ def getImagenetData(dataset):
             os.system("wget -q https://s3.amazonaws.com/aws-ml-platform-datasets/imagenet/256px-q95/val-256px-q95.rec -P ~/data/")
         if not os.path.exists(os.path.expanduser('~/data/train-256px-q95.rec')):
             os.system("wget -q https://s3.amazonaws.com/aws-ml-platform-datasets/imagenet/256px-q95/train-256px-q95.rec -P ~/data/")
-        
+    elif dataset == 'imagenet-ebs':
+        if not os.path.exists(os.path.expanduser('~/data/')):
+            os.system('mkdir -p ~/data/')
+            os.system("aws s3 sync s3://aws-ml-platform-datasets/imagenet/pass-through/ ~/data/ --exclude \"train*\"")
+    
     else:
         raise ValueError('Unknown dataset')
