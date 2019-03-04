@@ -21,7 +21,7 @@ package mxnet
 import org.apache.mxnet._
 import org.apache.mxnet.infer.Predictor
 import org.kohsuke.args4j.{CmdLineException, CmdLineParser, Option}
-import scala.util.Properties
+import scala.collection.JavaConversions._
 import collection.JavaConverters._
 
 /**
