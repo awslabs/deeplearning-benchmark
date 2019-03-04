@@ -41,7 +41,7 @@ output_single=$(java -Xmx8G  -cp $CLASSPATH mxnet.EndToEndModelWoPreprocessing \
 --model-path-prefix $model_path \
 --num-runs $4 \
 --batchsize 1 \
---warm-up 15 \
+--warm-up 5 \
 $end_to_end \
 $use_gpu)
 
