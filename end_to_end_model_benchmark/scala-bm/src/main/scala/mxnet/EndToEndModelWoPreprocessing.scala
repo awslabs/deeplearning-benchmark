@@ -21,7 +21,7 @@ package mxnet
 import org.apache.mxnet._
 import org.apache.mxnet.infer.Predictor
 import org.kohsuke.args4j.{CmdLineException, CmdLineParser, Option}
-
+import scala.util.Properties
 import collection.JavaConverters._
 
 /**
@@ -127,8 +127,16 @@ object EndToEndModelWoPreprocessing {
         System.exit(1)
     }
 
-    val context = if (useGPU) Context.gpu() else Context.cpu()
-
-    runInference(modelPathPrefix, context, batchSize, isE2E, numOfRuns, timesOfWarmUp)
+    try {
+      val context = if (useGPU) Context.gpu() else Context.cpu()
+      runInference(modelPathPrefix, context, batchSize, isE2E, numOfRuns, timesOfWarmUp)
+    } catch {
+      case e: Exception => 
+        print(s"${e.printStackTrace}\n")
+        val environmentVars = System.getenv()
+        for ((k,v) <- environmentVars) println(s"key: $k, value: $v\n")
+        val properties = System.getProperties()
+        for ((k,v) <- properties) println(s"key: $k, value: $v\n")
+    }
   }
 }
