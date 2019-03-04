@@ -47,9 +47,9 @@ $use_gpu)
 
 sum=0.0
 # the defualt value is 25 so tha we have enough CPU and GPU memory
-num_iter=$(($4/25))
-num_runs=25
-if (( $4 < 25 )); then num_runs=$4; fi
+num_runs=10
+num_iter=$(($4 / $num_runs))
+if (( $4 < $num_runs )); then num_runs=$4; fi
 if (( $num_iter == 0 )); then num_iter=1; fi
 for n in `seq 1 $num_iter`
 do
