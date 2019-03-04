@@ -22,6 +22,7 @@ import org.apache.mxnet._
 import org.apache.mxnet.infer.Predictor
 import org.kohsuke.args4j.{CmdLineException, CmdLineParser, Option}
 import scala.collection.JavaConversions._
+import org.slf4j.LoggerFactory
 import collection.JavaConverters._
 
 /**
