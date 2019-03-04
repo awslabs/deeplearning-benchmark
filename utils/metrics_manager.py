@@ -4,7 +4,7 @@ import subprocess
 import re
 import json
 import logging
-
+import numpy as np
 
 
 # TODO add detailed error/exception handling in the script
@@ -21,6 +21,10 @@ class BenchmarkMetricComputeMethod:
 
         if metric_compute_method == 'average':
             return 1.0 * sum(metric) / len(metric)
+        elif metric_compute_method == 'p90':
+            return np.percentile(metric, 90)
+        elif metric_compute_method == 'p50':
+            return np.percentile(metric, 50)
         elif metric_compute_method == 'last':
             return metric[-1]
         elif metric_compute_method == 'total':
