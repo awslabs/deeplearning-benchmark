@@ -32,6 +32,7 @@ else
 fi
 # build the project
 bash bin/build.sh $hw_type
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-9.2/lib64/
 CURR_DIR=$(pwd)
 CLASSPATH=$CLASSPATH:$CURR_DIR/target/*:$CLASSPATH:$CURR_DIR/target/dependency/*:$CLASSPATH:$CURR_DIR/target/classes/lib/*
 if [[ $3 = gpu ]]; then sudo ldconfig /usr/local/cuda-9.2/lib64; fi
