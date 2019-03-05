@@ -4,7 +4,6 @@ import os
 
 from ast import literal_eval
 import logging
-logging.basicConfig(level=logging.INFO)
 
 try:
     import ConfigParser
@@ -22,20 +21,7 @@ CONFIG_DIR = './task_config.cfg'
 
 
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="Run a benchmark task.")
-    parser.add_argument('--framework', type=str, help='Framework name e.g. mxnet')
-    parser.add_argument('--task-name', type=str, help='Task Name e.g. resnet50_cifar10_symbolic.')
-    parser.add_argument('--num-gpus', type=int, help='Numbers of gpus. e.g. --num-gpus 8')
-    parser.add_argument('--epochs', type=int, help='Numbers of epochs for training. e.g. --epochs 20')
-    parser.add_argument('--metrics-suffix', type=str, help='Metrics suffix e.g. --metrics-suffix daily')
-    parser.add_argument('--kvstore', type=str, default='device',help='kvstore to use for trainer/module.')
-    parser.add_argument('--dtype', type=str, default='float32',help='floating point precision to use')
-      
-    
-    
-    args = parser.parse_args()
-
+def run_benchmark(args):
     # modify the template config file and generate the user defined config file.
     cfg_process.generate_cfg(CONFIG_TEMPLATE_DIR, CONFIG_DIR, **vars(args))
     config.read(CONFIG_DIR)
@@ -61,3 +47,25 @@ if __name__ == '__main__':
 
     # clean up
     os.remove(CONFIG_DIR)
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description="Run a benchmark task.")
+    parser.add_argument('--framework', type=str, help='Framework name e.g. mxnet')
+    parser.add_argument('--task-name', type=str, help='Task Name e.g. resnet50_cifar10_symbolic.')
+    parser.add_argument('--num-gpus', type=int, help='Numbers of gpus. e.g. --num-gpus 8')
+    parser.add_argument('--epochs', type=int, help='Numbers of epochs for training. e.g. --epochs 20')
+    parser.add_argument('--metrics-suffix', type=str, help='Metrics suffix e.g. --metrics-suffix daily')
+    parser.add_argument('--kvstore', type=str, default='device',help='kvstore to use for trainer/module.')
+    parser.add_argument('--dtype', type=str, default='float32',help='floating point precision to use')
+
+    args = parser.parse_args()
+
+    log_file_location = args.task_name + ".log"
+    logging.basicConfig(filename=log_file_location,level=logging.DEBUG)
+
+    try:
+        run_benchmark(args)
+    except Exception:
+        logging.exception("Fatal error in run_benchmark")
+        exit()
+
