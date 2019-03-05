@@ -33,11 +33,12 @@ fi
 # build the project
 bash bin/build.sh $hw_type
 CURR_DIR=$(pwd)
-cp ../log4j.properties target/classes
 CLASSPATH=$CLASSPATH:$CURR_DIR/target/*:$CLASSPATH:$CURR_DIR/target/dependency/*:$CLASSPATH:$CURR_DIR/target/classes/lib/*
 if [[ $3 = gpu ]]; then sudo ldconfig /usr/local/cuda-9.2/lib64; fi
 # run single inference
-output_single=$(java -Xmx8G  -cp $CLASSPATH mxnet.EndToEndModelWoPreprocessing \
+output_single=$(java -Xmx8G  \
+-Dlog4j.configuration=file:/home/ubuntu/benchmarkai/end_to_end_model_benchmark/log4j.properties \
+-cp $CLASSPATH mxnet.EndToEndModelWoPreprocessing \
 --model-path-prefix $model_path \
 --num-runs $4 \
 --batchsize 1 \
@@ -54,7 +55,9 @@ if (( $num_iter == 0 )); then num_iter=1; fi
 for n in `seq 1 $num_iter`
 do
     if [[ $3 = gpu ]]; then sudo ldconfig /usr/local/cuda-9.2/lib64; fi
-    output_batch=$(java -Xmx8G  -cp $CLASSPATH mxnet.EndToEndModelWoPreprocessing \
+    output_batch=$(java -Xmx8G  \
+    -Dlog4j.configuration=file:/home/ubuntu/benchmarkai/end_to_end_model_benchmark/log4j.properties \
+    -cp $CLASSPATH mxnet.EndToEndModelWoPreprocessing \
     --model-path-prefix $model_path \
     --num-runs $num_runs \
     --batchsize 25 \
