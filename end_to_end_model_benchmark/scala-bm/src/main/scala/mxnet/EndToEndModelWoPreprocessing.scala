@@ -128,16 +128,7 @@ object EndToEndModelWoPreprocessing {
         System.exit(1)
     }
 
-    try {
-      val context = if (useGPU) Context.gpu() else Context.cpu()
-      runInference(modelPathPrefix, context, batchSize, isE2E, numOfRuns, timesOfWarmUp)
-    } catch {
-      case e: Exception => 
-        print(s"${e.printStackTrace}\n")
-        val environmentVars = System.getenv()
-        for ((k,v) <- environmentVars) println(s"key: $k, value: $v\n")
-        val properties = System.getProperties()
-        for ((k,v) <- properties) println(s"key: $k, value: $v\n")
-    }
+    val context = if (useGPU) Context.gpu() else Context.cpu()
+    runInference(modelPathPrefix, context, batchSize, isE2E, numOfRuns, timesOfWarmUp)
   }
 }
