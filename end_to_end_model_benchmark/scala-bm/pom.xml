@@ -50,6 +50,18 @@
       <artifactId>mxnet-full_${mxnet.scalaprofile}-${mxnet.profile}</artifactId>
       <version>${mxnet.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.7</version>
+    </dependency>
+    <!--Binding for log4j version 1.2.x You also need to
+    place log4j.jar on your class path. -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>1.7.7</version>
+    </dependency>
   </dependencies>
 
   <build>

@@ -32,11 +32,13 @@ else
 fi
 # build the project
 bash bin/build.sh $hw_type
-
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-9.2/lib64/
 CURR_DIR=$(pwd)
 CLASSPATH=$CLASSPATH:$CURR_DIR/target/*:$CLASSPATH:$CURR_DIR/target/dependency/*:$CLASSPATH:$CURR_DIR/target/classes/lib/*
 # run single inference
-output_single=$(java -Xmx8G  -cp $CLASSPATH mxnet.EndToEndModelWoPreprocessing \
+output_single=$(java -Xmx8G  \
+-Dlog4j.configuration=file:/home/ubuntu/benchmarkai/end_to_end_model_benchmark/log4j.properties \
+-cp $CLASSPATH mxnet.EndToEndModelWoPreprocessing \
 --model-path-prefix $model_path \
 --num-runs $4 \
 --batchsize 1 \
@@ -46,13 +48,15 @@ $use_gpu)
 
 sum=0.0
 # the defualt value is 25 so tha we have enough CPU and GPU memory
-num_iter=$(($4/25))
 num_runs=25
-if (( $4 < 25 )); then num_runs=$4; fi
+num_iter=$(($4 / $num_runs))
+if (( $4 < $num_runs )); then num_runs=$4; fi
 if (( $num_iter == 0 )); then num_iter=1; fi
 for n in `seq 1 $num_iter`
 do
-    output_batch=$(java -Xmx8G  -cp $CLASSPATH mxnet.EndToEndModelWoPreprocessing \
+    output_batch=$(java -Xmx8G  \
+    -Dlog4j.configuration=file:/home/ubuntu/benchmarkai/end_to_end_model_benchmark/log4j.properties \
+    -cp $CLASSPATH mxnet.EndToEndModelWoPreprocessing \
     --model-path-prefix $model_path \
     --num-runs $num_runs \
     --batchsize 25 \

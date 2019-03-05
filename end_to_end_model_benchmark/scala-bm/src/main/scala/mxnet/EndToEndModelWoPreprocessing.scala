@@ -21,7 +21,8 @@ package mxnet
 import org.apache.mxnet._
 import org.apache.mxnet.infer.Predictor
 import org.kohsuke.args4j.{CmdLineException, CmdLineParser, Option}
-
+import scala.collection.JavaConversions._
+import org.slf4j.LoggerFactory
 import collection.JavaConverters._
 
 /**
@@ -128,7 +129,6 @@ object EndToEndModelWoPreprocessing {
     }
 
     val context = if (useGPU) Context.gpu() else Context.cpu()
-
     runInference(modelPathPrefix, context, batchSize, isE2E, numOfRuns, timesOfWarmUp)
   }
 }
