@@ -33,7 +33,8 @@ def gpu_memory_usage_extract(file_name, ret_dict, num_gpus):
         gpu_usage_i = gpu_memory_usage[gpu_memory_usage.iloc[:,0] == i].iloc[:,1]
         gpu_usage_i = gpu_usage_i.str.extract('(\d+)', expand=False).astype(int)
         mean_use_gpu_i = gpu_usage_i.mean()
-        std_use_gpu_i = gpu_usage_i.std()
+        # when data only contains 1 data point and is 0, the Series.std() return NaN
+        std_use_gpu_i = gpu_usage_i.std() if pd.notna(gpu_usage_i.std()) else 0.0
         max_use_gpu_i = gpu_usage_i.max()
         record['mean_usage'].append(mean_use_gpu_i)
         record['std_usage'].append(std_use_gpu_i)
