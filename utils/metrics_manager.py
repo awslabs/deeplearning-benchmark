@@ -126,11 +126,13 @@ def benchmark(command_to_execute, metric_patterns,
         name of the framework
     :return:
     """
-    log_file_location = task_name + ".log"
-    log_file = open(log_file_location, 'w')
-    logging.info("Executing Command: %s", command_to_execute)
 
     cpu_gpu_memory_usage = {}
+    logging.info("Executing Command: %s", command_to_execute)
+
+    log_file_location = task_name + ".log"
+    log_file = open(log_file_location, 'a')
+
     process = subprocess.Popen(
             command_to_execute,
             shell=True,
