@@ -16,6 +16,12 @@
 # under the License.
 
 # Downloading the data and model
+export MXNET_HOME=${HOME}/incubator-mxnet
+export CPP_INFERENCE_EXAMPLE=${MXNET_HOME}/cpp-package/example/inference
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${MXNET_HOME}/lib
+cd ${CPP_INFERENCE_EXAMPLE}
+make
+
 mkdir -p model
 cd model
 wget -nc https://s3.amazonaws.com/model-server/models/resnet50_ssd/resnet50_ssd_model-symbol.json
