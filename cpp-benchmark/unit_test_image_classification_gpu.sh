@@ -20,13 +20,13 @@ export MXNET_HOME=${HOME}/incubator-mxnet
 export CPP_INFERENCE_EXAMPLE=${MXNET_HOME}/cpp-package/example/inference
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${MXNET_HOME}/lib
 
-mkdir -p model
+mkdir -p ${CPP_INFERENCE_EXAMPLE}/model
 cd ${CPP_INFERENCE_EXAMPLE}/model
-wget -nc https://s3.amazonaws.com/model-server/models/resnet50_ssd/resnet50_ssd_model-symbol.json
-wget -nc https://s3.amazonaws.com/model-server/models/resnet50_ssd/resnet50_ssd_model-0000.params
-wget -nc https://s3.amazonaws.com/model-server/models/resnet50_ssd/synset.txt
-wget -nc -O dog.jpg https://github.com/dmlc/web-data/blob/master/mxnet/doc/tutorials/python/predict_image/dog.jpg?raw=true
-wget -nc -O mean_224.nd https://github.com/dmlc/web-data/raw/master/mxnet/example/feature_extract/mean_224.nd
+wget -nc -O ${CPP_INFERENCE_EXAMPLE}/model/resnet50_ssd_model-symbol.json https://s3.amazonaws.com/model-server/models/resnet50_ssd/resnet50_ssd_model-symbol.json
+wget -nc -O ${CPP_INFERENCE_EXAMPLE}/model/resnet50_ssd_model-0000.params https://s3.amazonaws.com/model-server/models/resnet50_ssd/resnet50_ssd_model-0000.params
+wget -nc -O ${CPP_INFERENCE_EXAMPLE}/model/synset.txt https://s3.amazonaws.com/model-server/models/resnet50_ssd/synset.txt
+wget -nc -O ${CPP_INFERENCE_EXAMPLE}/model/dog.jpg https://github.com/dmlc/web-data/blob/master/mxnet/doc/tutorials/python/predict_image/dog.jpg?raw=true
+wget -nc -O ${CPP_INFERENCE_EXAMPLE}/model/mean_224.nd https://github.com/dmlc/web-data/raw/master/mxnet/example/feature_extract/mean_224.nd
 cd ${CPP_INFERENCE_EXAMPLE}
 
 
