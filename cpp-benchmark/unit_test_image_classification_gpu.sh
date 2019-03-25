@@ -19,18 +19,16 @@
 export MXNET_HOME=${HOME}/incubator-mxnet
 export CPP_INFERENCE_EXAMPLE=${MXNET_HOME}/cpp-package/example/inference
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${MXNET_HOME}/lib
-cd ${CPP_INFERENCE_EXAMPLE}
-make
 
 mkdir -p model
-cd model
+cd ${CPP_INFERENCE_EXAMPLE}/model
 wget -nc https://s3.amazonaws.com/model-server/models/resnet50_ssd/resnet50_ssd_model-symbol.json
 wget -nc https://s3.amazonaws.com/model-server/models/resnet50_ssd/resnet50_ssd_model-0000.params
 wget -nc https://s3.amazonaws.com/model-server/models/resnet50_ssd/synset.txt
 wget -nc -O dog.jpg https://github.com/dmlc/web-data/blob/master/mxnet/doc/tutorials/python/predict_image/dog.jpg?raw=true
 wget -nc -O mean_224.nd https://github.com/dmlc/web-data/raw/master/mxnet/example/feature_extract/mean_224.nd
-cd ..
+cd ${CPP_INFERENCE_EXAMPLE}
 
 
 # Running the example with dog image.
-LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:../../../lib ./image_classification --symbol "./model/resnet50_ssd_model-symbol.json" --params "./model/resnet50_ssd_model-0000.params" --synset "./model/synset.txt" --mean "./model/mean_224.nd" --image "./model/dog.jpg" --warmup 10 --predict 100 --gpu
+LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${MXNET_HOME}/lib ${CPP_INFERENCE_EXAMPLE}/image_classification --symbol "${CPP_INFERENCE_EXAMPLE}/model/resnet50_ssd_model-symbol.json" --params "${CPP_INFERENCE_EXAMPLE}/model/resnet50_ssd_model-0000.params" --synset "${CPP_INFERENCE_EXAMPLE}/model/synset.txt" --mean "${CPP_INFERENCE_EXAMPLE}/model/mean_224.nd" --image "${CPP_INFERENCE_EXAMPLE}/model/dog.jpg" --warmup 10 --predict 100 --gpu
