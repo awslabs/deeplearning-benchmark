@@ -299,11 +299,11 @@ void Predictor::Calculate()
   std::sort(measurements.begin(), measurements.end());
   int count = measurements.size();
   int Index_50 = static_cast<int>(ceil((count - 1) * 50 /100));
-  LG << "InferenceTime_P50(uSecs)  = " << measurements[Index_50].count();
+  LG << "InferenceTime_P50(uSecs): " << measurements[Index_50].count();
   int Index_90 = static_cast<int>(ceil((count - 1) * 90 /100));
-  LG << "InferenceTime_P90(uSecs)  = " << measurements[Index_90].count();
+  LG << "InferenceTime_P90(uSecs): " << measurements[Index_90].count();
   int Index_99 = static_cast<int>(ceil((count - 1) * 99 /100));
-  LG << "InferenceTime_P99(uSecs)  = " << measurements[Index_99].count();
+  LG << "InferenceTime_P99(uSecs): " << measurements[Index_99].count();
 }
 
 
