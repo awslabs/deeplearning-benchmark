@@ -31,4 +31,4 @@ cd ${CPP_INFERENCE_EXAMPLE}
 
 
 # Running the example with dog image.
-LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${MXNET_HOME}/lib ${CPP_INFERENCE_EXAMPLE}/image_classification --symbol "${CPP_INFERENCE_EXAMPLE}/model/resnet50_ssd_model-symbol.json" --params "${CPP_INFERENCE_EXAMPLE}/model/resnet50_ssd_model-0000.params" --synset "${CPP_INFERENCE_EXAMPLE}/model/synset.txt" --mean "${CPP_INFERENCE_EXAMPLE}/model/mean_224.nd" --image "${CPP_INFERENCE_EXAMPLE}/model/dog.jpg" --warmup 10 --predict 100 --gpu
+LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${MXNET_HOME}/lib ${CPP_INFERENCE_EXAMPLE}/image_classification --symbol "${CPP_INFERENCE_EXAMPLE}/model/resnet50_ssd_model-symbol.json" --params "${CPP_INFERENCE_EXAMPLE}/model/resnet50_ssd_model-0000.params" --synset "${CPP_INFERENCE_EXAMPLE}/model/synset.txt" --mean "${CPP_INFERENCE_EXAMPLE}/model/mean_224.nd" --image "${CPP_INFERENCE_EXAMPLE}/model/dog.jpg" --warmup 10 --predict 1000 --gpu
