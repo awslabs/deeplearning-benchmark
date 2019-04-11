@@ -22,6 +22,6 @@ cp ${PERF_HOME}/unit_test_image_classification_cpu.sh ${CPP_INFERENCE_EXAMPLE}/.
 
 echo "Building the mxnet at ${MXNET_HOME}"
 cd ${MXNET_HOME}
-make USE_CPP_PACKAGE=1 USE_OPENCV=1 USE_CUDA=0 USE_CUDNN=0 USE_LAPACK=0 -j${nproc} 2>&1 | tee buildLog.txt
+make USE_CPP_PACKAGE=1 USE_OPENCV=1 USE_CUDA=0 USE_CUDNN=0 USE_LAPACK=0  2>&1 | tee buildLog.txt
 cd ${HOME}/benchmarkai
 
