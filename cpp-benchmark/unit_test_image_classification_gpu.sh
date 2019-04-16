@@ -18,6 +18,7 @@
 
 
 # Downloading the data and model
+source ${HOME}/.dlamirc
 export MXNET_HOME=${HOME}/incubator-mxnet
 export CPP_INFERENCE_EXAMPLE=image_classification
 export CPP_INFERENCE_EXAMPLE_FOLDER=${MXNET_HOME}/cpp-package/example/inference
