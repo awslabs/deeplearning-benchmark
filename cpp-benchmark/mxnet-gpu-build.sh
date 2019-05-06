@@ -30,5 +30,5 @@ sudo ./ubuntu_mkl.sh
 echo "Building the mxnet at ${MXNET_HOME}"
 cd ${MXNET_HOME}
 make USE_CPP_PACKAGE=1 USE_MKLDNN=1 USE_OPENCV=1 USE_CUDA=1 USE_CUDNN=1 USE_CUDA_PATH=/usr/local/cuda USE_LAPACK=0  2>&1 | tee buildLog.txt
-cd ${MXNET_HOME}/benchmarkai
+cd ${HOME}/benchmarkai
 
