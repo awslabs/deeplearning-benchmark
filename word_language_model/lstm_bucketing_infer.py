@@ -11,7 +11,8 @@ import numpy as np
 parser = argparse.ArgumentParser(description="Run Inference using Pen Tree Bank Dataset",
                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument('--gpus', type=int,
-                    help='Number of GPUs to use, 0 means using CPU only.')
+                    help='Number of GPUs to use, 0 means using CPU only.', default=0)
+parser.add_argument('--dtype', choices=['float16', 'float32'], default='float32')
 
 
 def pad_sentence(sentence, buckets, invalid_label=-1, data_name='data', layout='NT'):
@@ -64,6 +65,8 @@ def tokenize_text(fname, vocab=None, invalid_label=-1, start_label=0):
 
 def sym_gen(seq_len):
     data = mx.sym.Variable("data")
+    if args.dtype == "float16":
+        data = mx.sym.Cast(data=data, dtype=np.float16)
     embed = mx.sym.Embedding(data=data, input_dim=len(vocab),
                              output_dim=num_embed, name="embed")
     stack.reset()
@@ -71,6 +74,8 @@ def sym_gen(seq_len):
 
     pred = mx.sym.Reshape(outputs, shape=(-1, num_hidden))
     pred = mx.sym.FullyConnected(data=pred, num_hidden=len(vocab), name="pred")
+    if args.dtype == "float16":
+        pred = mx.sym.Cast(data=data, dtype=np.float32)
     pred = mx.sym.softmax(pred, name='softmax')
     return pred, ('data',), ('softmax_label',)
 
@@ -125,7 +130,7 @@ if __name__ == '__main__':
 
     stack = mx.rnn.FusedRNNCell(num_hidden, num_layers=num_layers, mode="lstm").unfuse()
 
-    mxnet_ctx = mx.cpu()
+    mxnet_ctx = mx.gpu(0) if args.gpus > 0 else mx.cpu()
 
     # Create bucketing module and load weights
     mx_model = mx.mod.BucketingModule(
