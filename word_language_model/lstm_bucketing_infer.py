@@ -75,7 +75,7 @@ def sym_gen(seq_len):
     pred = mx.sym.Reshape(outputs, shape=(-1, num_hidden))
     pred = mx.sym.FullyConnected(data=pred, num_hidden=len(vocab), name="pred")
     if args.dtype == "float16":
-        pre = mx.sym.Cast(data=data, dtype=np.float32)
+        pred = mx.sym.Cast(data=data, dtype=np.float32)
     pred = mx.sym.softmax(pred, name='softmax')
     return pred, ('data',), ('softmax_label',)
 
