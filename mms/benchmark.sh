@@ -64,7 +64,9 @@ if [[ -z "${URL}" ]]; then
     exit 1
 fi
 
-if [[ -x "$(command -v nvidia-docker)" ]]; then
+is_gpu=`nvidia-smi`
+
+if [[ $? -eq 0 ]]; then
     GPU=true
 else
     GPU=false
