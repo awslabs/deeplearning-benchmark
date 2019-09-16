@@ -55,7 +55,7 @@ class BenchmarkResultManager(object):
         if not os.path.isfile(log_file_location):
             raise Exception("log file was missing!")
         with open(log_file_location, 'rb') as f:
-            self.log_file = f.read()
+            self.log_file = f.read().decode('utf-8')
         assert isinstance(metric_patterns, list), "metric_patterns is expected to be a list."
         assert isinstance(metric_names, list), "metric_names is expected to be a list."
         assert isinstance(metric_compute_methods, list), "metric_compute_methods is expected to be a list."
@@ -91,7 +91,7 @@ class BenchmarkResultManager(object):
             metric = map(self.__get_float_number, metric)
             metric_result = BenchmarkMetricComputeMethod.compute(
                 metric_compute_method=self.metric_compute_methods[i],
-                metric=metric
+                metric=[metric]
             )
             self.metric_map[name] = metric_result
         self.metric_map['uptime_in_seconds'] = self.uptime()
