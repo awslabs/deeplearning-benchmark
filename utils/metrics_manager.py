@@ -91,7 +91,7 @@ class BenchmarkResultManager(object):
             metric = map(self.__get_float_number, metric)
             metric_result = BenchmarkMetricComputeMethod.compute(
                 metric_compute_method=self.metric_compute_methods[i],
-                metric=[metric]
+                metric=list(metric)
             )
             self.metric_map[name] = metric_result
         self.metric_map['uptime_in_seconds'] = self.uptime()
