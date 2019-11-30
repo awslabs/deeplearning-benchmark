@@ -91,7 +91,7 @@ def eval(data_source, ctx):
     total_L = 0.0
     ntotal = 0
     hidden_states = [
-        model.begin_state(func=mx.nd.zeros, batch_size=args.batch_size/len(ctx), ctx=ctx[i])
+        model.begin_state(func=mx.nd.zeros, batch_size=int(args.batch_size/len(ctx)), ctx=ctx[i])
         for i in range(len(ctx))
     ]
     for i in range(0, data_source.shape[0] - 1, args.bptt):
