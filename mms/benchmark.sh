@@ -73,13 +73,13 @@ fi
 if [[ "${GPU}" == "true" ]]; then
     DOCKER_RUNTIME="--runtime=nvidia"
     if [[ -z "${IMAGE}" ]]; then
-        IMAGE=awsdeeplearningteam/mxnet-model-server:nightly-mxnet-gpu
+        IMAGE=awsdeeplearningteam/multi-model-server:nightly-mxnet-gpu
         docker pull "${IMAGE}"
     fi
     HW_TYPE=gpu
 else
     if [[ -z "${IMAGE}" ]]; then
-        IMAGE=awsdeeplearningteam/mxnet-model-server:nightly-mxnet-cpu
+        IMAGE=awsdeeplearningteam/multi-model-server:nightly-mxnet-cpu
         docker pull "${IMAGE}"
     fi
     HW_TYPE=cpu
@@ -122,10 +122,10 @@ set -e
 docker run ${DOCKER_RUNTIME} --name mms -p 8080:8080 -p 8081:8081 \
     -v /tmp/benchmark/conf:/opt/ml/conf \
     -v /tmp/benchmark/logs:/home/model-server/logs \
-    -u root -itd ${IMAGE} mxnet-model-server --start \
+    -u root -itd ${IMAGE} multi-model-server --start \
     --mms-config /opt/ml/conf/config.properties
 
-MMS_VERSION=`docker exec -it mms pip freeze | grep mxnet-model-server`
+MMS_VERSION=`docker exec -it mms pip freeze | grep multi-model-server`
 
 until curl -s "http://localhost:8080/ping" > /dev/null
 do
