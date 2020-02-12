@@ -40,7 +40,6 @@ def GetMNIST_ubyte():
         os.chdir("./data")
         with ZipFile('mnist.zip', 'r') as zipObj:
             zipObj.extractall()
-        os.system("unzip -u mnist.zip")
         os.chdir("..")
 
 # download cifar
