@@ -19,6 +19,7 @@
 import os, gzip
 import pickle as pickle
 import sys
+from zipfile import ZipFile
 
 # download mnist.pkl.gz
 def GetMNIST_pkl():
@@ -37,6 +38,8 @@ def GetMNIST_ubyte():
        (not os.path.exists('data/t10k-labels-idx1-ubyte')):
         os.system("wget -q http://data.mxnet.io/mxnet/data/mnist.zip -P data/")
         os.chdir("./data")
+        with ZipFile('mnist.zip', 'r') as zipObj:
+            zipObj.extractall()
         os.system("unzip -u mnist.zip")
         os.chdir("..")
 
@@ -50,5 +53,6 @@ def GetCifar10():
        (not os.path.exists('data/cifar/test.lst')):
         os.system("wget -q http://data.mxnet.io/mxnet/data/cifar10.zip -P data/")
         os.chdir("./data")
-        os.system("unzip -u cifar10.zip")
+        with ZipFile('cifar10.zip', 'r') as zipObj:
+            zipObj.extractall()
         os.chdir("..")
