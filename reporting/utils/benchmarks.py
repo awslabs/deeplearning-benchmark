@@ -35,19 +35,10 @@ class Benchmarks(object):
     * AWS_DEFAULT_REGION
     """
     HEADERS = {
-        'Inference' : ['Framework', 'Framework Desc', 'Model', 'Precision', 'Benchmark Desc',
-                       'Instance Type', 'Latency', 'P50 Latency', 'P90 Latency', 'P99 Latency',
-                       'Throughput', 'Error Rate', 'CPU Memory', 'GPU Memory Mean',
-                       'GPU Memory Max', 'Uptime'],
         'Training CV' : ['Framework', 'Framework Desc', 'Model', 'Precision', 'Benchmark Desc',
                          'Instance Type', 'Top 1 Val Acc', 'Top 1 Train Acc', 'Throughput',
                          'Time to Train', 'CPU Memory', 'GPU Memory Mean', 'GPU Memory Max',
-                         'Uptime'],
-        'Training NLP' : ['Framework', 'Framework Desc', 'Model', 'Benchmark Desc', 'Instance Type',
-                          'Perplexity', 'Throughput', 'Time to Train', 'CPU Memory',
-                          'GPU Memory Mean', 'GPU Memory Max', 'Uptime'],
-        'Model Import' : ['Framework', 'Model', 'Benchmark Desc', 'Instance Type', 'Latency',
-                          'P50 Latency', 'P90 Latency', 'P99 Latency']
+                         'Uptime']
     }
     HEADER_UNITS = {
         'Latency' : 'ms',
