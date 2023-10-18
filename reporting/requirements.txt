@@ -11,6 +11,6 @@ pytz==2018.6
 PyYAML>=4.2b1
 s3transfer==0.1.13
 six==1.11.0
-urllib3==1.26.5
+urllib3==1.26.18
 git+git://github.com/vishaalkapoor/xlsx2html@hyperlink#egg=xlsx2html
 XlsxWriter==1.1.2
